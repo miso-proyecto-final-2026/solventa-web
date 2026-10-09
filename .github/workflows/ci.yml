@@ -1,0 +1,55 @@
+name: ci
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Instalar dependencias
+        run: npm ci
+      - name: Lint
+        run: npx ng lint
+      - name: Pruebas unitarias (Jasmine + Karma)
+        run: npx ng test --watch=false --browsers=ChromeHeadless --code-coverage
+      - name: Build de producción
+        run: npx ng build --configuration production
+      - name: Publicar cobertura
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: karma-coverage
+          path: coverage/
+          if-no-files-found: ignore
+
+  e2e:
+    name: e2e
+    needs: test
+    # Cypress se activa cuando existan los primeros recorridos E2E (Sprint 2+)
+    if: vars.ENABLE_E2E == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - uses: cypress-io/github-action@v6
+        with:
+          build: npx ng build
+          start: npx ng serve
+          wait-on: 'http://localhost:4200'
