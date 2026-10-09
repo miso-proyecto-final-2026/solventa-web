@@ -15,20 +15,37 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      # Mientras el repo no tenga el proyecto Angular (package.json), los pasos se omiten con un aviso.
+      - name: Detectar proyecto Angular
+        id: angular
+        run: |
+          if [ -f ./package.json ]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Aún no hay proyecto Angular (falta package.json). Se omiten lint, pruebas y build."
+          fi
+
       - uses: actions/setup-node@v4
+        if: steps.angular.outputs.exists == 'true'
         with:
           node-version: 22
           cache: npm
       - name: Instalar dependencias
+        if: steps.angular.outputs.exists == 'true'
         run: npm ci
       - name: Lint
+        if: steps.angular.outputs.exists == 'true'
         run: npx ng lint
       - name: Pruebas unitarias (Jasmine + Karma)
+        if: steps.angular.outputs.exists == 'true'
         run: npx ng test --watch=false --browsers=ChromeHeadless --code-coverage
       - name: Build de producción
+        if: steps.angular.outputs.exists == 'true'
         run: npx ng build --configuration production
       - name: Publicar cobertura
-        if: always()
+        if: always() && steps.angular.outputs.exists == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: karma-coverage
