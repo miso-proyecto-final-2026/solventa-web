@@ -78,6 +78,14 @@
         <source>Navegación principal</source>
         <target>Main navigation</target>
       </trans-unit>
+      <trans-unit id="language.switch.es-CO" datatype="html">
+        <source>Idioma de la aplicación: inglés. Cambiar a español (ES)</source>
+        <target>Application language: English. Switch to Spanish (ES)</target>
+      </trans-unit>
+      <trans-unit id="language.switch.en-US" datatype="html">
+        <source>Idioma de la aplicación: español. Cambiar a inglés (EN)</source>
+        <target>Application language: Spanish. Switch to English (EN)</target>
+      </trans-unit>
       <trans-unit id="nav.home" datatype="html">
         <source>Inicio</source>
         <target>Home</target>

@@ -19,6 +19,13 @@
     text-decoration: none;
   }
 
+  &__end {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sol-space-2) var(--sol-space-3);
+    align-items: center;
+  }
+
   &__list {
     display: flex;
     flex-wrap: wrap;
