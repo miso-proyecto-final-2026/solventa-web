@@ -1,0 +1,12 @@
+{
+  "/api/identidad": {
+    "target": "http://localhost:8001",
+    "pathRewrite": { "^/api/identidad": "" },
+    "changeOrigin": true
+  },
+  "/api/cotizacion": {
+    "target": "http://localhost:8000",
+    "pathRewrite": { "^/api/cotizacion": "" },
+    "changeOrigin": true
+  }
+}

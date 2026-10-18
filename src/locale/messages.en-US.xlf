@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="es-CO" target-language="en-US" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="app.placeholder.title" datatype="html">
+        <source>Solventa</source>
+        <target>Solventa</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">2,3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="app.placeholder.subtitle" datatype="html">
+        <source>Estructura inicial del portal web. Aún no hay pantallas.</source>
+        <target>Initial structure of the web portal. There are no screens yet.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">3,6</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
