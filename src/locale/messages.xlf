@@ -2,18 +2,172 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="es-CO" datatype="plaintext" original="ng2.template">
     <body>
-      <trans-unit id="app.placeholder.title" datatype="html">
-        <source>Solventa</source>
+      <trans-unit id="home.document-title" datatype="html">
+        <source>Solventa — Inicio</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="sourcefile">src/app/features/home/home.routes.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="home.hero.title" datatype="html">
+        <source>Protege lo que importa</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/home/pages/home-page.html</context>
           <context context-type="linenumber">2,3</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="app.placeholder.subtitle" datatype="html">
-        <source>Estructura inicial del portal web. Aún no hay pantallas.</source>
+      <trans-unit id="home.hero.subtitle" datatype="html">
+        <source> Cotiza tu seguro de vida hipotecario en segundos, con la mejor prima personalizada gracias a Open Finance. </source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.html</context>
-          <context context-type="linenumber">3,6</context>
+          <context context-type="sourcefile">src/app/features/home/pages/home-page.html</context>
+          <context context-type="linenumber">4,7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="home.hero.cta" datatype="html">
+        <source>Cotizar ahora</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/home/pages/home-page.html</context>
+          <context context-type="linenumber">7,10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="home.partners.title" datatype="html">
+        <source>Integración con socios distribuidores</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/home/pages/home-page.html</context>
+          <context context-type="linenumber">23,24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="home.partners.text" datatype="html">
+        <source> Fintechs, bancos y comercios pueden integrar nuestros seguros directamente en sus flujos de venta. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/home/pages/home-page.html</context>
+          <context context-type="linenumber">25,28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="home.value.instant.title" datatype="html">
+        <source>Cotización instantánea</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/home/pages/home-page.ts</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="home.value.instant.text" datatype="html">
+        <source>Obtén tu prima personalizada en menos de 3 segundos, usando tus datos financieros con tu consentimiento.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/home/pages/home-page.ts</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="home.value.digital.title" datatype="html">
+        <source>100% digital</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/home/pages/home-page.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="home.value.digital.text" datatype="html">
+        <source>Desde la cotización hasta el pago, todo desde tu celular o computador. Sin papeleos.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/home/pages/home-page.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="home.value.claims.title" datatype="html">
+        <source>Siniestro automático</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/home/pages/home-page.ts</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="home.value.claims.text" datatype="html">
+        <source>Eventos paramétricos procesados automáticamente. Recibe tu indemnización sin trámites.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/home/pages/home-page.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="footer.copyright" datatype="html">
+        <source>© <x id="INTERPOLATION" equiv-text="{{ year }}"/> Solventa — Seguros inteligentes sobre Open Finance</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.html</context>
+          <context context-type="linenumber">2,3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="footer.credits" datatype="html">
+        <source> MISW4501 · Proyecto Final · Grupo 10 · Universidad de los Andes </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.html</context>
+          <context context-type="linenumber">4,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="footer.badge.accessibility" datatype="html">
+        <source>Accesibilidad</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.html</context>
+          <context context-type="linenumber">7,8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="footer.badge.i18n" datatype="html">
+        <source>i18n ES/EN</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.html</context>
+          <context context-type="linenumber">8,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="footer.badge.l10n" datatype="html">
+        <source>L10n Colombia</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.html</context>
+          <context context-type="linenumber">9,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="header.brand.label" datatype="html">
+        <source>Solventa, ir al inicio</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/header/header.html</context>
+          <context context-type="linenumber">7,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="header.nav.label" datatype="html">
+        <source>Navegación principal</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/header/header.html</context>
+          <context context-type="linenumber">12,13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nav.home" datatype="html">
+        <source>Inicio</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nav.quote" datatype="html">
+        <source>Cotizar</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nav.policies" datatype="html">
+        <source>Mis Pólizas</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nav.claims" datatype="html">
+        <source>Siniestros</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nav.profile" datatype="html">
+        <source>Perfil</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
+          <context context-type="linenumber">14</context>
         </context-group>
       </trans-unit>
     </body>

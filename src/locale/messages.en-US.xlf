@@ -2,21 +2,101 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="es-CO" target-language="en-US" datatype="plaintext" original="ng2.template">
     <body>
-      <trans-unit id="app.placeholder.title" datatype="html">
-        <source>Solventa</source>
-        <target>Solventa</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.html</context>
-          <context context-type="linenumber">2,3</context>
-        </context-group>
+      <trans-unit id="home.document-title" datatype="html">
+        <source>Solventa — Inicio</source>
+        <target>Solventa — Home</target>
       </trans-unit>
-      <trans-unit id="app.placeholder.subtitle" datatype="html">
-        <source>Estructura inicial del portal web. Aún no hay pantallas.</source>
-        <target>Initial structure of the web portal. There are no screens yet.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.html</context>
-          <context context-type="linenumber">3,6</context>
-        </context-group>
+      <trans-unit id="home.hero.title" datatype="html">
+        <source>Protege lo que importa</source>
+        <target>Protect what matters</target>
+      </trans-unit>
+      <trans-unit id="home.hero.subtitle" datatype="html">
+        <source> Cotiza tu seguro de vida hipotecario en segundos, con la mejor prima personalizada gracias a Open Finance. </source>
+        <target>Get a quote for your mortgage life insurance in seconds, with the best personalized premium thanks to Open Finance.</target>
+      </trans-unit>
+      <trans-unit id="home.hero.cta" datatype="html">
+        <source>Cotizar ahora</source>
+        <target>Get a quote now</target>
+      </trans-unit>
+      <trans-unit id="home.partners.title" datatype="html">
+        <source>Integración con socios distribuidores</source>
+        <target>Integration with distribution partners</target>
+      </trans-unit>
+      <trans-unit id="home.partners.text" datatype="html">
+        <source> Fintechs, bancos y comercios pueden integrar nuestros seguros directamente en sus flujos de venta. </source>
+        <target>Fintechs, banks and retailers can integrate our insurance directly into their sales flows.</target>
+      </trans-unit>
+      <trans-unit id="home.value.instant.title" datatype="html">
+        <source>Cotización instantánea</source>
+        <target>Instant quote</target>
+      </trans-unit>
+      <trans-unit id="home.value.instant.text" datatype="html">
+        <source>Obtén tu prima personalizada en menos de 3 segundos, usando tus datos financieros con tu consentimiento.</source>
+        <target>Get your personalized premium in under 3 seconds, using your financial data with your consent.</target>
+      </trans-unit>
+      <trans-unit id="home.value.digital.title" datatype="html">
+        <source>100% digital</source>
+        <target>100% digital</target>
+      </trans-unit>
+      <trans-unit id="home.value.digital.text" datatype="html">
+        <source>Desde la cotización hasta el pago, todo desde tu celular o computador. Sin papeleos.</source>
+        <target>From quote to payment, all from your phone or computer. No paperwork.</target>
+      </trans-unit>
+      <trans-unit id="home.value.claims.title" datatype="html">
+        <source>Siniestro automático</source>
+        <target>Automatic claims</target>
+      </trans-unit>
+      <trans-unit id="home.value.claims.text" datatype="html">
+        <source>Eventos paramétricos procesados automáticamente. Recibe tu indemnización sin trámites.</source>
+        <target>Parametric events are processed automatically. Receive your compensation with no red tape.</target>
+      </trans-unit>
+      <trans-unit id="footer.copyright" datatype="html">
+        <source>© <x id="INTERPOLATION" equiv-text="{{ year }}"/> Solventa — Seguros inteligentes sobre Open Finance</source>
+        <target>© <x id="INTERPOLATION" equiv-text="{{ year }}"/> Solventa — Smart insurance on Open Finance</target>
+      </trans-unit>
+      <trans-unit id="footer.credits" datatype="html">
+        <source> MISW4501 · Proyecto Final · Grupo 10 · Universidad de los Andes </source>
+        <target>MISW4501 · Final Project · Group 10 · Universidad de los Andes</target>
+      </trans-unit>
+      <trans-unit id="footer.badge.accessibility" datatype="html">
+        <source>Accesibilidad</source>
+        <target>Accessibility</target>
+      </trans-unit>
+      <trans-unit id="footer.badge.i18n" datatype="html">
+        <source>i18n ES/EN</source>
+        <target>i18n ES/EN</target>
+      </trans-unit>
+      <trans-unit id="footer.badge.l10n" datatype="html">
+        <source>L10n Colombia</source>
+        <target>L10n Colombia</target>
+      </trans-unit>
+      <trans-unit id="header.brand.label" datatype="html">
+        <source>Solventa, ir al inicio</source>
+        <target>Solventa, go to home</target>
+      </trans-unit>
+      <trans-unit id="header.nav.label" datatype="html">
+        <source>Navegación principal</source>
+        <target>Main navigation</target>
+      </trans-unit>
+      <trans-unit id="nav.home" datatype="html">
+        <source>Inicio</source>
+        <target>Home</target>
+      </trans-unit>
+      <trans-unit id="nav.quote" datatype="html">
+        <source>Cotizar</source>
+        <target>Quote</target>
+      </trans-unit>
+      <trans-unit id="nav.policies" datatype="html">
+        <source>Mis Pólizas</source>
+        <target>My Policies</target>
+      </trans-unit>
+      <trans-unit id="nav.claims" datatype="html">
+        <source>Siniestros</source>
+        <target>Claims</target>
+      </trans-unit>
+      <trans-unit id="nav.profile" datatype="html">
+        <source>Perfil</source>
+        <target>Profile</target>
       </trans-unit>
     </body>
   </file>
