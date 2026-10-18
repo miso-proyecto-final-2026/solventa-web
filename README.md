@@ -34,7 +34,7 @@ Para ver la aplicación en inglés:
 npm run start:en  # http://localhost:4200, en en-US
 ```
 
-El servidor de desarrollo recarga solo al guardar cambios. Cada comando sirve un solo idioma; para cambiar de uno a otro se detiene y se vuelve a lanzar.
+El servidor de desarrollo recarga solo al guardar cambios. Cada comando sirve un solo idioma; para cambiar de uno a otro se detiene y se vuelve a lanzar. Por eso **el botón de idioma del encabezado no aparece en desarrollo**: solo funciona con el build de producción (ver [Cambio de idioma](#cambio-de-idioma-del-usuario)).
 
 ### Contra el backend local
 
@@ -172,6 +172,25 @@ Usa siempre un identificador explícito (`@@area.elemento`): así el texto en es
 **Agregar un idioma:** crea `src/locale/messages.<locale>.xlf` y regístralo en `angular.json`, bajo `projects.solventa-web.i18n.locales`.
 
 Idioma y moneda son ajustes independientes. El idioma se resuelve en compilación (un build por idioma, por eso el cambio recarga la página). La moneda se resolverá en ejecución desde `core/preferences` y `core/money`; esas piezas se construyen junto con la primera historia que muestre montos.
+
+### Cambio de idioma del usuario
+
+El botón de idioma del encabezado (`layout/language-selector`) lleva al usuario a la misma pantalla en el otro build, conservando ruta, búsqueda y fragmento (`/es-CO/quote` pasa a `/en-US/quote`). La lógica vive en `core/i18n/locale-switcher.ts`; la elección se guarda en `localStorage` (clave `solventa.language`) a través de `core/preferences`.
+
+- **Al abrir la app**, si el usuario eligió antes otro idioma y abre el build equivocado, se le redirige a su idioma.
+- **Si nunca eligió**, no se redirige: la raíz (`/`) la resuelve el servidor, como se indica en [Generar el paquete de producción](#generar-el-paquete-de-producción).
+- **Solo existe en builds por idioma.** El botón se activa cuando `<base href>` es `/<idioma>/`. El servidor de desarrollo usa `/`, así que ahí no aparece.
+
+Para probarlo en local:
+
+```bash
+npm run build
+npx http-server dist/solventa-web/browser -p 8080   # abre http://localhost:8080/es-CO/
+```
+
+Las pantallas internas dependen de la regla de «cualquier ruta devuelve el `index.html` de su idioma», que este servidor simple no aplica; para el botón basta con empezar desde `/es-CO/` o `/en-US/`.
+
+Pendiente: conservar el borrador de los formularios al recargar por el cambio de idioma. Se resuelve en el primer paso de cotizar, que es la primera pantalla con datos que perder.
 
 Reglas para el código: ningún texto escrito a mano fuera de los mecanismos anteriores, y ningún monto o fecha formateado a mano. Los montos usarán `Money` y las fechas, el formato del idioma activo.
 
