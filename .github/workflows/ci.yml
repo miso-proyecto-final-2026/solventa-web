@@ -40,7 +40,7 @@ jobs:
         run: npx ng lint
       - name: Pruebas unitarias (Jasmine + Karma)
         if: steps.angular.outputs.exists == 'true'
-        run: npx ng test --watch=false --browsers=ChromeHeadless --code-coverage
+        run: npx ng test --watch=false --browsers=ChromeHeadless --coverage
       - name: Build de producción
         if: steps.angular.outputs.exists == 'true'
         run: npx ng build --configuration production
