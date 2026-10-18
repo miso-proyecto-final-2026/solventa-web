@@ -1,0 +1,39 @@
+// Tokens de diseño de Solventa. Toda la UI toma color, forma y espaciado de aquí.
+// Los pares de texto/fondo cumplen contraste WCAG 2.1 AA (4,5:1).
+:root {
+  // Color
+  --sol-navy-900: #0e2540;
+  --sol-navy-700: #15405c;
+  --sol-teal-700: #0f6155;
+  --sol-teal-600: #14796a;
+  --sol-teal-100: #e3f4f1;
+
+  --sol-bg: #f5f7fa;
+  --sol-surface: #ffffff;
+  --sol-border: #dfe5ec;
+  --sol-text: #0f2238;
+  --sol-text-muted: #4d5d70;
+  --sol-text-on-dark: #ffffff;
+  --sol-text-on-dark-muted: #d4deea;
+
+  // Tipografía
+  --sol-font-body: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  // Espaciado
+  --sol-space-1: 0.25rem;
+  --sol-space-2: 0.5rem;
+  --sol-space-3: 0.75rem;
+  --sol-space-4: 1rem;
+  --sol-space-5: 1.5rem;
+  --sol-space-6: 2rem;
+  --sol-space-7: 3rem;
+
+  // Forma
+  --sol-radius-sm: 6px;
+  --sol-radius-md: 10px;
+  --sol-radius-pill: 999px;
+  --sol-shadow-card: 0 1px 2px rgb(15 34 56 / 6%), 0 1px 3px rgb(15 34 56 / 8%);
+
+  // Layout
+  --sol-content-width: 66rem;
+}

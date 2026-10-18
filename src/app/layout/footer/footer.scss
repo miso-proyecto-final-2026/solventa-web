@@ -1,0 +1,31 @@
+.footer {
+  padding: var(--sol-space-5) var(--sol-space-4);
+  font-size: 0.85rem;
+  color: var(--sol-text-muted);
+  text-align: center;
+  border-top: 1px solid var(--sol-border);
+
+  &__credits {
+    margin-top: var(--sol-space-1);
+    font-size: 0.8rem;
+  }
+
+  &__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sol-space-2);
+    justify-content: center;
+    padding: 0;
+    margin: var(--sol-space-3) 0 0;
+    list-style: none;
+
+    li {
+      padding: var(--sol-space-1) var(--sol-space-3);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--sol-teal-700);
+      background: var(--sol-teal-100);
+      border-radius: var(--sol-radius-pill);
+    }
+  }
+}

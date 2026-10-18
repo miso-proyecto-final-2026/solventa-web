@@ -1,0 +1,40 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--sol-font-body);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--sol-text);
+  background: var(--sol-bg);
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+// Foco visible en todo el sitio. Solo para teclado: el ratón no lo dispara.
+:focus-visible {
+  outline: 3px solid var(--sol-teal-600);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
