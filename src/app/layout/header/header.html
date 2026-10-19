@@ -1,0 +1,31 @@
+<header class="header">
+  <div class="header__inner">
+    <a
+      class="header__brand"
+      routerLink="/"
+      i18n-aria-label="@@header.brand.label"
+      aria-label="Solventa, ir al inicio"
+    >
+      Solventa
+    </a>
+
+    <nav class="header__nav" i18n-aria-label="@@header.nav.label" aria-label="Navegación principal">
+      <ul class="header__list">
+        @for (item of navItems; track item.path) {
+          <li>
+            <a
+              class="header__link"
+              [routerLink]="item.path"
+              routerLinkActive="header__link--active"
+              [routerLinkActiveOptions]="{ exact: item.exact }"
+              ariaCurrentWhenActive="page"
+            >
+              <span aria-hidden="true">{{ item.icon }}</span>
+              {{ item.label }}
+            </a>
+          </li>
+        }
+      </ul>
+    </nav>
+  </div>
+</header>

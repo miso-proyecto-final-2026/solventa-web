@@ -1,0 +1,59 @@
+.header {
+  color: var(--sol-text-on-dark);
+  background: var(--sol-navy-900);
+
+  &__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sol-space-2) var(--sol-space-5);
+    max-width: var(--sol-content-width);
+    padding: var(--sol-space-3) var(--sol-space-4);
+    margin: 0 auto;
+  }
+
+  &__brand {
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sol-space-1);
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sol-space-2);
+    min-height: 2.75rem; // objetivo táctil de al menos 44 px
+    padding: var(--sol-space-1) var(--sol-space-3);
+    font-size: 0.9rem;
+    color: var(--sol-text-on-dark-muted);
+    text-decoration: none;
+    border-radius: var(--sol-radius-sm);
+
+    &:hover {
+      color: var(--sol-text-on-dark);
+      background: rgb(255 255 255 / 8%);
+    }
+
+    &--active {
+      font-weight: 600;
+      color: var(--sol-text-on-dark);
+      background: rgb(255 255 255 / 16%);
+    }
+  }
+
+  // El foco por defecto (verde) no se ve sobre el fondo oscuro.
+  &__brand:focus-visible,
+  &__link:focus-visible {
+    outline-color: var(--sol-text-on-dark);
+  }
+}

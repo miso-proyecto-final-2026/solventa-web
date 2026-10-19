@@ -1,0 +1,33 @@
+<section class="hero">
+  <h1 i18n="@@home.hero.title">Protege lo que importa</h1>
+  <p i18n="@@home.hero.subtitle">
+    Cotiza tu seguro de vida hipotecario en segundos, con la mejor prima personalizada gracias a
+    Open Finance.
+  </p>
+  <a class="sol-btn sol-btn--primary" routerLink="/quote" i18n="@@home.hero.cta">Cotizar ahora</a>
+</section>
+
+<ul class="value-props">
+  @for (prop of valueProps; track prop.title) {
+    <li>
+      <sol-card>
+        <span class="value-props__icon" aria-hidden="true">{{ prop.icon }}</span>
+        <h2 class="value-props__title">{{ prop.title }}</h2>
+        <p class="value-props__text">{{ prop.text }}</p>
+      </sol-card>
+    </li>
+  }
+</ul>
+
+<sol-card class="partners">
+  <h2 i18n="@@home.partners.title">Integración con socios distribuidores</h2>
+  <p i18n="@@home.partners.text">
+    Fintechs, bancos y comercios pueden integrar nuestros seguros directamente en sus flujos de
+    venta.
+  </p>
+  <ul class="partners__list">
+    @for (partner of partners; track partner) {
+      <li>{{ partner }}</li>
+    }
+  </ul>
+</sol-card>

@@ -1,0 +1,35 @@
+// Botón de Solventa. Sirve para <a> y <button>.
+.sol-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sol-space-2);
+  min-height: 2.75rem; // objetivo táctil de al menos 44 px
+  padding: var(--sol-space-2) var(--sol-space-5);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: var(--sol-radius-sm);
+  transition: background-color 0.15s ease;
+
+  &--primary {
+    color: var(--sol-text-on-dark);
+    background: var(--sol-teal-600);
+
+    &:hover {
+      background: var(--sol-teal-700);
+    }
+  }
+
+  &--outline {
+    color: var(--sol-teal-700);
+    background: var(--sol-surface);
+    border-color: var(--sol-teal-600);
+
+    &:hover {
+      background: var(--sol-teal-100);
+    }
+  }
+}
