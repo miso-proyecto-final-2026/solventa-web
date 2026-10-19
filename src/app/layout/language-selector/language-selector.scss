@@ -1,0 +1,22 @@
+.language-selector {
+  min-width: 2.75rem;
+  min-height: 2.75rem; // objetivo táctil de al menos 44 px
+  padding: var(--sol-space-1) var(--sol-space-3);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--sol-text-on-dark);
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid rgb(255 255 255 / 40%);
+  border-radius: var(--sol-radius-sm);
+
+  &:hover {
+    background: rgb(255 255 255 / 12%);
+  }
+
+  // El foco por defecto (verde) no se ve sobre el fondo oscuro.
+  &:focus-visible {
+    outline-color: var(--sol-text-on-dark);
+  }
+}
