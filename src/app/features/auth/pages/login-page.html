@@ -1,0 +1,68 @@
+<section class="login">
+  <h1 i18n="@@auth.login.title">Iniciar sesión</h1>
+  <p class="login__lead" i18n="@@auth.login.lead">Acceso para asesores de Solventa.</p>
+
+  @if (session.expired()) {
+    <sol-alert kind="warning">
+      <ng-container i18n="@@auth.login.expired"
+        >Tu sesión venció. Inicia sesión de nuevo para continuar: lo que ingresaste se
+        conserva.</ng-container
+      >
+    </sol-alert>
+  }
+
+  @if (failureMessage(); as message) {
+    <sol-alert kind="error">{{ message }}</sol-alert>
+  }
+
+  <form class="sol-form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    <sol-form-field
+      fieldId="login-email"
+      i18n-label="@@auth.login.email.label"
+      label="Correo"
+      [error]="fieldError('email')"
+    >
+      <input
+        id="login-email"
+        class="sol-input"
+        type="email"
+        autocomplete="username"
+        formControlName="email"
+        [attr.aria-invalid]="fieldError('email') ? 'true' : null"
+        [attr.aria-describedby]="describedBy('login-email', false, !!fieldError('email'))"
+      />
+    </sol-form-field>
+
+    <sol-form-field
+      fieldId="login-password"
+      i18n-label="@@auth.login.password.label"
+      label="Contraseña"
+      [error]="fieldError('password')"
+    >
+      <input
+        id="login-password"
+        class="sol-input"
+        type="password"
+        autocomplete="current-password"
+        formControlName="password"
+        [attr.aria-invalid]="fieldError('password') ? 'true' : null"
+        [attr.aria-describedby]="describedBy('login-password', false, !!fieldError('password'))"
+      />
+    </sol-form-field>
+
+    <div class="sol-actions">
+      <button
+        type="submit"
+        class="sol-btn sol-btn--primary"
+        [disabled]="busy()"
+        [attr.aria-busy]="busy() ? 'true' : null"
+      >
+        @if (busy()) {
+          <ng-container i18n="@@auth.login.submitting">Ingresando…</ng-container>
+        } @else {
+          <ng-container i18n="@@auth.login.submit">Ingresar</ng-container>
+        }
+      </button>
+    </div>
+  </form>
+</section>

@@ -1,0 +1,73 @@
+<h1 i18n="@@assistedQuote.title">Cotización asistida</h1>
+<p class="page__lead" i18n="@@assistedQuote.lead">
+  Acompaña al cliente en la venta: identifícalo, revisa su perfil y presenta la cotización.
+</p>
+
+<sol-stepper
+  [steps]="stepLabels"
+  [current]="store.stepIndex()"
+  i18n-label="@@assistedQuote.stepper.label"
+  label="Progreso de la cotización"
+  i18n-doneLabel="@@assistedQuote.stepper.done"
+  doneLabel="Completado"
+/>
+
+<!-- Anuncia a los lectores de pantalla que hay una operación en curso. -->
+<p class="sol-visually-hidden" role="status">
+  @if (store.busy()) {
+    <ng-container i18n="@@assistedQuote.loading">Cargando…</ng-container>
+  }
+</p>
+
+<sol-card class="page__card">
+  <h2 #stepHeading class="page__step" tabindex="-1">{{ stepTitle() }}</h2>
+
+  @if (errorText(); as text) {
+    <sol-alert kind="error">{{ text }}</sol-alert>
+  }
+
+  @switch (store.step()) {
+    @case ('lookup') {
+      <sol-client-lookup
+        [busy]="store.busy()"
+        [initial]="initialDocument"
+        (lookup)="facade.searchClient($event)"
+        (draftChange)="onLookupDraft($event)"
+      />
+    }
+    @case ('profile') {
+      <sol-client-profile
+        [client]="store.client()"
+        [profile]="store.profile()"
+        [searched]="store.searched()"
+        [busy]="store.busy()"
+        (approve)="facade.approve()"
+        (searchAnother)="facade.goTo('lookup')"
+      />
+    }
+    @case ('insurance') {
+      @if (store.catalog().length) {
+        <sol-product-form
+          [catalog]="store.catalog()"
+          [busy]="store.busy()"
+          [serverErrors]="store.fieldErrors()"
+          [initial]="draft"
+          (submitQuote)="submitQuote($event)"
+          (back)="facade.goTo('profile')"
+          (draftChange)="onProductDraft($event)"
+        />
+      } @else {
+        <sol-alert kind="info">
+          <ng-container i18n="@@assistedQuote.catalog.empty"
+            >No hay productos disponibles para cotizar en este momento.</ng-container
+          >
+        </sol-alert>
+      }
+    }
+    @case ('result') {
+      @if (store.quote(); as quote) {
+        <sol-quote-result [quote]="quote" (newQuote)="facade.newQuote()" />
+      }
+    }
+  }
+</sol-card>

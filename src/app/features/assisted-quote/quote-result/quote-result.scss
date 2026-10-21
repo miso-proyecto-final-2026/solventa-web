@@ -1,0 +1,44 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sol-space-4);
+}
+
+.result {
+  &__premium {
+    text-align: center;
+  }
+
+  &__product {
+    font-weight: 600;
+    color: var(--sol-text-muted);
+  }
+
+  &__amount {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--sol-teal-700);
+  }
+
+  &__caption,
+  &__note {
+    color: var(--sol-text-muted);
+  }
+
+  &__table {
+    width: 100%;
+    margin-top: var(--sol-space-2);
+    border-collapse: collapse;
+
+    th,
+    td {
+      padding: var(--sol-space-2) var(--sol-space-3);
+      text-align: left;
+      border-bottom: 1px solid var(--sol-border);
+    }
+  }
+
+  &__num {
+    text-align: right !important;
+  }
+}

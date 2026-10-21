@@ -16,6 +16,22 @@
   --sol-text-on-dark: #ffffff;
   --sol-text-on-dark-muted: #d4deea;
 
+  // Estados (texto sobre su fondo ≥ 4,5:1)
+  --sol-danger-text: #a4172a;
+  --sol-danger-bg: #fdecee;
+  --sol-danger-border: #e2a1a9;
+  --sol-warning-text: #7a4b00;
+  --sol-warning-bg: #fff4dd;
+  --sol-warning-border: #e0b861;
+  --sol-success-text: #0f5132;
+  --sol-success-bg: #e3f4ec;
+  --sol-success-border: #93cfb2;
+  --sol-info-text: #15405c;
+  --sol-info-bg: #e6f0f7;
+  --sol-info-border: #9cc2da;
+  --sol-disabled-text: #56657a;
+  --sol-disabled-bg: #e9edf2;
+
   // Tipografía
   --sol-font-body: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 

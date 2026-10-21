@@ -106,6 +106,472 @@
         <source>Perfil</source>
         <target>Profile</target>
       </trans-unit>
+      <trans-unit id="assistedQuote.document-title" datatype="html">
+        <source>Solventa — Cotización asistida</source>
+        <target>Solventa — Assisted quote</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.lookup.type.label" datatype="html">
+        <source>Tipo de documento</source>
+        <target>Document type</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.lookup.number.label" datatype="html">
+        <source>Número de documento</source>
+        <target>Document number</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.lookup.searching" datatype="html">
+        <source>Buscando…</source>
+        <target>Searching…</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.lookup.submit" datatype="html">
+        <source>Buscar cliente</source>
+        <target>Find client</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.lookup.number.required" datatype="html">
+        <source>Escribe el número de documento.</source>
+        <target>Enter the document number.</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.lookup.number.invalid" datatype="html">
+        <source>El número debe tener entre 5 y 15 letras o dígitos, sin espacios ni puntos.</source>
+        <target>The number must have 5 to 15 letters or digits, with no spaces or dots.</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.profile.name" datatype="html">
+        <source>Cliente</source>
+        <target>Client</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.profile.document" datatype="html">
+        <source>Documento</source>
+        <target>Document</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.profile.kyc" datatype="html">
+        <source>Verificación de identidad</source>
+        <target>Identity verification</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.profile.signals.title" datatype="html">
+        <source> Perfil financiero </source>
+        <target>Financial profile</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.profile.signals.caption" datatype="html">
+        <source> Nivel de riesgo por indicador del perfil financiero </source>
+        <target>Risk level for each financial profile indicator</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.profile.signals.indicator" datatype="html">
+        <source>Indicador</source>
+        <target>Indicator</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.profile.signals.level" datatype="html">
+        <source>Nivel</source>
+        <target>Level</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.profile.signals.empty" datatype="html">
+        <source> Sin datos financieros del cliente: se usará el perfil por defecto. </source>
+        <target>No financial data for this client: the default profile will be used.</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.profile.not-found" datatype="html">
+        <source> No encontramos un cliente con este documento. Puedes continuar con una cotización sin cuenta: el precio será un estimado con el perfil por defecto. </source>
+        <target>We could not find a client with this document. You can continue with a quote without an account: the price will be an estimate based on the default profile.</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.profile.approve" datatype="html">
+        <source>Aprobar y continuar</source>
+        <target>Approve and continue</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.profile.without-account" datatype="html">
+        <source>Continuar sin cuenta</source>
+        <target>Continue without an account</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.profile.search-another" datatype="html">
+        <source>Buscar otro cliente</source>
+        <target>Find another client</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.product.microseguro_vida" datatype="html">
+        <source>Microseguro de vida</source>
+        <target>Micro life insurance</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.product.proteccion_dispositivos" datatype="html">
+        <source>Protección de dispositivos</source>
+        <target>Device protection</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.field.edad" datatype="html">
+        <source>Edad</source>
+        <target>Age</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.field.suma_asegurada" datatype="html">
+        <source>Suma asegurada</source>
+        <target>Sum insured</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.field.tipo_dispositivo" datatype="html">
+        <source>Tipo de dispositivo</source>
+        <target>Device type</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.field.valor_dispositivo" datatype="html">
+        <source>Valor del dispositivo</source>
+        <target>Device value</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.field.antiguedad_meses" datatype="html">
+        <source>Antigüedad (meses)</source>
+        <target>Age of device (months)</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.option.celular" datatype="html">
+        <source>Celular</source>
+        <target>Mobile phone</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.option.portatil" datatype="html">
+        <source>Portátil</source>
+        <target>Laptop</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.option.tableta" datatype="html">
+        <source>Tableta</source>
+        <target>Tablet</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.coverage.muerte" datatype="html">
+        <source>Muerte</source>
+        <target>Death</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.coverage.incapacidad_total" datatype="html">
+        <source>Incapacidad total</source>
+        <target>Total disability</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.coverage.dano_accidental" datatype="html">
+        <source>Daño accidental</source>
+        <target>Accidental damage</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.coverage.robo" datatype="html">
+        <source>Robo</source>
+        <target>Theft</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.component.prima_base" datatype="html">
+        <source>Prima base del producto</source>
+        <target>Base product premium</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.component.ajuste_datos" datatype="html">
+        <source>Ajuste por los datos del seguro</source>
+        <target>Adjustment for the insurance data</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.component.ajuste_riesgo" datatype="html">
+        <source>Ajuste por el perfil de riesgo</source>
+        <target>Adjustment for the risk profile</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.component.recargo_degradado" datatype="html">
+        <source>Recargo por datos no disponibles</source>
+        <target>Surcharge for unavailable data</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.signal.ratio_endeudamiento" datatype="html">
+        <source>Nivel de endeudamiento</source>
+        <target>Debt level</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.signal.reportes_negativos" datatype="html">
+        <source>Reportes negativos</source>
+        <target>Negative reports</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.signal.ingresos_mensuales_cop" datatype="html">
+        <source>Ingresos mensuales</source>
+        <target>Monthly income</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.level.low" datatype="html">
+        <source>Bajo</source>
+        <target>Low</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.level.medium" datatype="html">
+        <source>Medio</source>
+        <target>Medium</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.level.high" datatype="html">
+        <source>Alto</source>
+        <target>High</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.consent.granted" datatype="html">
+        <source>Consentimiento vigente</source>
+        <target>Valid consent</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.consent.revoked" datatype="html">
+        <source>Consentimiento revocado</source>
+        <target>Consent revoked</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.consent.not-granted" datatype="html">
+        <source>Sin consentimiento</source>
+        <target>No consent</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.consent.effect.real" datatype="html">
+        <source>El precio se calcula con el perfil real del cliente.</source>
+        <target>The price is calculated with the client's real profile.</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.consent.effect.default" datatype="html">
+        <source>El precio se calcula con el perfil por defecto y es un estimado: puede cambiar al comprar.</source>
+        <target>The price is calculated with the default profile and is an estimate: it may change at purchase.</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.consent.effect.degraded" datatype="html">
+        <source>No pudimos consultar los datos del cliente: el precio lleva un recargo conservador y es un estimado.</source>
+        <target>We could not retrieve the client's data: the price includes a conservative surcharge and is an estimate.</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.source.real" datatype="html">
+        <source>Perfil real del cliente</source>
+        <target>Client's real profile</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.source.default" datatype="html">
+        <source>Perfil por defecto</source>
+        <target>Default profile</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.source.degraded" datatype="html">
+        <source>Perfil degradado</source>
+        <target>Degraded profile</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.error.network" datatype="html">
+        <source>No hay conexión con el servidor. Revisa tu red e inténtalo de nuevo; lo que ingresaste se conserva.</source>
+        <target>There is no connection to the server. Check your network and try again; what you entered is kept.</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.error.forbidden" datatype="html">
+        <source>Tu usuario no tiene permiso para esta operación.</source>
+        <target>Your user does not have permission for this operation.</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.error.validation" datatype="html">
+        <source>Revisa los datos marcados e inténtalo de nuevo.</source>
+        <target>Review the highlighted data and try again.</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.error.unauthenticated" datatype="html">
+        <source>Tu sesión venció. Inicia sesión de nuevo para continuar.</source>
+        <target>Your session expired. Sign in again to continue.</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.error.server" datatype="html">
+        <source>No pudimos completar la operación por un problema del servidor. Inténtalo de nuevo; lo que ingresaste se conserva.</source>
+        <target>We could not complete the operation because of a server problem. Try again; what you entered is kept.</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.title" datatype="html">
+        <source>Cotización asistida</source>
+        <target>Assisted quote</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.lead" datatype="html">
+        <source> Acompaña al cliente en la venta: identifícalo, revisa su perfil y presenta la cotización.
+</source>
+        <target>Support the client through the sale: identify them, review their profile and present the quote.</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.stepper.label" datatype="html">
+        <source>Progreso de la cotización</source>
+        <target>Quote progress</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.stepper.done" datatype="html">
+        <source>Completado</source>
+        <target>Completed</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.loading" datatype="html">
+        <source>Cargando…</source>
+        <target>Loading…</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.catalog.empty" datatype="html">
+        <source>No hay productos disponibles para cotizar en este momento.</source>
+        <target>There are no products available to quote right now.</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.step.lookup" datatype="html">
+        <source>Buscar al cliente</source>
+        <target>Find the client</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.step.profile" datatype="html">
+        <source>Perfil del cliente</source>
+        <target>Client profile</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.step.insurance" datatype="html">
+        <source>Datos del seguro</source>
+        <target>Insurance details</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.step.result" datatype="html">
+        <source>Resultado</source>
+        <target>Result</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.breakdown.title" datatype="html">
+        <source>Cómo se calculó el precio</source>
+        <target>How the price was calculated</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.breakdown.caption" datatype="html">
+        <source> Componentes de la prima anual </source>
+        <target>Components of the annual premium</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.breakdown.concept" datatype="html">
+        <source>Concepto</source>
+        <target>Item</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.breakdown.amount" datatype="html">
+        <source> Valor anual </source>
+        <target>Annual amount</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.breakdown.empty" datatype="html">
+        <source> Esta cotización no tiene desglose disponible. </source>
+        <target>This quote has no breakdown available.</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.form.summary" datatype="html">
+        <source>Revisa estos datos antes de continuar</source>
+        <target>Review this data before continuing</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.form.product" datatype="html">
+        <source>Producto</source>
+        <target>Product</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.form.choose" datatype="html">
+        <source>Selecciona una opción</source>
+        <target>Select an option</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.form.requesting" datatype="html">
+        <source>Calculando…</source>
+        <target>Calculating…</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.form.submit" datatype="html">
+        <source>Solicitar cotización</source>
+        <target>Request quote</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.form.back" datatype="html">
+        <source>Volver al perfil</source>
+        <target>Back to the profile</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.form.range" datatype="html">
+        <source>Rango permitido</source>
+        <target>Allowed range</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.form.error.server" datatype="html">
+        <source>El valor no cumple las reglas del producto.</source>
+        <target>The value does not meet the product rules.</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.form.error.required" datatype="html">
+        <source>Este dato es obligatorio.</source>
+        <target>This field is required.</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.form.error.integer" datatype="html">
+        <source>Escribe solo números enteros, sin puntos ni comas.</source>
+        <target>Enter whole numbers only, without dots or commas.</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.form.error.min" datatype="html">
+        <source>El valor es menor que el mínimo permitido.</source>
+        <target>The value is below the minimum allowed.</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.form.error.max" datatype="html">
+        <source>El valor es mayor que el máximo permitido.</source>
+        <target>The value is above the maximum allowed.</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.form.error.option" datatype="html">
+        <source>Elige una de las opciones.</source>
+        <target>Choose one of the options.</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.result.monthly" datatype="html">
+        <source>Prima mensual</source>
+        <target>Monthly premium</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.result.annual" datatype="html">
+        <source>Prima anual</source>
+        <target>Annual premium</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.result.estimated" datatype="html">
+        <source>Precio estimado: se calculó sin el perfil real del cliente y puede cambiar al comprar.</source>
+        <target>Estimated price: it was calculated without the client's real profile and may change at purchase.</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.result.without-account" datatype="html">
+        <source>Cotización sin cuenta: para comprar, el cliente debe registrarse.</source>
+        <target>Quote without an account: to buy, the client must sign up.</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.result.coverages" datatype="html">
+        <source>Coberturas y deducibles</source>
+        <target>Coverages and deductibles</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.result.coverages-caption" datatype="html">
+        <source> Coberturas con su valor asegurado y su deducible </source>
+        <target>Coverages with their insured amount and deductible</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.result.coverage" datatype="html">
+        <source>Cobertura</source>
+        <target>Coverage</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.result.insured" datatype="html">
+        <source> Valor asegurado </source>
+        <target>Insured amount</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.result.deductible" datatype="html">
+        <source>Deducible</source>
+        <target>Deductible</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.result.valid-until" datatype="html">
+        <source>Válida hasta</source>
+        <target>Valid until</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.result.accept" datatype="html">
+        <source> Registrar aceptación </source>
+        <target>Record acceptance</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.result.new" datatype="html">
+        <source>Nueva cotización</source>
+        <target>New quote</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.result.accept-note" datatype="html">
+        <source> Registrar la aceptación de la oferta estará disponible en el siguiente sprint.
+</source>
+        <target>Recording the acceptance of the offer will be available in the next sprint.</target>
+      </trans-unit>
+      <trans-unit id="auth.login.document-title" datatype="html">
+        <source>Solventa — Iniciar sesión</source>
+        <target>Solventa — Sign in</target>
+      </trans-unit>
+      <trans-unit id="auth.login.title" datatype="html">
+        <source>Iniciar sesión</source>
+        <target>Sign in</target>
+      </trans-unit>
+      <trans-unit id="auth.login.lead" datatype="html">
+        <source>Acceso para asesores de Solventa.</source>
+        <target>Access for Solventa advisors.</target>
+      </trans-unit>
+      <trans-unit id="auth.login.expired" datatype="html">
+        <source>Tu sesión venció. Inicia sesión de nuevo para continuar: lo que ingresaste se conserva.</source>
+        <target>Your session expired. Sign in again to continue: what you entered is kept.</target>
+      </trans-unit>
+      <trans-unit id="auth.login.email.label" datatype="html">
+        <source>Correo</source>
+        <target>Email</target>
+      </trans-unit>
+      <trans-unit id="auth.login.password.label" datatype="html">
+        <source>Contraseña</source>
+        <target>Password</target>
+      </trans-unit>
+      <trans-unit id="auth.login.submitting" datatype="html">
+        <source>Ingresando…</source>
+        <target>Signing in…</target>
+      </trans-unit>
+      <trans-unit id="auth.login.submit" datatype="html">
+        <source>Ingresar</source>
+        <target>Sign in</target>
+      </trans-unit>
+      <trans-unit id="auth.login.error.credentials" datatype="html">
+        <source>El correo o la contraseña no son correctos.</source>
+        <target>The email or the password is not correct.</target>
+      </trans-unit>
+      <trans-unit id="auth.login.error.network" datatype="html">
+        <source>No hay conexión con el servidor. Revisa tu red e inténtalo de nuevo.</source>
+        <target>There is no connection to the server. Check your network and try again.</target>
+      </trans-unit>
+      <trans-unit id="auth.login.error.server" datatype="html">
+        <source>No pudimos iniciar tu sesión por un problema del servidor. Inténtalo de nuevo en unos minutos.</source>
+        <target>We could not sign you in because of a server problem. Try again in a few minutes.</target>
+      </trans-unit>
+      <trans-unit id="auth.login.email.required" datatype="html">
+        <source>Escribe tu correo.</source>
+        <target>Enter your email.</target>
+      </trans-unit>
+      <trans-unit id="auth.login.password.required" datatype="html">
+        <source>Escribe tu contraseña.</source>
+        <target>Enter your password.</target>
+      </trans-unit>
+      <trans-unit id="auth.login.email.invalid" datatype="html">
+        <source>El correo no tiene un formato válido.</source>
+        <target>The email does not have a valid format.</target>
+      </trans-unit>
+      <trans-unit id="header.logout" datatype="html">
+        <source>Cerrar sesión</source>
+        <target>Sign out</target>
+      </trans-unit>
+      <trans-unit id="header.login" datatype="html">
+        <source>Ingresar</source>
+        <target>Sign in</target>
+      </trans-unit>
+      <trans-unit id="nav.assisted-quote" datatype="html">
+        <source>Cotización asistida</source>
+        <target>Assisted quote</target>
+      </trans-unit>
+      <trans-unit id="shell.skip-link" datatype="html">
+        <source>Saltar al contenido</source>
+        <target>Skip to content</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

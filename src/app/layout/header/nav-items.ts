@@ -4,11 +4,20 @@ export interface NavItem {
   readonly icon: string;
   /** Marca activo solo con la ruta exacta; el inicio no debe quedar activo en todas las páginas. */
   readonly exact: boolean;
+  /** Si se indica, la opción solo se muestra a quien tenga este rol. */
+  readonly requiredRole?: string;
 }
 
 export const NAV_ITEMS: readonly NavItem[] = [
   { path: '/', label: $localize`:@@nav.home:Inicio`, icon: '🏠', exact: true },
   { path: '/quote', label: $localize`:@@nav.quote:Cotizar`, icon: '📋', exact: false },
+  {
+    path: '/assisted-quote',
+    label: $localize`:@@nav.assisted-quote:Cotización asistida`,
+    icon: '🤝',
+    exact: false,
+    requiredRole: 'ASESOR',
+  },
   { path: '/policies', label: $localize`:@@nav.policies:Mis Pólizas`, icon: '🛡️', exact: false },
   { path: '/claims', label: $localize`:@@nav.claims:Siniestros`, icon: '⚡', exact: false },
   { path: '/profile', label: $localize`:@@nav.profile:Perfil`, icon: '👤', exact: false },

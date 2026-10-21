@@ -1,0 +1,74 @@
+<form class="sol-form" (submit)="submit($event)" novalidate>
+  <sol-error-summary
+    [errors]="summaryErrors()"
+    i18n-heading="@@assistedQuote.form.summary"
+    heading="Revisa estos datos antes de continuar"
+  />
+
+  <sol-form-field
+    fieldId="insurance-product"
+    i18n-label="@@assistedQuote.form.product"
+    label="Producto"
+  >
+    <select id="insurance-product" class="sol-input" [formControl]="productControl">
+      @for (p of catalog(); track p.code) {
+        <option [value]="p.code">{{ productLabel(p.code, p.name) }}</option>
+      }
+    </select>
+  </sol-form-field>
+
+  @if (product(); as current) {
+    @for (field of current.fields; track field.name) {
+      <sol-form-field
+        [fieldId]="idOf(field)"
+        [label]="fieldLabel(field.name)"
+        [hint]="hintOf(field)"
+        [error]="fieldError(field)"
+      >
+        @if (field.options) {
+          <select
+            class="sol-input"
+            [id]="idOf(field)"
+            [formControl]="dataForm().controls[field.name]"
+            [attr.aria-invalid]="fieldError(field) ? 'true' : null"
+            [attr.aria-describedby]="describedBy(idOf(field), !!hintOf(field), !!fieldError(field))"
+          >
+            <option value="" i18n="@@assistedQuote.form.choose">Selecciona una opción</option>
+            @for (option of field.options; track option) {
+              <option [value]="option">{{ optionLabel(option) }}</option>
+            }
+          </select>
+        } @else {
+          <input
+            class="sol-input"
+            type="text"
+            inputmode="numeric"
+            autocomplete="off"
+            [id]="idOf(field)"
+            [formControl]="dataForm().controls[field.name]"
+            [attr.aria-invalid]="fieldError(field) ? 'true' : null"
+            [attr.aria-describedby]="describedBy(idOf(field), !!hintOf(field), !!fieldError(field))"
+          />
+        }
+      </sol-form-field>
+    }
+  }
+
+  <div class="sol-actions">
+    <button
+      type="submit"
+      class="sol-btn sol-btn--primary"
+      [disabled]="busy()"
+      [attr.aria-busy]="busy() ? 'true' : null"
+    >
+      @if (busy()) {
+        <ng-container i18n="@@assistedQuote.form.requesting">Calculando…</ng-container>
+      } @else {
+        <ng-container i18n="@@assistedQuote.form.submit">Solicitar cotización</ng-container>
+      }
+    </button>
+    <button type="button" class="sol-btn sol-btn--outline" (click)="back.emit()">
+      <ng-container i18n="@@assistedQuote.form.back">Volver al perfil</ng-container>
+    </button>
+  </div>
+</form>

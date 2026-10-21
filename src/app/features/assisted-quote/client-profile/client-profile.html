@@ -1,0 +1,81 @@
+@if (client(); as c) {
+  <dl class="profile__identity">
+    <div>
+      <dt i18n="@@assistedQuote.profile.name">Cliente</dt>
+      <dd>{{ c.firstName }} {{ c.lastNameInitial }}</dd>
+    </div>
+    <div>
+      <dt i18n="@@assistedQuote.profile.document">Documento</dt>
+      <dd>{{ c.document.type }} {{ c.document.number }}</dd>
+    </div>
+    <div>
+      <dt i18n="@@assistedQuote.profile.kyc">Verificación de identidad</dt>
+      <dd>{{ c.kycStatus }}</dd>
+    </div>
+  </dl>
+
+  @if (profile(); as p) {
+    <sol-consent-status [state]="c.consent.state" [source]="p.source" />
+
+    <h3 class="profile__subtitle" i18n="@@assistedQuote.profile.signals.title">
+      Perfil financiero
+    </h3>
+    @if (p.signals.length) {
+      <table class="profile__signals">
+        <caption class="sol-visually-hidden" i18n="@@assistedQuote.profile.signals.caption">
+          Nivel de riesgo por indicador del perfil financiero
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col" i18n="@@assistedQuote.profile.signals.indicator">Indicador</th>
+            <th scope="col" i18n="@@assistedQuote.profile.signals.level">Nivel</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (s of p.signals; track s.name) {
+            <tr>
+              <th scope="row">{{ signalLabel(s.name) }}</th>
+              <td>{{ levelLabel(s.level) }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    } @else {
+      <p class="profile__empty" i18n="@@assistedQuote.profile.signals.empty">
+        Sin datos financieros del cliente: se usará el perfil por defecto.
+      </p>
+    }
+    <p class="profile__source">{{ sourceLabel(p.source) }}</p>
+  }
+} @else if (searched(); as doc) {
+  <sol-alert kind="info">
+    <p i18n="@@assistedQuote.profile.not-found">
+      No encontramos un cliente con este documento. Puedes continuar con una cotización sin cuenta:
+      el precio será un estimado con el perfil por defecto.
+    </p>
+    <p class="profile__doc">
+      <strong>{{ doc.type }} {{ doc.number }}</strong>
+    </p>
+  </sol-alert>
+}
+
+<div class="sol-actions profile__actions">
+  <button
+    type="button"
+    class="sol-btn sol-btn--primary"
+    [disabled]="busy()"
+    [attr.aria-busy]="busy() ? 'true' : null"
+    (click)="approve.emit()"
+  >
+    @if (client()) {
+      <ng-container i18n="@@assistedQuote.profile.approve">Aprobar y continuar</ng-container>
+    } @else {
+      <ng-container i18n="@@assistedQuote.profile.without-account"
+        >Continuar sin cuenta</ng-container
+      >
+    }
+  </button>
+  <button type="button" class="sol-btn sol-btn--outline" (click)="searchAnother.emit()">
+    <ng-container i18n="@@assistedQuote.profile.search-another">Buscar otro cliente</ng-container>
+  </button>
+</div>

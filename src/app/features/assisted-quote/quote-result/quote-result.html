@@ -1,0 +1,88 @@
+@let q = quote();
+
+<div class="result__premium">
+  <p class="result__product">{{ productLabel(q.productCode) }}</p>
+  <p class="result__amount">
+    {{ q.monthlyPremium.amount | currency: q.monthlyPremium.currency : 'symbol-narrow' : digits }}
+  </p>
+  <p class="result__caption" i18n="@@assistedQuote.result.monthly">Prima mensual</p>
+  <p class="result__annual">
+    <ng-container i18n="@@assistedQuote.result.annual">Prima anual</ng-container>:
+    <strong>{{
+      q.annualPremium.amount | currency: q.annualPremium.currency : 'symbol-narrow' : digits
+    }}</strong>
+  </p>
+</div>
+
+@if (q.estimated) {
+  <sol-alert kind="warning">
+    <ng-container i18n="@@assistedQuote.result.estimated"
+      >Precio estimado: se calculó sin el perfil real del cliente y puede cambiar al
+      comprar.</ng-container
+    >
+  </sol-alert>
+}
+
+@if (q.withoutAccount) {
+  <sol-alert kind="info">
+    <ng-container i18n="@@assistedQuote.result.without-account"
+      >Cotización sin cuenta: para comprar, el cliente debe registrarse.</ng-container
+    >
+  </sol-alert>
+}
+
+<section aria-labelledby="coverages-title">
+  <h3 id="coverages-title" i18n="@@assistedQuote.result.coverages">Coberturas y deducibles</h3>
+  <table class="result__table">
+    <caption class="sol-visually-hidden" i18n="@@assistedQuote.result.coverages-caption">
+      Coberturas con su valor asegurado y su deducible
+    </caption>
+    <thead>
+      <tr>
+        <th scope="col" i18n="@@assistedQuote.result.coverage">Cobertura</th>
+        <th scope="col" class="result__num" i18n="@@assistedQuote.result.insured">
+          Valor asegurado
+        </th>
+        <th scope="col" class="result__num" i18n="@@assistedQuote.result.deductible">Deducible</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (c of q.coverages; track c.type) {
+        <tr>
+          <th scope="row">{{ coverageLabel(c.type) }}</th>
+          <td class="result__num">
+            {{ c.amount.amount | currency: c.amount.currency : 'symbol-narrow' : digits }}
+          </td>
+          <td class="result__num">
+            {{ c.deductible.amount | currency: c.deductible.currency : 'symbol-narrow' : digits }}
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</section>
+
+<p class="result__validity">
+  <ng-container i18n="@@assistedQuote.result.valid-until">Válida hasta</ng-container>:
+  <strong>{{ q.validUntil | date: 'longDate' }}</strong>
+</p>
+
+<sol-price-breakdown [components]="q.components" [source]="q.profileSource" />
+
+<div class="sol-actions">
+  <button
+    type="button"
+    class="sol-btn sol-btn--primary"
+    disabled
+    aria-describedby="accept-note"
+    i18n="@@assistedQuote.result.accept"
+  >
+    Registrar aceptación
+  </button>
+  <button type="button" class="sol-btn sol-btn--outline" (click)="newQuote.emit()">
+    <ng-container i18n="@@assistedQuote.result.new">Nueva cotización</ng-container>
+  </button>
+</div>
+<p id="accept-note" class="result__note" i18n="@@assistedQuote.result.accept-note">
+  Registrar la aceptación de la oferta estará disponible en el siguiente sprint.
+</p>

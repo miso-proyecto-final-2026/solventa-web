@@ -1,0 +1,46 @@
+<form class="sol-form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+  <sol-form-field
+    fieldId="lookup-type"
+    i18n-label="@@assistedQuote.lookup.type.label"
+    label="Tipo de documento"
+  >
+    <select id="lookup-type" class="sol-input" formControlName="type">
+      @for (type of types; track type) {
+        <option [value]="type">{{ type }}</option>
+      }
+    </select>
+  </sol-form-field>
+
+  <sol-form-field
+    fieldId="lookup-number"
+    i18n-label="@@assistedQuote.lookup.number.label"
+    label="Número de documento"
+    [error]="numberError()"
+  >
+    <input
+      id="lookup-number"
+      class="sol-input"
+      type="text"
+      inputmode="text"
+      autocomplete="off"
+      formControlName="number"
+      [attr.aria-invalid]="numberError() ? 'true' : null"
+      [attr.aria-describedby]="describedBy('lookup-number', false, !!numberError())"
+    />
+  </sol-form-field>
+
+  <div class="sol-actions">
+    <button
+      type="submit"
+      class="sol-btn sol-btn--primary"
+      [disabled]="busy()"
+      [attr.aria-busy]="busy() ? 'true' : null"
+    >
+      @if (busy()) {
+        <ng-container i18n="@@assistedQuote.lookup.searching">Buscando…</ng-container>
+      } @else {
+        <ng-container i18n="@@assistedQuote.lookup.submit">Buscar cliente</ng-container>
+      }
+    </button>
+  </div>
+</form>
