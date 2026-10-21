@@ -18,6 +18,13 @@ export const routes: Routes = [
     loadChildren: () =>
       import('@features/assisted-quote/assisted-quote.routes').then((m) => m.ASSISTED_QUOTE_ROUTES),
   },
+  {
+    // Solo asesores, como la cotización asistida. La API valida el rol de nuevo (403 sin él).
+    path: 'client-consent',
+    canMatch: [roleGuard('ASESOR')],
+    loadChildren: () =>
+      import('@features/client-consent/client-consent.routes').then((m) => m.CLIENT_CONSENT_ROUTES),
+  },
   // Mientras no existan las demás pantallas (cotizar, pólizas…), vuelven al inicio.
   { path: '**', redirectTo: '' },
 ];

@@ -33,15 +33,21 @@ export class HttpAssistedQuoteGateway extends AssistedQuoteGateway {
     const params = new HttpParams()
       .set('tipo_documento', document.type)
       .set('numero_documento', document.number);
-    return this.http.get<ClientSearchDto>(`${IDENTIDAD}/v1/clientes/busqueda`, { params }).pipe(
-      map(toClient),
-      // Un documento que no existe no es un fallo: la pantalla ofrece cotizar sin cuenta.
-      catchError((error: unknown) =>
-        error instanceof ApiError && error.kind === 'not-found'
-          ? of(null)
-          : throwError(() => error),
-      ),
-    );
+    return this.http
+      .get<ClientSearchDto>(`${IDENTIDAD}/v1/clientes/busqueda`, {
+        params,
+        // El consentimiento puede cambiar en cualquier momento: nunca se sirve una copia vieja.
+        headers: { 'Cache-Control': 'no-cache' },
+      })
+      .pipe(
+        map(toClient),
+        // Un documento que no existe no es un fallo: la pantalla ofrece cotizar sin cuenta.
+        catchError((error: unknown) =>
+          error instanceof ApiError && error.kind === 'not-found'
+            ? of(null)
+            : throwError(() => error),
+        ),
+      );
   }
 
   getProfile(clientId: string): Observable<ProfileSummary> {

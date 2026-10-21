@@ -18,6 +18,13 @@ export const NAV_ITEMS: readonly NavItem[] = [
     exact: false,
     requiredRole: 'ASESOR',
   },
+  {
+    path: '/client-consent',
+    label: $localize`:@@nav.client-consent:Consentimiento`,
+    icon: '🔐',
+    exact: false,
+    requiredRole: 'ASESOR',
+  },
   { path: '/policies', label: $localize`:@@nav.policies:Mis Pólizas`, icon: '🛡️', exact: false },
   { path: '/claims', label: $localize`:@@nav.claims:Siniestros`, icon: '⚡', exact: false },
   { path: '/profile', label: $localize`:@@nav.profile:Perfil`, icon: '👤', exact: false },

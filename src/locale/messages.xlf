@@ -41,14 +41,14 @@
         <source>Escribe el número de documento.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/client-lookup/client-lookup.ts</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.lookup.number.invalid" datatype="html">
         <source>El número debe tener entre 5 y 15 letras o dígitos, sin espacios ni puntos.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/client-lookup/client-lookup.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">60</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.profile.name" datatype="html">
@@ -553,49 +553,49 @@
         <source>Rango permitido</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/product-form/product-form.ts</context>
-          <context context-type="linenumber">93</context>
+          <context context-type="linenumber">96</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.form.error.server" datatype="html">
         <source>El valor no cumple las reglas del producto.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/product-form/product-form.ts</context>
-          <context context-type="linenumber">99</context>
+          <context context-type="linenumber">102</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.form.error.required" datatype="html">
         <source>Este dato es obligatorio.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/product-form/product-form.ts</context>
-          <context context-type="linenumber">103</context>
+          <context context-type="linenumber">107</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.form.error.integer" datatype="html">
         <source>Escribe solo números enteros, sin puntos ni comas.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/product-form/product-form.ts</context>
-          <context context-type="linenumber">104</context>
+          <context context-type="linenumber">109</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.form.error.min" datatype="html">
         <source>El valor es menor que el mínimo permitido.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/product-form/product-form.ts</context>
-          <context context-type="linenumber">105</context>
+          <context context-type="linenumber">111</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.form.error.max" datatype="html">
         <source>El valor es mayor que el máximo permitido.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/product-form/product-form.ts</context>
-          <context context-type="linenumber">106</context>
+          <context context-type="linenumber">113</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.form.error.option" datatype="html">
         <source>Elige una de las opciones.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/product-form/product-form.ts</context>
-          <context context-type="linenumber">107</context>
+          <context context-type="linenumber">114</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.result.monthly" datatype="html">
@@ -788,6 +788,147 @@
           <context context-type="linenumber">62</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="clientConsent.document-title" datatype="html">
+        <source>Solventa — Consentimiento del cliente</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/client-consent/client-consent.routes.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clientConsent.status.granted" datatype="html">
+        <source>Consentimiento otorgado</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/client-consent/domain/labels.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clientConsent.status.revoked" datatype="html">
+        <source>Consentimiento revocado</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/client-consent/domain/labels.ts</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clientConsent.status.not-requested" datatype="html">
+        <source>Consentimiento no solicitado</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/client-consent/domain/labels.ts</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clientConsent.error.unauthenticated" datatype="html">
+        <source>Tu sesión venció. Inicia sesión de nuevo para consultar.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/client-consent/domain/labels.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clientConsent.error.forbidden" datatype="html">
+        <source>Tu usuario no tiene permiso para consultar el consentimiento de un cliente.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/client-consent/domain/labels.ts</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clientConsent.error.validation" datatype="html">
+        <source>El documento no es válido. Revisa el tipo y el número e inténtalo de nuevo.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/client-consent/domain/labels.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clientConsent.error.network" datatype="html">
+        <source>No hay conexión con el servidor. Revisa tu red e inténtalo de nuevo.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/client-consent/domain/labels.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clientConsent.error.server" datatype="html">
+        <source>No pudimos consultar el consentimiento por un problema del servidor. Inténtalo de nuevo en unos minutos.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/client-consent/domain/labels.ts</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clientConsent.title" datatype="html">
+        <source>Consentimiento del cliente</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/client-consent/pages/client-consent-page.html</context>
+          <context context-type="linenumber">1,2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clientConsent.lead" datatype="html">
+        <source> Consulta si el cliente autorizó el uso de sus datos antes de operar con ellos.
+</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/client-consent/pages/client-consent-page.html</context>
+          <context context-type="linenumber">3,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clientConsent.search.title" datatype="html">
+        <source>Buscar al cliente</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/client-consent/pages/client-consent-page.html</context>
+          <context context-type="linenumber">7,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clientConsent.loading" datatype="html">
+        <source>Consultando…</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/client-consent/pages/client-consent-page.html</context>
+          <context context-type="linenumber">13,17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clientConsent.not-found" datatype="html">
+        <source>No encontramos un cliente con el documento <x id="INTERPOLATION" equiv-text="{{ doc.type }}"/> <x id="INTERPOLATION_1" equiv-text="{{ doc.number }}"/>. Revisa el tipo y el número.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/client-consent/pages/client-consent-page.html</context>
+          <context context-type="linenumber">25,26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clientConsent.client" datatype="html">
+        <source>Cliente</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/client-consent/pages/client-consent-page.html</context>
+          <context context-type="linenumber">36,37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clientConsent.document" datatype="html">
+        <source>Documento</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/client-consent/pages/client-consent-page.html</context>
+          <context context-type="linenumber">40,41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clientConsent.consent.title" datatype="html">
+        <source>Consentimiento</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/client-consent/pages/client-consent-page.html</context>
+          <context context-type="linenumber">45,48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clientConsent.granted-at" datatype="html">
+        <source>Otorgado el</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/client-consent/pages/client-consent-page.html</context>
+          <context context-type="linenumber">59,60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clientConsent.blocked" datatype="html">
+        <source>No se puede cotizar con los datos de Open Finance de este cliente. Puedes cotizar con el perfil por defecto, que es un estimado.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/client-consent/pages/client-consent-page.html</context>
+          <context context-type="linenumber">66,68</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clientConsent.quote-default" datatype="html">
+        <source>Cotizar con perfil por defecto</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/client-consent/pages/client-consent-page.html</context>
+          <context context-type="linenumber">73,76</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="home.document-title" datatype="html">
         <source>Solventa — Inicio</source>
         <context-group purpose="location">
@@ -911,7 +1052,7 @@
         <source>Solventa, ir al inicio</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/header/header.html</context>
-          <context context-type="linenumber">7,10</context>
+          <context context-type="linenumber">7,12</context>
         </context-group>
       </trans-unit>
       <trans-unit id="header.nav.label" datatype="html">
@@ -956,25 +1097,32 @@
           <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="nav.client-consent" datatype="html">
+        <source>Consentimiento</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="nav.policies" datatype="html">
         <source>Mis Pólizas</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
-          <context context-type="linenumber">21</context>
+          <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nav.claims" datatype="html">
         <source>Siniestros</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nav.profile" datatype="html">
         <source>Perfil</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
-          <context context-type="linenumber">23</context>
+          <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
       <trans-unit id="language.switch.es-CO" datatype="html">

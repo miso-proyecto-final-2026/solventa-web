@@ -145,6 +145,10 @@ solventa-web/
 
 Las carpetas vacías tienen un archivo `.gitkeep`; bórralo al agregar el primer archivo real. La guía de cada capa y la plantilla de una feature están en [`src/app/README.md`](src/app/README.md).
 
+### Consentimiento del cliente (HU-08)
+
+Ruta `/client-consent`, solo para el rol `ASESOR`. El asesor busca al cliente por tipo y número de documento (el mismo formulario de HU-38) y ve uno de tres estados: **otorgado** (con fecha), **revocado** o **no solicitado**. Con un consentimiento revocado o inexistente, la pantalla avisa que no se puede cotizar con datos de Open Finance y enlaza a la cotización con perfil por defecto. Es de solo lectura y cada búsqueda consulta al servidor (`Cache-Control: no-cache`), así que una revocación reciente aparece al volver a buscar. Usa `GET /v1/clientes/busqueda` de Identidad; no hay búsqueda por nombre ni fecha de revocación todavía (ver el PR).
+
 ### Reglas de dependencia
 
 ```
