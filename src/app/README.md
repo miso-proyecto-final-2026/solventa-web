@@ -23,7 +23,7 @@ features/<area>/
 └─ data-access/
    ├─ <area>.gateway.ts      clase abstracta: lo que la feature necesita del backend, en sus términos
    ├─ http-<area>.gateway.ts adaptador real contra el API Gateway
-   ├─ mock-<area>.gateway.ts adaptador simulado para Cypress y desarrollo sin backend
+   ├─ mock-<area>.gateway.ts adaptador simulado para desarrollo sin backend
    ├─ dto/                   formas exactas que usa el backend
    └─ mappers/               traducen DTO ⇄ modelo de dominio
 ```

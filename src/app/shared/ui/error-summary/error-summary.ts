@@ -15,7 +15,7 @@ export interface SummaryError {
   template: `
     @if (errors().length) {
       <div class="summary" role="alert">
-        <h2 class="summary__title" #title tabindex="-1">{{ heading() }}</h2>
+        <h3 class="summary__title" #title tabindex="-1">{{ heading() }}</h3>
         <ul>
           @for (e of errors(); track e.fieldId) {
             <li>
