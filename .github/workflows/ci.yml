@@ -55,8 +55,6 @@ jobs:
   e2e:
     name: e2e
     needs: test
-    # Se activa con la variable de repositorio ENABLE_E2E=true
-    if: vars.ENABLE_E2E == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

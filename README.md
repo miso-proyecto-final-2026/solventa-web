@@ -221,7 +221,7 @@ Reglas para el código: ningún texto escrito a mano fuera de los mecanismos ant
 
 **E2E (HU-38).** La web corre con su servidor de desarrollo y el backend se simula con `page.route`, con respuestas tomadas de los ejemplos del contrato de Cotización 1.3.0 (`e2e/support/fixtures.ts`). Así se prueban los interceptores y los errores reales (500, red caída, 401, 422) sin levantar servicios. El proyecto `en-US` corre contra el build en inglés. Cada prueba falla si el recorrido llama a un endpoint que no se simuló.
 
-Primera vez en una máquina nueva: `npx playwright install chromium` (en Linux, `--with-deps`). Después, `npm run e2e`. Recorridos cubiertos: camino feliz con tres estados de consentimiento, validación de campos (local y del servidor), cotización sin cuenta, errores del servidor y sesión vencida con borrador recuperado, recorrido solo con teclado con axe en cada pantalla, y en-US. El CI tiene el job `e2e`, que se activa con la variable de repositorio `ENABLE_E2E=true`.
+Primera vez en una máquina nueva: `npx playwright install chromium` (en Linux, `--with-deps`). Después, `npm run e2e`. Recorridos cubiertos: camino feliz con tres estados de consentimiento, validación de campos (local y del servidor), cotización sin cuenta, errores del servidor y sesión vencida con borrador recuperado, recorrido solo con teclado con axe en cada pantalla, y en-US. El CI corre estas pruebas en el job `e2e` (después de `test`) y publica el reporte HTML como artefacto.
 
 Todo `feat` o `fix` lleva pruebas. Escríbelas contra el comportamiento visible (textos, roles, etiquetas) y no contra detalles internos.
 
