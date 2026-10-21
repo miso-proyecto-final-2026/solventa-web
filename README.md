@@ -4,7 +4,7 @@ Portal web de Solventa (MISW4501, Grupo 10): consola para asesores y portal del 
 
 - **Stack:** Angular 22 (componentes standalone, signals), TypeScript, SCSS.
 - **Idiomas:** es-CO (base) y en-US, con `@angular/localize`.
-- **Pruebas:** Jasmine + Karma (unitarias), Cypress (E2E, aún sin recorridos).
+- **Pruebas:** Jasmine + Karma (unitarias), Playwright + axe-core (E2E y accesibilidad).
 - **Backend:** MS Identidad y MS Cotización, en el repo [`solventa-backend`](https://github.com/miso-proyecto-final-2026/solventa-backend).
 
 > **¿Vas a escribir código?** Lee antes la [guía de capas y plantilla de feature](src/app/README.md): explica dónde va cada cosa dentro de `src/app` y cómo se organiza una feature nueva.
@@ -75,6 +75,7 @@ Lo ingresado se guarda en `sessionStorage` como borrador: si la sesión vence (e
 | `npm run lint` | ESLint, incluida la regla de dependencias entre capas. |
 | `npm test` | Pruebas unitarias en modo vigilancia (Chrome con interfaz). |
 | `npm run test:ci` | Pruebas unitarias una vez, sin interfaz y con cobertura en `coverage/`. |
+| `npm run e2e` | Pruebas E2E y de accesibilidad con Playwright (levanta los servidores solo). `e2e:ui` abre el modo interactivo y `e2e:report` el reporte HTML. |
 | `npm run i18n:extract` | Extrae los textos marcados para traducir a `src/locale/messages.xlf`. |
 | `npm run format` / `format:check` | Aplica o verifica el formato con Prettier. |
 
@@ -133,9 +134,10 @@ solventa-web/
 │     │  ├─ directives/
 │     │  └─ models/
 │     └─ features/               un área de negocio por carpeta (cotizar, pólizas, siniestros…)
-├─ cypress/
-│  ├─ e2e/                       recorridos de punta a punta
-│  └─ fixtures/                  respuestas simuladas del contrato del backend
+├─ e2e/
+│  ├─ *.spec.ts                  recorridos de punta a punta (Playwright)
+│  └─ support/                   backend simulado, fixtures del contrato y helpers (axe, teclado)
+├─ playwright.config.ts          proyectos es-CO (4200) y en-US (4201) y sus servidores
 ├─ proxy.conf.json               redirección de /api/* al backend local
 ├─ angular.json                  build, pruebas, lint e i18n
 └─ eslint.config.js              reglas de código y de dependencias entre capas
@@ -214,10 +216,12 @@ Reglas para el código: ningún texto escrito a mano fuera de los mecanismos ant
 | Tipo | Herramienta | Dónde |
 |---|---|---|
 | Unitarias | Jasmine + Karma | Junto al código, en archivos `*.spec.ts` |
-| E2E | Cypress | `cypress/e2e/` |
-| Accesibilidad | axe-core sobre Cypress | `cypress/e2e/` |
+| E2E | Playwright | `e2e/` |
+| Accesibilidad | axe-core sobre Playwright (`@axe-core/playwright`) | `e2e/accessibility.spec.ts` y los pasos de los demás recorridos |
 
-Cypress y axe-core se instalan al llegar los primeros recorridos E2E (el CI ya trae el job `e2e`, que se activa con la variable de repositorio `ENABLE_E2E=true`).
+**E2E (HU-38).** La web corre con su servidor de desarrollo y el backend se simula con `page.route`, con respuestas tomadas de los ejemplos del contrato de Cotización 1.3.0 (`e2e/support/fixtures.ts`). Así se prueban los interceptores y los errores reales (500, red caída, 401, 422) sin levantar servicios. El proyecto `en-US` corre contra el build en inglés. Cada prueba falla si el recorrido llama a un endpoint que no se simuló.
+
+Primera vez en una máquina nueva: `npx playwright install chromium` (en Linux, `--with-deps`). Después, `npm run e2e`. Recorridos cubiertos: camino feliz con tres estados de consentimiento, validación de campos (local y del servidor), cotización sin cuenta, errores del servidor y sesión vencida con borrador recuperado, recorrido solo con teclado con axe en cada pantalla, y en-US. El CI tiene el job `e2e`, que se activa con la variable de repositorio `ENABLE_E2E=true`.
 
 Todo `feat` o `fix` lleva pruebas. Escríbelas contra el comportamiento visible (textos, roles, etiquetas) y no contra detalles internos.
 
@@ -240,7 +244,7 @@ La guía completa del equipo, válida para los cuatro repos, está en [`CONTRIBU
    Tipos permitidos: `feat`, `fix`, `docs`, `test`, `refactor`, `ci`, `build`, `chore`.
 4. **Antes de abrir el PR**, corre lo mismo que corre el CI y confirma que pasa:
    ```bash
-   npm run lint && npm run format:check && npm run test:ci && npm run build
+   npm run lint && npm run format:check && npm run test:ci && npm run build && npm run e2e
    ```
 5. **Abre el PR hacia `main`** con la plantilla del repo. El título también sigue Conventional Commits, porque es el mensaje del *squash and merge*. Incluye `Closes #n`.
 6. **Necesitas al menos 1 aprobación** de otro integrante y el CI en verde. Quien abre el PR no se aprueba a sí mismo.

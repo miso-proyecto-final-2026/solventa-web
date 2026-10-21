@@ -34,7 +34,7 @@ describe('ErrorSummary', () => {
     const fixture = await create();
 
     const el = fixture.nativeElement as HTMLElement;
-    expect(el.querySelector('[role="alert"] h2')?.textContent).toBe('Revisa estos datos');
+    expect(el.querySelector('[role="alert"] h3')?.textContent).toBe('Revisa estos datos');
     expect(el.querySelector('li a')?.getAttribute('href')).toBe('#edad');
     el.remove();
   });
@@ -53,7 +53,7 @@ describe('ErrorSummary', () => {
 
     fixture.componentInstance.summary().focus();
 
-    expect(document.activeElement?.tagName).toBe('H2');
+    expect(document.activeElement?.tagName).toBe('H3');
     fixture.nativeElement.remove();
   });
 });
