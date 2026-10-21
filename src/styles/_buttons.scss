@@ -32,4 +32,30 @@
       background: var(--sol-teal-100);
     }
   }
+
+  // Deshabilitado y en espera (la acción ya se envió): no responde al ratón ni al teclado.
+  &:disabled,
+  &[aria-disabled='true'] {
+    color: var(--sol-disabled-text);
+    cursor: not-allowed;
+    background: var(--sol-disabled-bg);
+    border-color: var(--sol-disabled-bg);
+  }
+
+  &[aria-busy='true'] {
+    cursor: progress;
+  }
+}
+
+// Texto solo para lectores de pantalla.
+.sol-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
 }

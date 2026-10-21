@@ -16,7 +16,7 @@
         aria-label="Navegación principal"
       >
         <ul class="header__list">
-          @for (item of navItems; track item.path) {
+          @for (item of navItems(); track item.path) {
             <li>
               <a
                 class="header__link"
@@ -32,6 +32,17 @@
           }
         </ul>
       </nav>
+
+      <div class="header__session">
+        @if (session.user(); as user) {
+          <span class="header__user">{{ user.name }}</span>
+          <button type="button" class="header__link header__button" (click)="logout()">
+            <ng-container i18n="@@header.logout">Cerrar sesión</ng-container>
+          </button>
+        } @else {
+          <a class="header__link" routerLink="/login" i18n="@@header.login">Ingresar</a>
+        }
+      </div>
 
       <sol-language-selector />
     </div>

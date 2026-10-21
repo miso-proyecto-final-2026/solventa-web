@@ -58,6 +58,25 @@
     }
   }
 
+  &__session {
+    display: flex;
+    gap: var(--sol-space-2);
+    align-items: center;
+  }
+
+  &__user {
+    font-size: 0.9rem;
+    color: var(--sol-text-on-dark-muted);
+  }
+
+  &__button {
+    font: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+    background: none;
+    border: 0;
+  }
+
   // El foco por defecto (verde) no se ve sobre el fondo oscuro.
   &__brand:focus-visible,
   &__link:focus-visible {

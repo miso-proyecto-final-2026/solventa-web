@@ -1,0 +1,35 @@
+<section aria-labelledby="breakdown-title">
+  <h3 id="breakdown-title" i18n="@@assistedQuote.breakdown.title">Cómo se calculó el precio</h3>
+
+  @if (components().length) {
+    <table class="breakdown">
+      <caption class="sol-visually-hidden" i18n="@@assistedQuote.breakdown.caption">
+        Componentes de la prima anual
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col" i18n="@@assistedQuote.breakdown.concept">Concepto</th>
+          <th scope="col" class="breakdown__amount" i18n="@@assistedQuote.breakdown.amount">
+            Valor anual
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (c of components(); track c.concept) {
+          <tr>
+            <th scope="row">{{ label(c.concept) }}</th>
+            <td class="breakdown__amount">
+              {{ c.amount.amount | currency: c.amount.currency : 'symbol-narrow' : digits }}
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  } @else {
+    <p class="breakdown__empty" i18n="@@assistedQuote.breakdown.empty">
+      Esta cotización no tiene desglose disponible.
+    </p>
+  }
+
+  <p class="breakdown__source">{{ sourceLabel(source()) }}</p>
+</section>

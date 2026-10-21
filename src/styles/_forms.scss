@@ -1,0 +1,27 @@
+// Controles de formulario. El foco visible global (`:focus-visible`) aplica también aquí.
+.sol-input {
+  width: 100%;
+  min-height: 2.75rem; // objetivo táctil de al menos 44 px
+  padding: var(--sol-space-2) var(--sol-space-3);
+  font: inherit;
+  color: var(--sol-text);
+  background: var(--sol-surface);
+  border: 1px solid var(--sol-text-muted); // borde con contraste ≥ 3:1 sobre el fondo (WCAG 1.4.11)
+  border-radius: var(--sol-radius-sm);
+
+  &[aria-invalid='true'] {
+    border: 2px solid var(--sol-danger-text);
+  }
+}
+
+.sol-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sol-space-4);
+}
+
+.sol-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sol-space-3);
+}

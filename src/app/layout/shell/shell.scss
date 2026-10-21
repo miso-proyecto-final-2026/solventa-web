@@ -10,4 +10,28 @@
   max-width: var(--sol-content-width);
   padding: var(--sol-space-6) var(--sol-space-4);
   margin: 0 auto;
+
+  // Recibe el foco por código al cambiar de pantalla; no es un control, no lleva anillo.
+  &:focus {
+    outline: none;
+  }
+}
+
+// Enlace para saltar la navegación: solo se ve al enfocarlo con teclado.
+.skip-link {
+  position: absolute;
+  top: var(--sol-space-2);
+  left: var(--sol-space-2);
+  z-index: 10;
+  padding: var(--sol-space-2) var(--sol-space-4);
+  font-weight: 600;
+  color: var(--sol-text-on-dark);
+  text-decoration: none;
+  background: var(--sol-navy-900);
+  border-radius: var(--sol-radius-sm);
+  transform: translateY(-200%);
+
+  &:focus {
+    transform: translateY(0);
+  }
 }

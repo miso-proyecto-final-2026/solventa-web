@@ -1,0 +1,21 @@
+.breakdown {
+  width: 100%;
+  margin: var(--sol-space-2) 0;
+  border-collapse: collapse;
+
+  th,
+  td {
+    padding: var(--sol-space-2) var(--sol-space-3);
+    text-align: left;
+    border-bottom: 1px solid var(--sol-border);
+  }
+
+  &__amount {
+    text-align: right;
+  }
+
+  &__empty,
+  &__source {
+    color: var(--sol-text-muted);
+  }
+}

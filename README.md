@@ -49,6 +49,21 @@ Para levantar los servicios sigue la sección «Levantar los servicios en local�
 
 > **Supuesto por confirmar:** que el API Gateway de cada ambiente exponga las mismas rutas (`/api/identidad/...`, `/api/cotizacion/...`). Si no es así, se ajusta `apiBaseUrl` en `src/environments/` y el mapa de `proxy.conf.json`.
 
+### Cotización asistida del asesor (HU-38)
+
+Ruta `/assisted-quote`, visible solo para el rol `ASESOR` (la guarda `roleGuard` lleva a `/login` si no hay sesión; la API valida el rol de nuevo). El recorrido tiene cuatro pasos: documento del cliente → perfil y aprobación → datos del seguro → resultado con desglose. Si el documento no existe, el asesor puede seguir con una cotización sin cuenta (precio estimado).
+
+Hay dos formas de probarla, que se eligen con `dataSource` en `src/environments/environment.development.ts`:
+
+| `dataSource` | Qué usa | Credenciales |
+|---|---|---|
+| `'http'` (por defecto) | Los servicios locales vía el proxy. Antes, en `solventa-backend`: sembrar el asesor y los clientes demo y levantar Identidad y Cotización (README de `postman/`). | Las que se usaron en `sembrar_demo.py`. |
+| `'mock'` | Datos simulados en el navegador, sin backend. Replica la matriz demo del backend (clientes con documento `1000000001` a `1000000005`). | `asesor@solventa.test` / `Demo12345` (solo existen en el simulado). |
+
+Clientes demo: `…001` perfil favorable (precio ≈ −10 %), `…002` riesgoso (≈ +58 %), `…003` neutro, `…004` consentimiento revocado y `…005` sin consentimiento (precio por defecto con aviso). Cualquier otro documento se trata como un cliente sin cuenta.
+
+Lo ingresado se guarda en `sessionStorage` como borrador: si la sesión vence (el interceptor detecta el 401) o se cambia de idioma, el asesor vuelve a donde estaba sin perder los datos.
+
 ## Comandos disponibles
 
 | Comando | Qué hace |

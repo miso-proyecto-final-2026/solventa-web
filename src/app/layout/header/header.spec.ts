@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, provideRouter } from '@angular/router';
+import { SessionStore } from '@core/auth/session.store';
 import { Header } from './header';
 
 describe('Header', () => {
@@ -30,6 +31,47 @@ describe('Header', () => {
       '⚡ Siniestros',
       '👤 Perfil',
     ]);
+  });
+
+  describe('session', () => {
+    const advisor = () =>
+      TestBed.inject(SessionStore).start({
+        token: 't',
+        user: { id: '1', name: 'Asesora Demo', role: 'ASESOR' },
+        expiresAt: Date.now() + 60_000,
+      });
+    const sessionEl = (selector: string): HTMLElement | null =>
+      fixture.nativeElement.querySelector(selector);
+
+    beforeEach(() => sessionStorage.clear());
+    afterEach(() => sessionStorage.clear());
+
+    it('should hide the assisted quote option from visitors and offer to sign in', () => {
+      expect(links().some((l) => l.textContent?.includes('Cotización asistida'))).toBeFalse();
+      expect(sessionEl('.header__session a')?.textContent).toContain('Ingresar');
+    });
+
+    it('should show the assisted quote option to advisors, with their name and a sign-out', async () => {
+      advisor();
+      await fixture.whenStable();
+
+      expect(links().map((l) => l.textContent?.trim())).toContain('🤝 Cotización asistida');
+      expect(sessionEl('.header__user')?.textContent).toContain('Asesora Demo');
+      expect(sessionEl('.header__session button')?.textContent).toContain('Cerrar sesión');
+    });
+
+    it('should sign out and go home', async () => {
+      advisor();
+      await fixture.whenStable();
+      const navigate = spyOn(TestBed.inject(Router), 'navigateByUrl').and.resolveTo(true);
+
+      sessionEl('.header__session button')!.click();
+      await fixture.whenStable();
+
+      expect(TestBed.inject(SessionStore).isAuthenticated()).toBeFalse();
+      expect(navigate).toHaveBeenCalledWith('/');
+      expect(links().some((l) => l.textContent?.includes('Cotización asistida'))).toBeFalse();
+    });
   });
 
   it('should mark only the current page with aria-current', async () => {
