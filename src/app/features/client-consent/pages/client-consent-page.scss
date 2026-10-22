@@ -1,0 +1,78 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sol-space-4);
+}
+
+.page {
+  &__lead {
+    color: var(--sol-text-muted);
+  }
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sol-space-4);
+    max-width: 44rem;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  &__step {
+    font-size: 1.25rem;
+  }
+
+  &__result {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sol-space-3);
+
+    // Recibe el foco por código al mostrar el resultado; no es un control, no lleva anillo.
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.consent {
+  &__identity {
+    display: grid;
+    gap: var(--sol-space-3);
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+
+    dt {
+      color: var(--sol-text-muted);
+    }
+    dd {
+      margin: 0;
+      font-weight: 600;
+    }
+  }
+
+  &__heading {
+    font-size: 1.1rem;
+  }
+
+  &__badge {
+    display: inline-flex;
+    gap: var(--sol-space-2);
+    padding: var(--sol-space-1) var(--sol-space-3);
+    font-weight: 600;
+    color: var(--sol-warning-text);
+    background: var(--sol-warning-bg);
+    border: 1px solid var(--sol-warning-border);
+    border-radius: var(--sol-radius-pill);
+
+    &--granted {
+      color: var(--sol-success-text);
+      background: var(--sol-success-bg);
+      border-color: var(--sol-success-border);
+    }
+  }
+
+  &__action {
+    display: inline-block;
+    margin-top: var(--sol-space-2);
+    font-weight: 600;
+  }
+}

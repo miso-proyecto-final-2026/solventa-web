@@ -572,6 +572,91 @@
         <source>Saltar al contenido</source>
         <target>Skip to content</target>
       </trans-unit>
+      <trans-unit id="clientConsent.document-title" datatype="html">
+        <source>Solventa — Consentimiento del cliente</source>
+        <target>Solventa — Client consent</target>
+      </trans-unit>
+      <trans-unit id="clientConsent.status.granted" datatype="html">
+        <source>Consentimiento otorgado</source>
+        <target>Consent granted</target>
+      </trans-unit>
+      <trans-unit id="clientConsent.status.revoked" datatype="html">
+        <source>Consentimiento revocado</source>
+        <target>Consent revoked</target>
+      </trans-unit>
+      <trans-unit id="clientConsent.status.not-requested" datatype="html">
+        <source>Consentimiento no solicitado</source>
+        <target>Consent not requested</target>
+      </trans-unit>
+      <trans-unit id="clientConsent.error.unauthenticated" datatype="html">
+        <source>Tu sesión venció. Inicia sesión de nuevo para consultar.</source>
+        <target>Your session has expired. Sign in again to run the search.</target>
+      </trans-unit>
+      <trans-unit id="clientConsent.error.forbidden" datatype="html">
+        <source>Tu usuario no tiene permiso para consultar el consentimiento de un cliente.</source>
+        <target>Your user doesn't have permission to check a client's consent.</target>
+      </trans-unit>
+      <trans-unit id="clientConsent.error.validation" datatype="html">
+        <source>El documento no es válido. Revisa el tipo y el número e inténtalo de nuevo.</source>
+        <target>The document is not valid. Check the type and number and try again.</target>
+      </trans-unit>
+      <trans-unit id="clientConsent.error.network" datatype="html">
+        <source>No hay conexión con el servidor. Revisa tu red e inténtalo de nuevo.</source>
+        <target>Cannot reach the server. Check your connection and try again.</target>
+      </trans-unit>
+      <trans-unit id="clientConsent.error.server" datatype="html">
+        <source>No pudimos consultar el consentimiento por un problema del servidor. Inténtalo de nuevo en unos minutos.</source>
+        <target>We couldn't check the consent because of a server problem. Try again in a few minutes.</target>
+      </trans-unit>
+      <trans-unit id="clientConsent.title" datatype="html">
+        <source>Consentimiento del cliente</source>
+        <target>Client consent</target>
+      </trans-unit>
+      <trans-unit id="clientConsent.lead" datatype="html">
+        <source> Consulta si el cliente autorizó el uso de sus datos antes de operar con ellos.
+</source>
+        <target>Check whether the client authorized the use of their data before working with it.</target>
+      </trans-unit>
+      <trans-unit id="clientConsent.search.title" datatype="html">
+        <source>Buscar al cliente</source>
+        <target>Find the client</target>
+      </trans-unit>
+      <trans-unit id="clientConsent.loading" datatype="html">
+        <source>Consultando…</source>
+        <target>Checking…</target>
+      </trans-unit>
+      <trans-unit id="clientConsent.not-found" datatype="html">
+        <source>No encontramos un cliente con el documento <x id="INTERPOLATION" equiv-text="{{ doc.type }}"/> <x id="INTERPOLATION_1" equiv-text="{{ doc.number }}"/>. Revisa el tipo y el número.</source>
+        <target>We found no client with document <x id="INTERPOLATION" equiv-text="{{ doc.type }}"/> <x id="INTERPOLATION_1" equiv-text="{{ doc.number }}"/>. Check the type and number.</target>
+      </trans-unit>
+      <trans-unit id="clientConsent.client" datatype="html">
+        <source>Cliente</source>
+        <target>Client</target>
+      </trans-unit>
+      <trans-unit id="clientConsent.document" datatype="html">
+        <source>Documento</source>
+        <target>Document</target>
+      </trans-unit>
+      <trans-unit id="clientConsent.consent.title" datatype="html">
+        <source>Consentimiento</source>
+        <target>Consent</target>
+      </trans-unit>
+      <trans-unit id="clientConsent.granted-at" datatype="html">
+        <source>Otorgado el</source>
+        <target>Granted on</target>
+      </trans-unit>
+      <trans-unit id="clientConsent.blocked" datatype="html">
+        <source>No se puede cotizar con los datos de Open Finance de este cliente. Puedes cotizar con el perfil por defecto, que es un estimado.</source>
+        <target>Open Finance data can't be used to quote this client. You can quote with the default profile, which is an estimate.</target>
+      </trans-unit>
+      <trans-unit id="clientConsent.quote-default" datatype="html">
+        <source>Cotizar con perfil por defecto</source>
+        <target>Quote with the default profile</target>
+      </trans-unit>
+      <trans-unit id="nav.client-consent" datatype="html">
+        <source>Consentimiento</source>
+        <target>Consent</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

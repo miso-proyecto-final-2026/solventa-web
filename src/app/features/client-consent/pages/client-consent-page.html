@@ -1,0 +1,79 @@
+<h1 i18n="@@clientConsent.title">Consentimiento del cliente</h1>
+<p class="page__lead" i18n="@@clientConsent.lead">
+  Consulta si el cliente autorizó el uso de sus datos antes de operar con ellos.
+</p>
+
+<sol-card class="page__card">
+  <h2 class="page__step" i18n="@@clientConsent.search.title">Buscar al cliente</h2>
+
+  <sol-client-lookup [busy]="busy()" (lookup)="search($event)" />
+
+  <p class="sol-visually-hidden" role="status">
+    @if (busy()) {
+      <ng-container i18n="@@clientConsent.loading">Consultando…</ng-container>
+    }
+  </p>
+
+  @if (error(); as e) {
+    <sol-alert kind="error">{{ errorText(e) }}</sol-alert>
+  }
+
+  @if (notFound(); as doc) {
+    <div #result tabindex="-1" class="page__result">
+      <sol-alert kind="info">
+        <ng-container i18n="@@clientConsent.not-found"
+          >No encontramos un cliente con el documento {{ doc.type }} {{ doc.number }}. Revisa el
+          tipo y el número.</ng-container
+        >
+      </sol-alert>
+    </div>
+  }
+
+  @if (client(); as c) {
+    <div #result tabindex="-1" class="page__result">
+      <dl class="consent__identity">
+        <div>
+          <dt i18n="@@clientConsent.client">Cliente</dt>
+          <dd>{{ c.firstName }} {{ c.lastNameInitial }}</dd>
+        </div>
+        <div>
+          <dt i18n="@@clientConsent.document">Documento</dt>
+          <dd>{{ c.document.type }} {{ c.document.number }}</dd>
+        </div>
+      </dl>
+
+      <h3 class="consent__heading" i18n="@@clientConsent.consent.title">Consentimiento</h3>
+      <p>
+        <span
+          class="consent__badge"
+          [class.consent__badge--granted]="c.consent.state === 'GRANTED'"
+        >
+          <span aria-hidden="true">{{ c.consent.state === 'GRANTED' ? '✓' : '!' }}</span>
+          {{ statusLabel(c.consent.state) }}
+        </span>
+      </p>
+
+      @if (c.consent.state === 'GRANTED') {
+        @if (c.consent.grantedAt; as grantedAt) {
+          <p>
+            <ng-container i18n="@@clientConsent.granted-at">Otorgado el</ng-container>
+            {{ grantedAt | date: 'longDate' }}
+          </p>
+        }
+      } @else {
+        <sol-alert kind="warning">
+          <ng-container i18n="@@clientConsent.blocked"
+            >No se puede cotizar con los datos de Open Finance de este cliente. Puedes cotizar con
+            el perfil por defecto, que es un estimado.</ng-container
+          >
+          <a
+            class="consent__action"
+            routerLink="/assisted-quote"
+            i18n="@@clientConsent.quote-default"
+            >Cotizar con perfil por defecto</a
+          >
+        </sol-alert>
+      }
+    </div>
+  }
+</sol-card>
