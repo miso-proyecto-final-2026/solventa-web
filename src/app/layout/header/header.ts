@@ -16,7 +16,7 @@ export class Header {
 
   /** Las opciones con rol solo las ve quien lo tiene. */
   protected readonly navItems = computed(() =>
-    NAV_ITEMS.filter((item) => !item.requiredRole || this.session.hasRole(item.requiredRole)),
+    NAV_ITEMS.filter((item) => !item.requiredRoles || this.session.hasAnyRole(item.requiredRoles)),
   );
 
   protected logout(): void {

@@ -657,6 +657,287 @@
         <source>Consentimiento</source>
         <target>Consent</target>
       </trans-unit>
+      <trans-unit id="failedPayments.status.pending" datatype="html">
+        <source>Pendiente</source>
+        <target>Pending</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.status.expired" datatype="html">
+        <source>Gracia vencida</source>
+        <target>Grace period over</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.status.recovered" datatype="html">
+        <source>Recuperado</source>
+        <target>Recovered</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.grace.current" datatype="html">
+        <source>En gracia</source>
+        <target>In grace period</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.grace.due-soon" datatype="html">
+        <source>Vence en menos de 24 h</source>
+        <target>Due in less than 24 h</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.grace.overdue" datatype="html">
+        <source>Gracia vencida</source>
+        <target>Grace period over</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.error.unauthenticated" datatype="html">
+        <source>Tu sesión venció. Inicia sesión de nuevo para continuar.</source>
+        <target>Your session expired. Sign in again to continue.</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.error.forbidden" datatype="html">
+        <source>Tu usuario no tiene permiso para gestionar cobros fallidos.</source>
+        <target>Your user is not allowed to manage failed payments.</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.error.not-found" datatype="html">
+        <source>Este cobro fallido no existe. Vuelve a la bandeja y elige otro.</source>
+        <target>This failed payment does not exist. Go back to the inbox and choose another one.</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.error.network" datatype="html">
+        <source>No hay conexión con el servidor. Revisa tu red e inténtalo de nuevo.</source>
+        <target>There is no connection to the server. Check your network and try again.</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.error.server" datatype="html">
+        <source>No pudimos cargar los cobros fallidos por un problema del servidor. Inténtalo de nuevo en unos minutos.</source>
+        <target>We could not load the failed payments because of a server problem. Try again in a few minutes.</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.note.error.card" datatype="html">
+        <source>La nota no puede llevar números de tarjeta. Quítalo y guarda de nuevo.</source>
+        <target>A note cannot contain card numbers. Remove it and save again.</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.note.error.length" datatype="html">
+        <source>Escribe una nota de 1 a 1000 caracteres.</source>
+        <target>Write a note of 1 to 1000 characters.</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.retry.error.recovered" datatype="html">
+        <source>Este cobro ya se recuperó; no hace falta reintentarlo.</source>
+        <target>This payment was already recovered; there is no need to retry it.</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.retry.error.gateway" datatype="html">
+        <source>La pasarela de pago no responde. Inténtalo de nuevo en unos minutos.</source>
+        <target>The payment gateway is not responding. Try again in a few minutes.</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.retry.replay" datatype="html">
+        <source>Ya hay un reintento en curso para este cobro; no se cobró otra vez.</source>
+        <target>A retry is already in progress for this payment; it was not charged again.</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.retry.approved" datatype="html">
+        <source>Cobro aprobado. El caso quedó recuperado.</source>
+        <target>Payment approved. The case is recovered.</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.retry.declined" datatype="html">
+        <source>La pasarela rechazó el cobro otra vez: <x id="reason" equiv-text="reason"/>.</source>
+        <target>The gateway declined the payment again: <x id="reason" equiv-text="reason"/>.</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.retry.unavailable" datatype="html">
+        <source>La pasarela de pago no está disponible. El cobro quedó en proceso y se reintentará solo; revisa el estado en unos minutos.</source>
+        <target>The payment gateway is unavailable. The payment is in progress and will be retried automatically; check its status in a few minutes.</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.retry.no-response" datatype="html">
+        <source>La pasarela no respondió. Estamos confirmando si el cobro pasó; revisa el estado en unos minutos antes de reintentar.</source>
+        <target>The gateway did not respond. We are confirming whether the payment went through; check its status in a few minutes before retrying.</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.inbox.document-title" datatype="html">
+        <source>Solventa — Cobros fallidos</source>
+        <target>Solventa — Failed payments</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.detail.document-title" datatype="html">
+        <source>Solventa — Detalle del cobro fallido</source>
+        <target>Solventa — Failed payment details</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.detail.back" datatype="html">
+        <source>← Volver a la bandeja</source>
+        <target>← Back to the inbox</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.detail.title" datatype="html">
+        <source>Cobro fallido</source>
+        <target>Failed payment</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.detail.loading" datatype="html">
+        <source>Cargando el cobro fallido…</source>
+        <target>Loading the failed payment…</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.retry-load" datatype="html">
+        <source> Volver a cargar </source>
+        <target>Reload</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.detail.loading-visible" datatype="html">
+        <source> Cargando el cobro fallido… </source>
+        <target>Loading the failed payment…</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.detail.summary" datatype="html">
+        <source>Resumen</source>
+        <target>Summary</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.col.amount" datatype="html">
+        <source>Monto</source>
+        <target>Amount</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.col.status" datatype="html">
+        <source>Estado</source>
+        <target>Status</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.col.attempts" datatype="html">
+        <source>Intentos</source>
+        <target>Attempts</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.col.last-attempt" datatype="html">
+        <source>Último intento</source>
+        <target>Last attempt</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.col.reason" datatype="html">
+        <source>Motivo</source>
+        <target>Reason</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.col.grace" datatype="html">
+        <source>Gracia hasta</source>
+        <target>Grace period until</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.detail.card" datatype="html">
+        <source>Método de pago registrado</source>
+        <target>Registered payment method</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.detail.operator-notified" datatype="html">
+        <source>Operador avisado</source>
+        <target>Operator notified</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.retry.title" datatype="html">
+        <source>Reintentar el cobro</source>
+        <target>Retry the payment</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.retry.hint" datatype="html">
+        <source> Se cobra otra vez la prima con el método de pago que el cliente ya registró. El período de gracia no se extiende. </source>
+        <target>The premium is charged again to the payment method the client already registered. The grace period is not extended.</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.retry.busy" datatype="html">
+        <source>Reintentando…</source>
+        <target>Retrying…</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.retry.action" datatype="html">
+        <source>Reintentar cobro</source>
+        <target>Retry payment</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.history.title" datatype="html">
+        <source>Historial de cobros</source>
+        <target>Payment history</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.history.retry" datatype="html">
+        <source>Reintento</source>
+        <target>Retry</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.history.original" datatype="html">
+        <source>Cobro original</source>
+        <target>Original payment</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.history.number" datatype="html">
+        <source>N.º</source>
+        <target>No.</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.history.result" datatype="html">
+        <source>Resultado</source>
+        <target>Result</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.history.code" datatype="html">
+        <source>Código de la pasarela</source>
+        <target>Gateway code</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.history.date" datatype="html">
+        <source>Fecha</source>
+        <target>Date</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.notes.title" datatype="html">
+        <source>Notas de seguimiento</source>
+        <target>Follow-up notes</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.notes.empty" datatype="html">
+        <source>Todavía no hay notas.</source>
+        <target>There are no notes yet.</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.notes.label" datatype="html">
+        <source>Nueva nota</source>
+        <target>New note</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.notes.hint" datatype="html">
+        <source>Hasta <x id="INTERPOLATION" equiv-text="{{ maxLength }}"/> caracteres. No escribas números de tarjeta.</source>
+        <target>Up to <x id="INTERPOLATION" equiv-text="{{ maxLength }}"/> characters. Do not write card numbers.</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.notes.saved" datatype="html">
+        <source>Nota guardada.</source>
+        <target>Note saved.</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.notes.save" datatype="html">
+        <source> Guardar nota </source>
+        <target>Save note</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.inbox.title" datatype="html">
+        <source>Cobros fallidos</source>
+        <target>Failed payments</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.inbox.lead" datatype="html">
+        <source> Cobros de prima rechazados por la pasarela. Los que vencen primero aparecen arriba.
+</source>
+        <target>Premium payments declined by the gateway. Those due first appear at the top.</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.filter.status" datatype="html">
+        <source>Estado</source>
+        <target>Status</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.filter.due-soon" datatype="html">
+        <source>Solo los que vencen en menos de 24 h</source>
+        <target>Only those due in less than 24 h</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.loading" datatype="html">
+        <source>Cargando cobros fallidos…</source>
+        <target>Loading failed payments…</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.inbox.count" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ r.total }}"/> cobros fallidos</source>
+        <target><x id="INTERPOLATION" equiv-text="{{ r.total }}"/> failed payments</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.inbox.loading-visible" datatype="html">
+        <source> Cargando cobros fallidos… </source>
+        <target>Loading failed payments…</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.inbox.empty" datatype="html">
+        <source>No hay cobros fallidos con estos filtros.</source>
+        <target>There are no failed payments with these filters.</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.inbox.caption" datatype="html">
+        <source> Cobros fallidos, ordenados por fin del período de gracia </source>
+        <target>Failed payments, sorted by end of grace period</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.col.actions" datatype="html">
+        <source>Acciones</source>
+        <target>Actions</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.inbox.open" datatype="html">
+        <source>Ver detalle</source>
+        <target>View details</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.pager.label" datatype="html">
+        <source>Paginación</source>
+        <target>Pagination</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.pager.previous" datatype="html">
+        <source> Anterior </source>
+        <target>Previous</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.pager.position" datatype="html">
+        <source>Página <x id="INTERPOLATION" equiv-text="{{ query().page }}"/> de <x id="INTERPOLATION_1" equiv-text="{{ pages() }}"/></source>
+        <target>Page <x id="INTERPOLATION" equiv-text="{{ query().page }}"/> of <x id="INTERPOLATION_1" equiv-text="{{ pages() }}"/></target>
+      </trans-unit>
+      <trans-unit id="failedPayments.pager.next" datatype="html">
+        <source> Siguiente </source>
+        <target>Next</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.filter.open" datatype="html">
+        <source>Abiertos</source>
+        <target>Open</target>
+      </trans-unit>
+      <trans-unit id="nav.failed-payments" datatype="html">
+        <source>Cobros fallidos</source>
+        <target>Failed payments</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

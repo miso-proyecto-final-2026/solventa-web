@@ -25,6 +25,15 @@ export const routes: Routes = [
     loadChildren: () =>
       import('@features/client-consent/client-consent.routes').then((m) => m.CLIENT_CONSENT_ROUTES),
   },
+  {
+    // HU19: asesores y operadores gestionan los cobros de prima rechazados. La API valida el rol de nuevo.
+    path: 'failed-payments',
+    canMatch: [roleGuard('ASESOR', 'OPERADOR')],
+    loadChildren: () =>
+      import('@features/failed-payments/failed-payments.routes').then(
+        (m) => m.FAILED_PAYMENTS_ROUTES,
+      ),
+  },
   // Mientras no existan las demás pantallas (cotizar, pólizas…), vuelven al inicio.
   { path: '**', redirectTo: '' },
 ];

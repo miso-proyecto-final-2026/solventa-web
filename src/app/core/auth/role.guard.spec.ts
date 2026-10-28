@@ -58,6 +58,27 @@ describe('roleGuard', () => {
     expect(router.serializeUrl(run() as UrlTree)).toBe('/');
   });
 
+  it('should accept any of several roles and still reject the rest', () => {
+    const runFor = (role: string) => {
+      session.start({
+        token: 't',
+        user: { id: '3', name: 'C', role },
+        expiresAt: Date.now() + 60_000,
+      });
+      return TestBed.runInInjectionContext(() =>
+        roleGuard('ASESOR', 'OPERADOR')(
+          {} as Route,
+          [new UrlSegment('failed-payments', {})],
+          {} as PartialMatchRouteSnapshot,
+        ),
+      );
+    };
+
+    expect(runFor('OPERADOR')).toBeTrue();
+    expect(runFor('ASESOR')).toBeTrue();
+    expect(router.serializeUrl(runFor('AUDITOR') as UrlTree)).toBe('/');
+  });
+
   it('should treat an expired session as no session', () => {
     session.start({
       token: 't',

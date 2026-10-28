@@ -60,6 +60,23 @@ describe('Header', () => {
       expect(sessionEl('.header__session button')?.textContent).toContain('Cerrar sesión');
     });
 
+    it('should show failed payments to advisors and operators, and only that to operators', async () => {
+      advisor();
+      await fixture.whenStable();
+      expect(links().map((l) => l.textContent?.trim())).toContain('💳 Cobros fallidos');
+
+      TestBed.inject(SessionStore).start({
+        token: 't',
+        user: { id: '2', name: 'Operador Demo', role: 'OPERADOR' },
+        expiresAt: Date.now() + 60_000,
+      });
+      await fixture.whenStable();
+
+      const labels = links().map((l) => l.textContent?.trim());
+      expect(labels).toContain('💳 Cobros fallidos');
+      expect(labels).not.toContain('🤝 Cotización asistida');
+    });
+
     it('should sign out and go home', async () => {
       advisor();
       await fixture.whenStable();
