@@ -58,6 +58,32 @@ export const DETAIL: CaseDetail = {
   notes: [],
 };
 
+/** Reintento que Pagos sigue intentando: la pasarela no estaba disponible. */
+export const DETAIL_WITH_PENDING_RETRY: CaseDetail = {
+  ...DETAIL,
+  attempts: 2,
+  retries: 1,
+  charges: [
+    ...DETAIL.charges,
+    {
+      transactionId: 'tx-1-r1',
+      isRetry: true,
+      status: 'PENDIENTE',
+      amount: money(55_500),
+      createdAt: new Date('2026-10-28T17:00:00Z'),
+      attempts: [
+        {
+          number: 1,
+          result: 'NO_DISPONIBLE',
+          code: null,
+          reason: null,
+          at: new Date('2026-10-28T17:00:00Z'),
+        },
+      ],
+    },
+  ],
+};
+
 export const RETRY_APPROVED: RetryResult = {
   outcome: 'APPROVED',
   gatewayDetail: null,

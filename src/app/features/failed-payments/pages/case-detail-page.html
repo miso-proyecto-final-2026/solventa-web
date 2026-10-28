@@ -103,6 +103,7 @@
         class="sol-btn sol-btn--primary"
         [disabled]="!canRetry()"
         [attr.aria-busy]="retrying()"
+        [attr.aria-describedby]="pendingRetry() ? 'fp-retry-pending' : null"
         (click)="retry()"
       >
         @if (retrying()) {
@@ -112,6 +113,24 @@
         }
       </button>
     </div>
+    @if (pendingRetry()) {
+      <p id="fp-retry-pending" class="fp__hint">
+        <span aria-hidden="true">⏳</span>
+        <ng-container i18n="@@failedPayments.retry.pending"
+          >Hay un reintento en proceso: la pasarela no estaba disponible o no respondió, y Pagos lo
+          sigue intentando con la misma orden, sin cobrar dos veces. Podrás reintentar cuando
+          termine.</ng-container
+        >
+        <button
+          type="button"
+          class="sol-btn sol-btn--outline fp__inline-action"
+          (click)="load()"
+          i18n="@@failedPayments.retry.pending-reload"
+        >
+          Volver a cargar
+        </button>
+      </p>
+    }
     <div #retryStatus tabindex="-1" class="page__result">
       @if (retryResult(); as r) {
         <sol-alert [kind]="retryKind(r)">{{ retryText(r) }}</sol-alert>

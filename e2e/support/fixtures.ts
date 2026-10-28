@@ -231,7 +231,19 @@ export function failedCases(now = Date.now()): FailedCaseDto[] {
   ];
 }
 
-export function failedCaseDetail(c: FailedCaseDto, notes: unknown[]): Record<string, unknown> {
+/** Cargo de un reintento tal como lo devuelve el detalle; `PENDIENTE` mientras Pagos lo sigue intentando. */
+export interface RetryChargeDto {
+  readonly transaccion_id: string;
+  estado: 'PENDIENTE' | 'APROBADA' | 'RECHAZADA';
+  readonly resultado: string;
+  readonly fecha: string;
+}
+
+export function failedCaseDetail(
+  c: FailedCaseDto,
+  notes: unknown[],
+  retries: readonly RetryChargeDto[] = [],
+): Record<string, unknown> {
   return {
     ...c,
     reintentos: c.intentos - 1,
@@ -256,6 +268,24 @@ export function failedCaseDetail(c: FailedCaseDto, notes: unknown[]): Record<str
           },
         ],
       },
+      ...retries.map((r) => ({
+        transaccion_id: r.transaccion_id,
+        es_reintento: true,
+        estado: r.estado,
+        monto: c.monto,
+        creado_en: r.fecha,
+        resuelto_en: r.estado === 'PENDIENTE' ? null : r.fecha,
+        intentos: [
+          {
+            numero: 1,
+            resultado: r.resultado,
+            codigo: r.resultado === 'RECHAZADO' ? c.codigo_rechazo : null,
+            motivo: r.resultado === 'RECHAZADO' ? c.motivo_rechazo : null,
+            referencia_pasarela: null,
+            fecha: r.fecha,
+          },
+        ],
+      })),
     ],
     notas: notes,
   };

@@ -8,7 +8,8 @@
     align-items: center;
     justify-content: space-between;
     gap: var(--sol-space-2) var(--sol-space-5);
-    max-width: var(--sol-content-width);
+    // Más ancho que el contenido: con todas las opciones del asesor el menú cabe en una línea a 1280 px.
+    max-width: var(--sol-header-width);
     padding: var(--sol-space-3) var(--sol-space-4);
     margin: 0 auto;
   }
@@ -29,7 +30,7 @@
   &__list {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--sol-space-1);
+    gap: 0;
     padding: 0;
     margin: 0;
     list-style: none;
@@ -38,9 +39,9 @@
   &__link {
     display: inline-flex;
     align-items: center;
-    gap: var(--sol-space-2);
+    gap: var(--sol-space-1);
     min-height: 2.75rem; // objetivo táctil de al menos 44 px
-    padding: var(--sol-space-1) var(--sol-space-3);
+    padding: var(--sol-space-1) var(--sol-space-2);
     font-size: 0.9rem;
     color: var(--sol-text-on-dark-muted);
     text-decoration: none;

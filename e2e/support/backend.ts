@@ -10,6 +10,7 @@ import {
   failedCaseDetail,
   failedCases,
   quoteDto,
+  RetryChargeDto,
 } from './fixtures';
 
 /** Un fallo que se inyecta en la siguiente llamada: una respuesta HTTP o una caída de red. */
@@ -66,6 +67,8 @@ export class Backend {
   cases: FailedCaseDto[] = failedCases();
   readonly notes: Record<string, unknown[]> = {};
   readonly retryKeys: string[] = [];
+  /** Cargos de reintento por caso; el de la pasarela caída queda `PENDIENTE` hasta `resolvePendingRetry`. */
+  readonly retryCharges: Record<string, RetryChargeDto[]> = {};
   retryMode: RetryMode = 'APROBADO';
   private nextCasesFailure: Failure | null = null;
 
@@ -163,7 +166,9 @@ export class Backend {
         const id = decodeURIComponent(/cobros-fallidos\/([^/?]+)/.exec(route.request().url())![1]);
         const found = this.cases.find((c) => c.id === id);
         return found
-          ? route.fulfill({ json: failedCaseDetail(found, this.notes[id] ?? []) })
+          ? route.fulfill({
+              json: failedCaseDetail(found, this.notes[id] ?? [], this.retryCharges[id]),
+            })
           : route.fulfill({ status: 404, json: pagosError('CASO_NO_ENCONTRADO') });
       }),
     );
@@ -194,6 +199,15 @@ export class Backend {
       const declined = this.retryMode === 'RECHAZADO';
       if (approved) Object.assign(found, { estado: 'RECUPERADO', estado_gracia: null });
       found.intentos += 1;
+      this.retryCharges[id] = [
+        ...(this.retryCharges[id] ?? []),
+        {
+          transaccion_id: `${id}-r${found.intentos}`,
+          estado: approved ? 'APROBADA' : declined ? 'RECHAZADA' : 'PENDIENTE',
+          resultado: this.retryMode,
+          fecha: new Date().toISOString(),
+        },
+      ];
       return route.fulfill({
         status: approved || declined ? 200 : 202,
         json: {
@@ -209,6 +223,13 @@ export class Backend {
         },
       });
     });
+  }
+
+  /** Pagos termina el reintento que estaba en curso (la pasarela volvió y lo rechazó). */
+  resolvePendingRetry(caseId: string): void {
+    for (const charge of this.retryCharges[caseId] ?? []) {
+      if (charge.estado === 'PENDIENTE') charge.estado = 'RECHAZADA';
+    }
   }
 
   private takeCasesFailure(): Failure | null {

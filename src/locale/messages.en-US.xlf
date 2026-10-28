@@ -813,6 +813,14 @@
         <source>Reintentando…</source>
         <target>Retrying…</target>
       </trans-unit>
+      <trans-unit id="failedPayments.retry.pending" datatype="html">
+        <source>Hay un reintento en proceso: la pasarela no estaba disponible o no respondió, y Pagos lo sigue intentando con la misma orden, sin cobrar dos veces. Podrás reintentar cuando termine.</source>
+        <target>There is a retry in progress: the payment gateway was unavailable or did not respond, and Payments keeps trying the same order without charging twice. You can retry once it finishes.</target>
+      </trans-unit>
+      <trans-unit id="failedPayments.retry.pending-reload" datatype="html">
+        <source> Volver a cargar </source>
+        <target> Reload </target>
+      </trans-unit>
       <trans-unit id="failedPayments.retry.action" datatype="html">
         <source>Reintentar cobro</source>
         <target>Retry payment</target>

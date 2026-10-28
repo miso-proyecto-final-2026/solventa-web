@@ -73,6 +73,27 @@ test.describe('Cobros fallidos (HU-19)', () => {
       expect(new Set(backend.retryKeys).size).toBe(2);
     });
 
+    test('con un reintento pendiente el botón queda deshabilitado y dice por qué', async ({
+      page,
+      backend,
+    }) => {
+      await page.goto('/failed-payments/tx-normal');
+      const retry = page.getByRole('button', { name: 'Reintentar cobro' });
+
+      backend.retryMode = 'NO_DISPONIBLE';
+      await retry.click();
+
+      await expect(retry).toBeDisabled();
+      await expect(retry).toHaveAccessibleDescription(/Hay un reintento en proceso/);
+      expect(backend.retryKeys).toHaveLength(1);
+
+      // Cuando Pagos lo resuelve, al volver a cargar se puede reintentar otra vez.
+      backend.resolvePendingRetry('tx-normal');
+      await page.getByRole('button', { name: 'Volver a cargar' }).click();
+      await expect(retry).toBeEnabled();
+      await expect(page.getByText('Hay un reintento en proceso')).toHaveCount(0);
+    });
+
     test('las notas quedan con autor y fecha, y no aceptan números de tarjeta', async ({
       page,
     }) => {
@@ -129,6 +150,20 @@ test.describe('Cobros fallidos (HU-19)', () => {
       await expect(page.getByText('Cobro original')).toBeVisible();
       await expectNoSeriousA11yViolations(page);
     });
+  });
+
+  test('a 1280 px el encabezado del asesor cabe en una sola línea', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await signIn(page);
+    await page.goto('/failed-payments');
+
+    const nav = page.getByRole('navigation').first();
+    const logout = page.getByRole('button', { name: 'Cerrar sesión' });
+    await expect(nav.getByRole('link', { name: /Cobros fallidos/ })).toBeVisible();
+    const [navBox, logoutBox] = [await nav.boundingBox(), await logout.boundingBox()];
+    // Una fila de enlaces mide 44 px; con dos, el menú o «Cerrar sesión» bajan.
+    expect(navBox!.height).toBeLessThan(50);
+    expect(Math.abs(navBox!.y - logoutBox!.y)).toBeLessThan(4);
   });
 
   test('el operador ve cobros fallidos en la navegación, pero no la cotización asistida', async ({

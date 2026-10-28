@@ -18,7 +18,7 @@ import {
   retryResultKind,
   retryResultMessage,
 } from '../domain/labels';
-import { CaseDetail, NOTE_MAX_LENGTH, RetryResult } from '../domain/models';
+import { CaseDetail, NOTE_MAX_LENGTH, RetryResult, hasPendingRetry } from '../domain/models';
 
 /**
  * HU19: detalle de un cobro fallido. Muestra el historial de intentos con el motivo y el código
@@ -56,8 +56,16 @@ export class CaseDetailPage {
   protected readonly noteError = signal<string | null>(null);
   protected readonly noteSaved = signal(false);
 
+  protected readonly pendingRetry = computed(() => {
+    const d = this.detail();
+    return !!d && d.status !== 'RECOVERED' && hasPendingRetry(d);
+  });
   protected readonly canRetry = computed(
-    () => !!this.detail() && this.detail()!.status !== 'RECOVERED' && !this.retrying(),
+    () =>
+      !!this.detail() &&
+      this.detail()!.status !== 'RECOVERED' &&
+      !this.pendingRetry() &&
+      !this.retrying(),
   );
 
   protected readonly digits = CURRENCY_DIGITS;

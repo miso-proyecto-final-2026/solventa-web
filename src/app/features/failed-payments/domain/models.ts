@@ -86,6 +86,15 @@ export interface CaseDetail extends FailedPaymentCase {
   readonly notes: readonly CaseNote[];
 }
 
+/**
+ * Hay un reintento que Pagos todavía no resolvió (la pasarela no estaba disponible o no respondió y
+ * lo sigue intentando con la misma clave). Mientras tanto no se ofrece otro: no cobraría dos veces,
+ * pero solo repetiría el que ya está en curso.
+ */
+export function hasPendingRetry(detail: CaseDetail): boolean {
+  return detail.charges.some((c) => c.isRetry && c.status === 'PENDIENTE');
+}
+
 export type RetryOutcome = 'APPROVED' | 'DECLINED' | 'IN_PROGRESS';
 
 /** Con `IN_PROGRESS`: la pasarela no recibió la orden o no respondió (se concilia). */

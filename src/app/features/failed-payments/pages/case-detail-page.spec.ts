@@ -4,7 +4,7 @@ import { ApiError } from '@core/http/api-error';
 import { Subject } from 'rxjs';
 import { FailedPaymentsGateway } from '../data-access/failed-payments.gateway';
 import { RetryResult } from '../domain/models';
-import { DETAIL, NOTE, RETRY_APPROVED } from '../testing/fixtures';
+import { DETAIL, DETAIL_WITH_PENDING_RETRY, NOTE, RETRY_APPROVED } from '../testing/fixtures';
 import { FakeFailedPaymentsGateway } from '../testing/fake-failed-payments.gateway';
 import { CaseDetailPage } from './case-detail-page';
 
@@ -151,6 +151,29 @@ describe('CaseDetailPage', () => {
     fixture.destroy();
     await create();
     expect(retryButton().disabled).toBeTrue();
+  });
+
+  it('should disable the retry while one is pending, say why and enable it once resolved', async () => {
+    gateway.detail = DETAIL_WITH_PENDING_RETRY;
+    await create();
+
+    const hint = el.querySelector('#fp-retry-pending');
+    expect(retryButton().disabled).toBeTrue();
+    expect(retryButton().getAttribute('aria-describedby')).toBe('fp-retry-pending');
+    expect(hint?.textContent).toContain('Hay un reintento en proceso');
+    retryButton().click();
+    await settle();
+    expect(gateway.retries.length).toBe(0);
+
+    gateway.detail = {
+      ...DETAIL_WITH_PENDING_RETRY,
+      charges: DETAIL_WITH_PENDING_RETRY.charges.map((c) => ({ ...c, status: 'RECHAZADA' })),
+    };
+    Array.from(el.querySelectorAll<HTMLButtonElement>('#fp-retry-pending button'))[0].click();
+    await settle();
+    expect(retryButton().disabled).toBeFalse();
+    expect(retryButton().hasAttribute('aria-describedby')).toBeFalse();
+    expect(el.querySelector('#fp-retry-pending')).toBeNull();
   });
 
   it('should save a note with its author and date and clear the field', async () => {
