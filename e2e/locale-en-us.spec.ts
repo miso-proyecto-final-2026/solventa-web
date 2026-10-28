@@ -50,3 +50,21 @@ test('los errores de validación también salen en inglés', async ({ page }) =>
 
   await expect(page.getByText('Enter the document number.')).toBeVisible();
 });
+
+test('los cobros fallidos (HU-19) se ven en inglés, con montos de en-US', async ({ page }) => {
+  await signIn(page, 'OPERADOR');
+  await page.goto('/failed-payments');
+
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Failed payments');
+  await expect(page.getByRole('row').nth(1)).toContainText('Due in less than 24 h');
+  await expect(page.getByRole('row').nth(1)).toContainText('$55,500');
+  await expect(page.getByRole('button', { name: 'Next' })).toBeVisible();
+
+  await page
+    .getByRole('link', { name: /View details/ })
+    .first()
+    .click();
+  await expect(page.getByRole('heading', { name: 'Payment history' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Retry payment' })).toBeEnabled();
+  await expectNoSeriousA11yViolations(page);
+});

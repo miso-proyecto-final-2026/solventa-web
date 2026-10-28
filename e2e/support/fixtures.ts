@@ -173,3 +173,90 @@ export function quoteDto(client: DemoClient | null, sinCuenta: boolean) {
     sin_cuenta: sinCuenta,
   };
 }
+
+// --- MS Pagos: cobros fallidos (HU19), formas de `solventa-backend/services/pagos/docs/api/openapi.json` ---
+
+const HOUR_MS = 60 * 60 * 1000;
+
+export interface FailedCaseDto {
+  id: string;
+  suscripcion_id: string;
+  cliente_id: string;
+  estado: 'PENDIENTE' | 'VENCIDO' | 'RECUPERADO';
+  monto: string;
+  moneda: string;
+  intentos: number;
+  ultimo_intento_en: string;
+  codigo_rechazo: string | null;
+  motivo_rechazo: string | null;
+  gracia_hasta: string;
+  estado_gracia: 'VIGENTE' | 'POR_VENCER' | 'VENCIDA' | null;
+  tarjeta: { marca: string | null; ultimos4: string | null };
+}
+
+/** Dos casos abiertos: uno vence en 6 h (resaltado) y otro en 2 días. */
+export function failedCases(now = Date.now()): FailedCaseDto[] {
+  const at = (hours: number) => new Date(now + hours * HOUR_MS).toISOString();
+  return [
+    {
+      id: 'tx-urgente',
+      suscripcion_id: 'sus-1',
+      cliente_id: 'cli-1',
+      estado: 'PENDIENTE',
+      monto: '55500.00',
+      moneda: 'COP',
+      intentos: 1,
+      ultimo_intento_en: at(-66),
+      codigo_rechazo: 'FONDOS_INSUFICIENTES',
+      motivo_rechazo: 'Fondos insuficientes',
+      gracia_hasta: at(6),
+      estado_gracia: 'POR_VENCER',
+      tarjeta: { marca: 'VISA', ultimos4: '4242' },
+    },
+    {
+      id: 'tx-normal',
+      suscripcion_id: 'sus-2',
+      cliente_id: 'cli-2',
+      estado: 'PENDIENTE',
+      monto: '81000.00',
+      moneda: 'COP',
+      intentos: 2,
+      ultimo_intento_en: at(-20),
+      codigo_rechazo: 'TARJETA_BLOQUEADA',
+      motivo_rechazo: 'Tarjeta bloqueada por el banco',
+      gracia_hasta: at(50),
+      estado_gracia: 'VIGENTE',
+      tarjeta: { marca: 'MASTERCARD', ultimos4: '5100' },
+    },
+  ];
+}
+
+export function failedCaseDetail(c: FailedCaseDto, notes: unknown[]): Record<string, unknown> {
+  return {
+    ...c,
+    reintentos: c.intentos - 1,
+    operador_notificado_en: null,
+    resuelto_en: null,
+    cobros: [
+      {
+        transaccion_id: c.id,
+        es_reintento: false,
+        estado: 'RECHAZADA',
+        monto: c.monto,
+        creado_en: c.ultimo_intento_en,
+        resuelto_en: c.ultimo_intento_en,
+        intentos: [
+          {
+            numero: 1,
+            resultado: 'RECHAZADO',
+            codigo: c.codigo_rechazo,
+            motivo: c.motivo_rechazo,
+            referencia_pasarela: 'sim-ref-1',
+            fecha: c.ultimo_intento_en,
+          },
+        ],
+      },
+    ],
+    notas: notes,
+  };
+}
