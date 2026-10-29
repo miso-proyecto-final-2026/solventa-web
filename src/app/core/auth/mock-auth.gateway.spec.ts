@@ -3,7 +3,7 @@ import { firstValueFrom } from 'rxjs';
 import { ApiError } from '../http/api-error';
 import { AuthGateway } from './auth.gateway';
 import { AuthService } from './auth.service';
-import { MOCK_ADVISOR, MockAuthGateway } from './mock-auth.gateway';
+import { MOCK_ADVISOR, MOCK_OPERATOR, MockAuthGateway } from './mock-auth.gateway';
 import { SessionStore } from './session.store';
 
 describe('AuthService with the mock gateway', () => {
@@ -25,6 +25,12 @@ describe('AuthService with the mock gateway', () => {
     await firstValueFrom(auth.login(` ${MOCK_ADVISOR.email} `, MOCK_ADVISOR.password));
 
     expect(session.hasRole('ASESOR')).toBeTrue();
+  });
+
+  it('should start an operator session with the demo operator credentials', async () => {
+    await firstValueFrom(auth.login(MOCK_OPERATOR.email, MOCK_OPERATOR.password));
+
+    expect(session.hasRole('OPERADOR')).toBeTrue();
   });
 
   it('should reject wrong credentials without starting a session', async () => {

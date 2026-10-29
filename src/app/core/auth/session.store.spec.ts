@@ -30,6 +30,8 @@ describe('SessionStore', () => {
     expect(store.user()?.name).toBe('Asesora Demo');
     expect(store.hasRole('ASESOR')).toBeTrue();
     expect(store.hasRole('AUDITOR')).toBeFalse();
+    expect(store.hasAnyRole(['OPERADOR', 'ASESOR'])).toBeTrue();
+    expect(store.hasAnyRole(['OPERADOR', 'AUDITOR'])).toBeFalse();
     expect(store.token()).toBe('tok');
   });
 

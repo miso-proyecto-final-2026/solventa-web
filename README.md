@@ -44,10 +44,11 @@ El servidor de desarrollo redirige las llamadas a `/api/...` hacia los servicios
 |---|---|---|
 | `/api/identidad/v1/...` | MS Identidad | 8001 |
 | `/api/cotizacion/v1/...` | MS Cotización | 8000 |
+| `/api/pagos/v1/...` | MS Pagos (solo `/v1/pagos/cobros-fallidos`, HU-19) | 8005 |
 
 Para levantar los servicios sigue la sección «Levantar los servicios en local» del README de `postman/` en `solventa-backend`. No hace falta configurar CORS: el navegador solo habla con `localhost:4200`.
 
-> **Supuesto por confirmar:** que el API Gateway de cada ambiente exponga las mismas rutas (`/api/identidad/...`, `/api/cotizacion/...`). Si no es así, se ajusta `apiBaseUrl` en `src/environments/` y el mapa de `proxy.conf.json`.
+> **Supuesto por confirmar:** que el API Gateway de cada ambiente exponga las mismas rutas (`/api/identidad/...`, `/api/cotizacion/...`, `/api/pagos/...`). Si no es así, se ajusta `apiBaseUrl` en `src/environments/` y el mapa de `proxy.conf.json`.
 
 ### Cotización asistida del asesor (HU-38)
 
@@ -58,7 +59,7 @@ Hay dos formas de probarla, que se eligen con `dataSource` en `src/environments/
 | `dataSource` | Qué usa | Credenciales |
 |---|---|---|
 | `'http'` (por defecto) | Los servicios locales vía el proxy. Antes, en `solventa-backend`: sembrar el asesor y los clientes demo y levantar Identidad y Cotización (README de `postman/`). | Las que se usaron en `sembrar_demo.py`. |
-| `'mock'` | Datos simulados en el navegador, sin backend. Replica la matriz demo del backend (clientes con documento `1000000001` a `1000000005`). | `asesor@solventa.test` / `Demo12345` (solo existen en el simulado). |
+| `'mock'` | Datos simulados en el navegador, sin backend. Replica la matriz demo del backend (clientes con documento `1000000001` a `1000000005`). | `asesor@solventa.test` / `Demo12345`, u `operador@solventa.test` / `Demo12345` para el rol `OPERADOR` (solo existen en el simulado). |
 
 Clientes demo: `…001` perfil favorable (precio ≈ −10 %), `…002` riesgoso (≈ +58 %), `…003` neutro, `…004` consentimiento revocado y `…005` sin consentimiento (precio por defecto con aviso). Cualquier otro documento se trata como un cliente sin cuenta.
 
@@ -148,6 +149,18 @@ Las carpetas vacías tienen un archivo `.gitkeep`; bórralo al agregar el primer
 ### Consentimiento del cliente (HU-08)
 
 Ruta `/client-consent`, solo para el rol `ASESOR`. El asesor busca al cliente por tipo y número de documento (el mismo formulario de HU-38) y ve uno de tres estados: **otorgado** (con fecha), **revocado** o **no solicitado**. Con un consentimiento revocado o inexistente, la pantalla avisa que no se puede cotizar con datos de Open Finance y enlaza a la cotización con perfil por defecto. Es de solo lectura y cada búsqueda consulta al servidor (`Cache-Control: no-cache`), así que una revocación reciente aparece al volver a buscar. Usa `GET /v1/clientes/busqueda` de Identidad; no hay búsqueda por nombre ni fecha de revocación todavía (ver el PR).
+
+### Cobros fallidos (HU-19)
+
+Ruta `/failed-payments`, para los roles `ASESOR` y `OPERADOR` (`roleGuard` acepta varios roles y la navegación filtra con
+`requiredRoles`). La **bandeja** lista los cobros de prima rechazados con monto, intentos, último intento, motivo y fin de
+la gracia, paginada de a 20 y ordenada por urgencia; los que vencen en menos de 24 h se resaltan con texto y color. Filtra
+por estado y por «próximos a vencer». El **detalle** muestra el historial de cobros con cada intento y el código de la
+pasarela, la marca y los últimos 4 de la tarjeta (nunca el token ni datos de contacto del cliente), las **notas** con
+autor y fecha, y el botón **Reintentar cobro**: envía una `Idempotency-Key` por intención del usuario, queda deshabilitado
+mientras espera (dos clics cobran una vez) y conserva la clave si no llegó respuesta. Aprobado, rechazado y pasarela no
+disponible tienen mensajes distintos. Usa el único prefijo de MS Pagos publicado en el borde
+(`/v1/pagos/cobros-fallidos`, enmienda del ADR-0014 en `solventa-backend`).
 
 ### Reglas de dependencia
 

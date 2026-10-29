@@ -44,6 +44,10 @@ export class SessionStore {
     return this.user()?.role === role;
   }
 
+  hasAnyRole(roles: readonly string[]): boolean {
+    return roles.some((role) => this.hasRole(role));
+  }
+
   token(): string | null {
     return this.isActive() ? (this.current()?.token ?? null) : null;
   }

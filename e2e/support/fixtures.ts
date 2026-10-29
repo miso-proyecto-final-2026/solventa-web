@@ -173,3 +173,120 @@ export function quoteDto(client: DemoClient | null, sinCuenta: boolean) {
     sin_cuenta: sinCuenta,
   };
 }
+
+// --- MS Pagos: cobros fallidos (HU19), formas de `solventa-backend/services/pagos/docs/api/openapi.json` ---
+
+const HOUR_MS = 60 * 60 * 1000;
+
+export interface FailedCaseDto {
+  id: string;
+  suscripcion_id: string;
+  cliente_id: string;
+  estado: 'PENDIENTE' | 'VENCIDO' | 'RECUPERADO';
+  monto: string;
+  moneda: string;
+  intentos: number;
+  ultimo_intento_en: string;
+  codigo_rechazo: string | null;
+  motivo_rechazo: string | null;
+  gracia_hasta: string;
+  estado_gracia: 'VIGENTE' | 'POR_VENCER' | 'VENCIDA' | null;
+  tarjeta: { marca: string | null; ultimos4: string | null };
+}
+
+/** Dos casos abiertos: uno vence en 6 h (resaltado) y otro en 2 días. */
+export function failedCases(now = Date.now()): FailedCaseDto[] {
+  const at = (hours: number) => new Date(now + hours * HOUR_MS).toISOString();
+  return [
+    {
+      id: 'tx-urgente',
+      suscripcion_id: 'sus-1',
+      cliente_id: 'cli-1',
+      estado: 'PENDIENTE',
+      monto: '55500.00',
+      moneda: 'COP',
+      intentos: 1,
+      ultimo_intento_en: at(-66),
+      codigo_rechazo: 'FONDOS_INSUFICIENTES',
+      motivo_rechazo: 'Fondos insuficientes',
+      gracia_hasta: at(6),
+      estado_gracia: 'POR_VENCER',
+      tarjeta: { marca: 'VISA', ultimos4: '4242' },
+    },
+    {
+      id: 'tx-normal',
+      suscripcion_id: 'sus-2',
+      cliente_id: 'cli-2',
+      estado: 'PENDIENTE',
+      monto: '81000.00',
+      moneda: 'COP',
+      intentos: 2,
+      ultimo_intento_en: at(-20),
+      codigo_rechazo: 'TARJETA_BLOQUEADA',
+      motivo_rechazo: 'Tarjeta bloqueada por el banco',
+      gracia_hasta: at(50),
+      estado_gracia: 'VIGENTE',
+      tarjeta: { marca: 'MASTERCARD', ultimos4: '5100' },
+    },
+  ];
+}
+
+/** Cargo de un reintento tal como lo devuelve el detalle; `PENDIENTE` mientras Pagos lo sigue intentando. */
+export interface RetryChargeDto {
+  readonly transaccion_id: string;
+  estado: 'PENDIENTE' | 'APROBADA' | 'RECHAZADA';
+  readonly resultado: string;
+  readonly fecha: string;
+}
+
+export function failedCaseDetail(
+  c: FailedCaseDto,
+  notes: unknown[],
+  retries: readonly RetryChargeDto[] = [],
+): Record<string, unknown> {
+  return {
+    ...c,
+    reintentos: c.intentos - 1,
+    operador_notificado_en: null,
+    resuelto_en: null,
+    cobros: [
+      {
+        transaccion_id: c.id,
+        es_reintento: false,
+        estado: 'RECHAZADA',
+        monto: c.monto,
+        creado_en: c.ultimo_intento_en,
+        resuelto_en: c.ultimo_intento_en,
+        intentos: [
+          {
+            numero: 1,
+            resultado: 'RECHAZADO',
+            codigo: c.codigo_rechazo,
+            motivo: c.motivo_rechazo,
+            referencia_pasarela: 'sim-ref-1',
+            fecha: c.ultimo_intento_en,
+          },
+        ],
+      },
+      ...retries.map((r) => ({
+        transaccion_id: r.transaccion_id,
+        es_reintento: true,
+        estado: r.estado,
+        monto: c.monto,
+        creado_en: r.fecha,
+        resuelto_en: r.estado === 'PENDIENTE' ? null : r.fecha,
+        intentos: [
+          {
+            numero: 1,
+            resultado: r.resultado,
+            codigo: r.resultado === 'RECHAZADO' ? c.codigo_rechazo : null,
+            motivo: r.resultado === 'RECHAZADO' ? c.motivo_rechazo : null,
+            referencia_pasarela: null,
+            fecha: r.fecha,
+          },
+        ],
+      })),
+    ],
+    notas: notes,
+  };
+}

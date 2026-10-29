@@ -1,0 +1,157 @@
+<h1 i18n="@@failedPayments.inbox.title">Cobros fallidos</h1>
+<p class="page__lead" i18n="@@failedPayments.inbox.lead">
+  Cobros de prima rechazados por la pasarela. Los que vencen primero aparecen arriba.
+</p>
+
+<sol-card class="page__card">
+  <form class="fp__filters" (submit)="$event.preventDefault()">
+    <div class="fp__filter">
+      <label for="fp-status" i18n="@@failedPayments.filter.status">Estado</label>
+      <select
+        id="fp-status"
+        class="sol-input"
+        [ngModel]="query().status"
+        name="status"
+        (ngModelChange)="setStatus($event)"
+      >
+        @for (o of statusOptions; track o.value) {
+          <option [value]="o.value">{{ o.label }}</option>
+        }
+      </select>
+    </div>
+    <label class="fp__check">
+      <input
+        type="checkbox"
+        [ngModel]="query().dueSoonOnly"
+        name="dueSoonOnly"
+        (ngModelChange)="setDueSoonOnly($event)"
+      />
+      <ng-container i18n="@@failedPayments.filter.due-soon"
+        >Solo los que vencen en menos de 24 h</ng-container
+      >
+    </label>
+  </form>
+
+  <p class="sol-visually-hidden" role="status">
+    @if (loading()) {
+      <ng-container i18n="@@failedPayments.loading">Cargando cobros fallidos…</ng-container>
+    } @else if (result(); as r) {
+      <ng-container i18n="@@failedPayments.inbox.count">{{ r.total }} cobros fallidos</ng-container>
+    }
+  </p>
+
+  @if (error(); as e) {
+    <sol-alert kind="error">
+      {{ errorText(e) }}
+      <button
+        type="button"
+        class="sol-btn sol-btn--outline fp__inline-action"
+        (click)="load()"
+        i18n="@@failedPayments.retry-load"
+      >
+        Volver a cargar
+      </button>
+    </sol-alert>
+  }
+
+  @if (loading() && !result()) {
+    <p class="fp__loading" aria-hidden="true" i18n="@@failedPayments.inbox.loading-visible">
+      Cargando cobros fallidos…
+    </p>
+  }
+
+  @if (result(); as r) {
+    @if (r.items.length === 0) {
+      <sol-alert kind="info">
+        <ng-container i18n="@@failedPayments.inbox.empty"
+          >No hay cobros fallidos con estos filtros.</ng-container
+        >
+      </sol-alert>
+    } @else {
+      <div class="fp__table-wrap">
+        <table class="fp__table" [attr.aria-busy]="loading()">
+          <caption class="sol-visually-hidden" i18n="@@failedPayments.inbox.caption">
+            Cobros fallidos, ordenados por fin del período de gracia
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col" i18n="@@failedPayments.col.amount">Monto</th>
+              <th scope="col" i18n="@@failedPayments.col.attempts">Intentos</th>
+              <th scope="col" i18n="@@failedPayments.col.last-attempt">Último intento</th>
+              <th scope="col" i18n="@@failedPayments.col.reason">Motivo</th>
+              <th scope="col" i18n="@@failedPayments.col.grace">Gracia hasta</th>
+              <th scope="col" i18n="@@failedPayments.col.status">Estado</th>
+              <th scope="col">
+                <span class="sol-visually-hidden" i18n="@@failedPayments.col.actions"
+                  >Acciones</span
+                >
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (c of r.items; track c.id) {
+              <tr [class.fp__row--urgent]="c.grace === 'DUE_SOON' || c.grace === 'OVERDUE'">
+                <td>
+                  {{ c.amount.amount | currency: c.amount.currency : 'symbol-narrow' : digits }}
+                </td>
+                <td>{{ c.attempts }}</td>
+                <td>{{ c.lastAttemptAt | date: 'short' }}</td>
+                <td>{{ c.declineReason ?? '—' }}</td>
+                <td>
+                  {{ c.graceUntil | date: 'short' }}
+                  @if (c.grace) {
+                    <span
+                      class="fp__badge"
+                      [class.fp__badge--warning]="c.grace === 'DUE_SOON'"
+                      [class.fp__badge--danger]="c.grace === 'OVERDUE'"
+                    >
+                      @if (c.grace !== 'CURRENT') {
+                        <span aria-hidden="true">⚠</span>
+                      }
+                      {{ graceText(c.grace) }}
+                    </span>
+                  }
+                </td>
+                <td>{{ statusLabel(c.status) }}</td>
+                <td>
+                  <a [routerLink]="['/failed-payments', c.id]" class="fp__link">
+                    <ng-container i18n="@@failedPayments.inbox.open">Ver detalle</ng-container>
+                    <span class="sol-visually-hidden">
+                      ({{
+                        c.amount.amount | currency: c.amount.currency : 'symbol-narrow' : digits
+                      }}, {{ c.graceUntil | date: 'short' }})
+                    </span>
+                  </a>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <nav class="fp__pager" i18n-aria-label="@@failedPayments.pager.label" aria-label="Paginación">
+        <button
+          type="button"
+          class="sol-btn sol-btn--outline"
+          [disabled]="query().page <= 1 || loading()"
+          (click)="goToPage(query().page - 1)"
+          i18n="@@failedPayments.pager.previous"
+        >
+          Anterior
+        </button>
+        <span i18n="@@failedPayments.pager.position"
+          >Página {{ query().page }} de {{ pages() }}</span
+        >
+        <button
+          type="button"
+          class="sol-btn sol-btn--outline"
+          [disabled]="query().page >= pages() || loading()"
+          (click)="goToPage(query().page + 1)"
+          i18n="@@failedPayments.pager.next"
+        >
+          Siguiente
+        </button>
+      </nav>
+    }
+  }
+</sol-card>

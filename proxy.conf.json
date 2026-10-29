@@ -1,12 +1,23 @@
 {
   "/api/identidad": {
     "target": "http://localhost:8001",
-    "pathRewrite": { "^/api/identidad": "" },
+    "pathRewrite": {
+      "^/api/identidad": ""
+    },
     "changeOrigin": true
   },
   "/api/cotizacion": {
     "target": "http://localhost:8000",
-    "pathRewrite": { "^/api/cotizacion": "" },
+    "pathRewrite": {
+      "^/api/cotizacion": ""
+    },
+    "changeOrigin": true
+  },
+  "/api/pagos": {
+    "target": "http://localhost:8005",
+    "pathRewrite": {
+      "^/api/pagos": ""
+    },
     "changeOrigin": true
   }
 }

@@ -929,6 +929,536 @@
           <context context-type="linenumber">73,76</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="failedPayments.status.pending" datatype="html">
+        <source>Pendiente</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/domain/labels.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.status.expired" datatype="html">
+        <source>Gracia vencida</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/domain/labels.ts</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.status.recovered" datatype="html">
+        <source>Recuperado</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/domain/labels.ts</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.grace.current" datatype="html">
+        <source>En gracia</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/domain/labels.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.grace.due-soon" datatype="html">
+        <source>Vence en menos de 24 h</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/domain/labels.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.grace.overdue" datatype="html">
+        <source>Gracia vencida</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/domain/labels.ts</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.error.unauthenticated" datatype="html">
+        <source>Tu sesión venció. Inicia sesión de nuevo para continuar.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/domain/labels.ts</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.error.forbidden" datatype="html">
+        <source>Tu usuario no tiene permiso para gestionar cobros fallidos.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/domain/labels.ts</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.error.not-found" datatype="html">
+        <source>Este cobro fallido no existe. Vuelve a la bandeja y elige otro.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/domain/labels.ts</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.error.network" datatype="html">
+        <source>No hay conexión con el servidor. Revisa tu red e inténtalo de nuevo.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/domain/labels.ts</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.error.server" datatype="html">
+        <source>No pudimos cargar los cobros fallidos por un problema del servidor. Inténtalo de nuevo en unos minutos.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/domain/labels.ts</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.note.error.card" datatype="html">
+        <source>La nota no puede llevar números de tarjeta. Quítalo y guarda de nuevo.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/domain/labels.ts</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.note.error.length" datatype="html">
+        <source>Escribe una nota de 1 a 1000 caracteres.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/domain/labels.ts</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.retry.error.recovered" datatype="html">
+        <source>Este cobro ya se recuperó; no hace falta reintentarlo.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/domain/labels.ts</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.retry.error.gateway" datatype="html">
+        <source>La pasarela de pago no responde. Inténtalo de nuevo en unos minutos.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/domain/labels.ts</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.retry.replay" datatype="html">
+        <source>Ya hay un reintento en curso para este cobro; no se cobró otra vez.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/domain/labels.ts</context>
+          <context context-type="linenumber">66</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.retry.approved" datatype="html">
+        <source>Cobro aprobado. El caso quedó recuperado.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/domain/labels.ts</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.retry.declined" datatype="html">
+        <source>La pasarela rechazó el cobro otra vez: <x id="reason" equiv-text="reason"/>.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/domain/labels.ts</context>
+          <context context-type="linenumber">73</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.retry.unavailable" datatype="html">
+        <source>La pasarela de pago no está disponible. El cobro quedó en proceso y se reintentará solo; revisa el estado en unos minutos.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/domain/labels.ts</context>
+          <context context-type="linenumber">77</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.retry.no-response" datatype="html">
+        <source>La pasarela no respondió. Estamos confirmando si el cobro pasó; revisa el estado en unos minutos antes de reintentar.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/domain/labels.ts</context>
+          <context context-type="linenumber">78</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.inbox.document-title" datatype="html">
+        <source>Solventa — Cobros fallidos</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/failed-payments.routes.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.detail.document-title" datatype="html">
+        <source>Solventa — Detalle del cobro fallido</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/failed-payments.routes.ts</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.detail.back" datatype="html">
+        <source>← Volver a la bandeja</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/case-detail-page.html</context>
+          <context context-type="linenumber">2,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.detail.title" datatype="html">
+        <source>Cobro fallido</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/case-detail-page.html</context>
+          <context context-type="linenumber">4,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.detail.loading" datatype="html">
+        <source>Cargando el cobro fallido…</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/case-detail-page.html</context>
+          <context context-type="linenumber">8,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.retry-load" datatype="html">
+        <source> Volver a cargar </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/case-detail-page.html</context>
+          <context context-type="linenumber">22,25</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/inbox-page.html</context>
+          <context context-type="linenumber">52,54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.detail.loading-visible" datatype="html">
+        <source> Cargando el cobro fallido… </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/case-detail-page.html</context>
+          <context context-type="linenumber">30,35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.detail.summary" datatype="html">
+        <source>Resumen</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/case-detail-page.html</context>
+          <context context-type="linenumber">36,38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.col.amount" datatype="html">
+        <source>Monto</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/case-detail-page.html</context>
+          <context context-type="linenumber">39,40</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/inbox-page.html</context>
+          <context context-type="linenumber">78,79</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.col.status" datatype="html">
+        <source>Estado</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/case-detail-page.html</context>
+          <context context-type="linenumber">43,44</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/inbox-page.html</context>
+          <context context-type="linenumber">83,85</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.col.attempts" datatype="html">
+        <source>Intentos</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/case-detail-page.html</context>
+          <context context-type="linenumber">47,49</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/inbox-page.html</context>
+          <context context-type="linenumber">79,80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.col.last-attempt" datatype="html">
+        <source>Último intento</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/case-detail-page.html</context>
+          <context context-type="linenumber">51,52</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/inbox-page.html</context>
+          <context context-type="linenumber">80,81</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.col.reason" datatype="html">
+        <source>Motivo</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/case-detail-page.html</context>
+          <context context-type="linenumber">55,57</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/case-detail-page.html</context>
+          <context context-type="linenumber">163,164</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/inbox-page.html</context>
+          <context context-type="linenumber">81,82</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.col.grace" datatype="html">
+        <source>Gracia hasta</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/case-detail-page.html</context>
+          <context context-type="linenumber">64,66</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/inbox-page.html</context>
+          <context context-type="linenumber">82,83</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.detail.card" datatype="html">
+        <source>Método de pago registrado</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/case-detail-page.html</context>
+          <context context-type="linenumber">82,83</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.detail.operator-notified" datatype="html">
+        <source>Operador avisado</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/case-detail-page.html</context>
+          <context context-type="linenumber">87,88</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.retry.title" datatype="html">
+        <source>Reintentar el cobro</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/case-detail-page.html</context>
+          <context context-type="linenumber">95,96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.retry.hint" datatype="html">
+        <source> Se cobra otra vez la prima con el método de pago que el cliente ya registró. El período de gracia no se extiende. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/case-detail-page.html</context>
+          <context context-type="linenumber">97,100</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.retry.busy" datatype="html">
+        <source>Reintentando…</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/case-detail-page.html</context>
+          <context context-type="linenumber">110,112</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.retry.action" datatype="html">
+        <source>Reintentar cobro</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/case-detail-page.html</context>
+          <context context-type="linenumber">112,115</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.retry.pending" datatype="html">
+        <source>Hay un reintento en proceso: la pasarela no estaba disponible o no respondió, y Pagos lo sigue intentando con la misma orden, sin cobrar dos veces. Podrás reintentar cuando termine.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/case-detail-page.html</context>
+          <context context-type="linenumber">120,123</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.retry.pending-reload" datatype="html">
+        <source> Volver a cargar </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/case-detail-page.html</context>
+          <context context-type="linenumber">130,134</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.history.title" datatype="html">
+        <source>Historial de cobros</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/case-detail-page.html</context>
+          <context context-type="linenumber">145,146</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.history.retry" datatype="html">
+        <source>Reintento</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/case-detail-page.html</context>
+          <context context-type="linenumber">150,152</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.history.original" datatype="html">
+        <source>Cobro original</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/case-detail-page.html</context>
+          <context context-type="linenumber">152,154</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.history.number" datatype="html">
+        <source>N.º</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/case-detail-page.html</context>
+          <context context-type="linenumber">161</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.history.result" datatype="html">
+        <source>Resultado</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/case-detail-page.html</context>
+          <context context-type="linenumber">161,162</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.history.code" datatype="html">
+        <source>Código de la pasarela</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/case-detail-page.html</context>
+          <context context-type="linenumber">162,163</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.history.date" datatype="html">
+        <source>Fecha</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/case-detail-page.html</context>
+          <context context-type="linenumber">164,166</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.notes.title" datatype="html">
+        <source>Notas de seguimiento</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/case-detail-page.html</context>
+          <context context-type="linenumber">185,187</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.notes.empty" datatype="html">
+        <source>Todavía no hay notas.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/case-detail-page.html</context>
+          <context context-type="linenumber">187,189</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.notes.label" datatype="html">
+        <source>Nueva nota</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/case-detail-page.html</context>
+          <context context-type="linenumber">203,205</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.notes.hint" datatype="html">
+        <source>Hasta <x id="INTERPOLATION" equiv-text="{{ maxLength }}"/> caracteres. No escribas números de tarjeta.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/case-detail-page.html</context>
+          <context context-type="linenumber">215,217</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.notes.saved" datatype="html">
+        <source>Nota guardada.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/case-detail-page.html</context>
+          <context context-type="linenumber">224,227</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.notes.save" datatype="html">
+        <source> Guardar nota </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/case-detail-page.html</context>
+          <context context-type="linenumber">234,236</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.inbox.title" datatype="html">
+        <source>Cobros fallidos</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/inbox-page.html</context>
+          <context context-type="linenumber">1,2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.inbox.lead" datatype="html">
+        <source> Cobros de prima rechazados por la pasarela. Los que vencen primero aparecen arriba.
+</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/inbox-page.html</context>
+          <context context-type="linenumber">3,7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.filter.status" datatype="html">
+        <source>Estado</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/inbox-page.html</context>
+          <context context-type="linenumber">9,11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.filter.due-soon" datatype="html">
+        <source>Solo los que vencen en menos de 24 h</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/inbox-page.html</context>
+          <context context-type="linenumber">30,33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.loading" datatype="html">
+        <source>Cargando cobros fallidos…</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/inbox-page.html</context>
+          <context context-type="linenumber">37,38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.inbox.count" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ r.total }}"/> cobros fallidos</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/inbox-page.html</context>
+          <context context-type="linenumber">39,40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.inbox.loading-visible" datatype="html">
+        <source> Cargando cobros fallidos… </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/inbox-page.html</context>
+          <context context-type="linenumber">59,64</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.inbox.empty" datatype="html">
+        <source>No hay cobros fallidos con estos filtros.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/inbox-page.html</context>
+          <context context-type="linenumber">67,69</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.inbox.caption" datatype="html">
+        <source> Cobros fallidos, ordenados por fin del período de gracia </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/inbox-page.html</context>
+          <context context-type="linenumber">74,76</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.col.actions" datatype="html">
+        <source>Acciones</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/inbox-page.html</context>
+          <context context-type="linenumber">86,88</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.inbox.open" datatype="html">
+        <source>Ver detalle</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/inbox-page.html</context>
+          <context context-type="linenumber">118,119</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.pager.label" datatype="html">
+        <source>Paginación</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/inbox-page.html</context>
+          <context context-type="linenumber">132,134</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.pager.previous" datatype="html">
+        <source> Anterior </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/inbox-page.html</context>
+          <context context-type="linenumber">140,142</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.pager.position" datatype="html">
+        <source>Página <x id="INTERPOLATION" equiv-text="{{ query().page }}"/> de <x id="INTERPOLATION_1" equiv-text="{{ pages() }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/inbox-page.html</context>
+          <context context-type="linenumber">143,145</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.pager.next" datatype="html">
+        <source> Siguiente </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/inbox-page.html</context>
+          <context context-type="linenumber">152,154</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="failedPayments.filter.open" datatype="html">
+        <source>Abiertos</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/failed-payments/pages/inbox-page.ts</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="home.document-title" datatype="html">
         <source>Solventa — Inicio</source>
         <context-group purpose="location">
@@ -1104,25 +1634,32 @@
           <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="nav.failed-payments" datatype="html">
+        <source>Cobros fallidos</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="nav.policies" datatype="html">
         <source>Mis Pólizas</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nav.claims" datatype="html">
         <source>Siniestros</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
-          <context context-type="linenumber">29</context>
+          <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nav.profile" datatype="html">
         <source>Perfil</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
-          <context context-type="linenumber">30</context>
+          <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="language.switch.es-CO" datatype="html">

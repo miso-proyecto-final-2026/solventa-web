@@ -1,0 +1,239 @@
+<a routerLink="/failed-payments" class="fp__back" i18n="@@failedPayments.detail.back"
+  >← Volver a la bandeja</a
+>
+<h1 i18n="@@failedPayments.detail.title">Cobro fallido</h1>
+
+<p class="sol-visually-hidden" role="status">
+  @if (loading()) {
+    <ng-container i18n="@@failedPayments.detail.loading">Cargando el cobro fallido…</ng-container>
+  }
+</p>
+
+@if (loadError(); as e) {
+  <sol-alert kind="error">
+    {{ loadErrorText(e) }}
+    @if (e.kind !== 'not-found') {
+      <button
+        type="button"
+        class="sol-btn sol-btn--outline fp__inline-action"
+        (click)="load()"
+        i18n="@@failedPayments.retry-load"
+      >
+        Volver a cargar
+      </button>
+    }
+  </sol-alert>
+}
+
+@if (!detail() && loading()) {
+  <p class="fp__loading" aria-hidden="true" i18n="@@failedPayments.detail.loading-visible">
+    Cargando el cobro fallido…
+  </p>
+}
+
+@if (detail(); as d) {
+  <sol-card class="page__card">
+    <h2 class="page__step" i18n="@@failedPayments.detail.summary">Resumen</h2>
+    <dl class="fp__summary">
+      <div>
+        <dt i18n="@@failedPayments.col.amount">Monto</dt>
+        <dd>{{ d.amount.amount | currency: d.amount.currency : 'symbol-narrow' : digits }}</dd>
+      </div>
+      <div>
+        <dt i18n="@@failedPayments.col.status">Estado</dt>
+        <dd>{{ statusLabel(d.status) }}</dd>
+      </div>
+      <div>
+        <dt i18n="@@failedPayments.col.attempts">Intentos</dt>
+        <dd>{{ d.attempts }}</dd>
+      </div>
+      <div>
+        <dt i18n="@@failedPayments.col.last-attempt">Último intento</dt>
+        <dd>{{ d.lastAttemptAt | date: 'medium' }}</dd>
+      </div>
+      <div>
+        <dt i18n="@@failedPayments.col.reason">Motivo</dt>
+        <dd>
+          {{ d.declineReason ?? '—' }}
+          @if (d.declineCode) {
+            <span class="fp__code">({{ d.declineCode }})</span>
+          }
+        </dd>
+      </div>
+      <div>
+        <dt i18n="@@failedPayments.col.grace">Gracia hasta</dt>
+        <dd>
+          {{ d.graceUntil | date: 'medium' }}
+          @if (d.grace) {
+            <span
+              class="fp__badge"
+              [class.fp__badge--warning]="d.grace === 'DUE_SOON'"
+              [class.fp__badge--danger]="d.grace === 'OVERDUE'"
+            >
+              @if (d.grace !== 'CURRENT') {
+                <span aria-hidden="true">⚠</span>
+              }
+              {{ graceText(d.grace) }}
+            </span>
+          }
+        </dd>
+      </div>
+      <div>
+        <dt i18n="@@failedPayments.detail.card">Método de pago registrado</dt>
+        <dd>{{ d.card.brand ?? '—' }} •••• {{ d.card.last4 ?? '—' }}</dd>
+      </div>
+      @if (d.operatorNotifiedAt) {
+        <div>
+          <dt i18n="@@failedPayments.detail.operator-notified">Operador avisado</dt>
+          <dd>{{ d.operatorNotifiedAt | date: 'medium' }}</dd>
+        </div>
+      }
+    </dl>
+  </sol-card>
+
+  <sol-card class="page__card">
+    <h2 class="page__step" i18n="@@failedPayments.retry.title">Reintentar el cobro</h2>
+    <p class="page__lead" i18n="@@failedPayments.retry.hint">
+      Se cobra otra vez la prima con el método de pago que el cliente ya registró. El período de
+      gracia no se extiende.
+    </p>
+    <div class="sol-actions">
+      <button
+        type="button"
+        class="sol-btn sol-btn--primary"
+        [disabled]="!canRetry()"
+        [attr.aria-busy]="retrying()"
+        [attr.aria-describedby]="pendingRetry() ? 'fp-retry-pending' : null"
+        (click)="retry()"
+      >
+        @if (retrying()) {
+          <ng-container i18n="@@failedPayments.retry.busy">Reintentando…</ng-container>
+        } @else {
+          <ng-container i18n="@@failedPayments.retry.action">Reintentar cobro</ng-container>
+        }
+      </button>
+    </div>
+    @if (pendingRetry()) {
+      <p id="fp-retry-pending" class="fp__hint">
+        <span aria-hidden="true">⏳</span>
+        <ng-container i18n="@@failedPayments.retry.pending"
+          >Hay un reintento en proceso: la pasarela no estaba disponible o no respondió, y Pagos lo
+          sigue intentando con la misma orden, sin cobrar dos veces. Podrás reintentar cuando
+          termine.</ng-container
+        >
+        <button
+          type="button"
+          class="sol-btn sol-btn--outline fp__inline-action"
+          (click)="load()"
+          i18n="@@failedPayments.retry.pending-reload"
+        >
+          Volver a cargar
+        </button>
+      </p>
+    }
+    <div #retryStatus tabindex="-1" class="page__result">
+      @if (retryResult(); as r) {
+        <sol-alert [kind]="retryKind(r)">{{ retryText(r) }}</sol-alert>
+      }
+      @if (retryError(); as e) {
+        <sol-alert kind="error">{{ retryErrorText(e) }}</sol-alert>
+      }
+    </div>
+  </sol-card>
+
+  <sol-card class="page__card">
+    <h2 class="page__step" i18n="@@failedPayments.history.title">Historial de cobros</h2>
+    @for (charge of d.charges; track charge.transactionId) {
+      <section class="fp__charge">
+        <h3 class="fp__charge-title">
+          @if (charge.isRetry) {
+            <ng-container i18n="@@failedPayments.history.retry">Reintento</ng-container>
+          } @else {
+            <ng-container i18n="@@failedPayments.history.original">Cobro original</ng-container>
+          }
+          · {{ charge.createdAt | date: 'medium' }} · {{ charge.status }}
+        </h3>
+        <div class="fp__table-wrap">
+          <table class="fp__table">
+            <thead>
+              <tr>
+                <th scope="col" i18n="@@failedPayments.history.number">N.º</th>
+                <th scope="col" i18n="@@failedPayments.history.result">Resultado</th>
+                <th scope="col" i18n="@@failedPayments.history.code">Código de la pasarela</th>
+                <th scope="col" i18n="@@failedPayments.col.reason">Motivo</th>
+                <th scope="col" i18n="@@failedPayments.history.date">Fecha</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (a of charge.attempts; track a.number) {
+                <tr>
+                  <td>{{ a.number }}</td>
+                  <td>{{ a.result }}</td>
+                  <td>{{ a.code ?? '—' }}</td>
+                  <td>{{ a.reason ?? '—' }}</td>
+                  <td>{{ a.at | date: 'medium' }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </section>
+    }
+  </sol-card>
+
+  <sol-card class="page__card">
+    <h2 class="page__step" i18n="@@failedPayments.notes.title">Notas de seguimiento</h2>
+    @if (d.notes.length === 0) {
+      <p class="page__lead" i18n="@@failedPayments.notes.empty">Todavía no hay notas.</p>
+    } @else {
+      <ul class="fp__notes">
+        @for (n of d.notes; track n.id) {
+          <li>
+            <p class="fp__note-meta">
+              <strong>{{ n.authorName }}</strong> ({{ n.authorRole }}) ·
+              {{ n.createdAt | date: 'medium' }}
+            </p>
+            <p class="fp__note-text">{{ n.text }}</p>
+          </li>
+        }
+      </ul>
+    }
+
+    <form class="sol-form" (ngSubmit)="saveNote()">
+      <label for="fp-note" class="fp__label" i18n="@@failedPayments.notes.label">Nueva nota</label>
+      <textarea
+        id="fp-note"
+        name="note"
+        class="sol-input"
+        rows="3"
+        [maxlength]="maxLength"
+        [(ngModel)]="noteText"
+        [attr.aria-invalid]="noteError() ? true : null"
+        [attr.aria-describedby]="describedBy('fp-note', true, !!noteError())"
+      ></textarea>
+      <small id="fp-note-hint" class="fp__hint" i18n="@@failedPayments.notes.hint"
+        >Hasta {{ maxLength }} caracteres. No escribas números de tarjeta.</small
+      >
+      @if (noteError(); as msg) {
+        <small id="fp-note-error" class="fp__error"
+          ><span aria-hidden="true">✕</span> {{ msg }}</small
+        >
+      }
+      <p class="sol-visually-hidden" role="status">
+        @if (noteSaved()) {
+          <ng-container i18n="@@failedPayments.notes.saved">Nota guardada.</ng-container>
+        }
+      </p>
+      <div class="sol-actions">
+        <button
+          type="submit"
+          class="sol-btn sol-btn--outline"
+          [disabled]="savingNote()"
+          i18n="@@failedPayments.notes.save"
+        >
+          Guardar nota
+        </button>
+      </div>
+    </form>
+  </sol-card>
+}
