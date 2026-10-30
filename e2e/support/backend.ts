@@ -1,6 +1,8 @@
 import { Page, Route } from '@playwright/test';
 import {
   ADVISOR,
+  AssistedSubscriptionDto,
+  assistedSubscription,
   CATALOG_DTO,
   CLIENTS,
   PROFILE_DTO,
@@ -19,6 +21,7 @@ export type Failure = { status: number; body?: unknown } | 'network';
 const IDENTIDAD = '/api/identidad/v1';
 const COTIZACION = '/api/cotizacion/v1';
 const COBROS_FALLIDOS = '/api/pagos/v1/pagos/cobros-fallidos';
+const ASISTIDAS = '/api/suscripcion/v1/suscripciones/asistidas';
 
 /** Respuesta de la pasarela al próximo reintento (HU19). */
 export type RetryMode = 'APROBADO' | 'RECHAZADO' | 'NO_DISPONIBLE';
@@ -55,6 +58,12 @@ export const VALIDATION_ERROR: Failure = {
   },
 };
 
+function fulfillFailure(route: Route, failure: Failure): Promise<void> {
+  return failure === 'network'
+    ? route.abort()
+    : route.fulfill({ status: failure.status, json: failure.body ?? {} });
+}
+
 /**
  * Backend simulado con `page.route`. Cada llamada del recorrido se responde con los fixtures del
  * contrato; lo que no esté simulado se anota en `unhandled` (el fixture de prueba falla si queda algo).
@@ -71,6 +80,13 @@ export class Backend {
   readonly retryCharges: Record<string, RetryChargeDto[]> = {};
   retryMode: RetryMode = 'APROBADO';
   private nextCasesFailure: Failure | null = null;
+  /** HU39: la saga simulada, los inicios recibidos (el cuerpo tal como salió) y los códigos de firma. */
+  subscription: AssistedSubscriptionDto = assistedSubscription();
+  readonly startRequests: { body: Record<string, unknown>; key: string | null }[] = [];
+  readonly signCodes: string[] = [];
+  otpAttemptsLeft = 3;
+  nextStartFailure: Failure | null = null;
+  subscriptionForbidden = false;
 
   private nextSearchFailure: Failure | null = null;
   private nextQuoteFailure: Failure | null = null;
@@ -92,12 +108,122 @@ export class Backend {
     this.nextCasesFailure = failure;
   }
 
+  /** HU39. Las rutas más específicas van después: tienen prioridad. */
+  private async installAssistedSubscriptions(): Promise<void> {
+    await this.page.route(new RegExp(`${ASISTIDAS}(\\?.*)?$`), (route) => {
+      if (route.request().method() === 'POST') {
+        this.startRequests.push({
+          body: route.request().postDataJSON() as Record<string, unknown>,
+          key: route.request().headers()['idempotency-key'] ?? null,
+        });
+        const failure = this.nextStartFailure;
+        this.nextStartFailure = null;
+        if (failure) return fulfillFailure(route, failure);
+        return route.fulfill({ status: 202, json: { id: this.subscription.id } });
+      }
+      return route.fulfill({
+        json: { items: [this.subscription], total: 1, pagina: 1, tamano: 20 },
+      });
+    });
+    await this.page.route(new RegExp(`${ASISTIDAS}/[^/?]+$`), (route) =>
+      this.subscriptionForbidden
+        ? fulfillFailure(route, {
+            status: 403,
+            body: {
+              error: { code: 'ACCESO_DENEGADO', message: 'x', details: [], trace_id: 't' },
+            },
+          })
+        : route.fulfill({ json: this.subscription }),
+    );
+    await this.page.route(new RegExp(`${ASISTIDAS}/[^/]+/documento-firma$`), (route) =>
+      route.fulfill({
+        json: {
+          suscripcion_id: this.subscription.id,
+          numero_poliza: 'SOLV-E2E-1',
+          documento_sha256: 'a'.repeat(64),
+          estado: 'PENDIENTE',
+          vence_en: '2030-01-01T00:00:00Z',
+          autenticacion: 'OTP',
+        },
+      }),
+    );
+    await this.page.route(new RegExp(`${ASISTIDAS}/[^/]+/documento-firma/pdf$`), (route) =>
+      route.fulfill({ contentType: 'application/pdf', body: '%PDF-1.4 e2e' }),
+    );
+    await this.page.route(new RegExp(`${ASISTIDAS}/[^/]+/firma/codigo$`), (route) =>
+      route.fulfill({ status: 202, body: '' }),
+    );
+    await this.page.route(new RegExp(`${ASISTIDAS}/[^/]+/firma$`), (route) => {
+      const { codigo } = route.request().postDataJSON() as { codigo: string };
+      this.signCodes.push(codigo);
+      if (codigo !== '123456') return this.rejectCode(route);
+      this.subscription = {
+        ...this.subscription,
+        estado_saga: 'EMITIDA',
+        paso_actual: 'EMISION',
+        puede_gestionar_firma: false,
+      };
+      return route.fulfill({
+        json: {
+          suscripcion_id: this.subscription.id,
+          poliza_id: 'pol-1',
+          estado_saga: 'EMITIDA',
+          documento_sha256: 'a'.repeat(64),
+          firmada_en: '2026-10-30T12:00:00Z',
+          canal: 'WEB',
+          metodo_autenticacion: 'OTP',
+          modalidad: 'ASISTIDA_PANTALLA',
+          asesor_id: 'a-1',
+        },
+      });
+    });
+    await this.page.route(new RegExp(`${ASISTIDAS}/[^/]+/firma/documento$`), (route) =>
+      route.fulfill({
+        contentType: 'application/pdf',
+        headers: { 'Content-Disposition': 'attachment; filename="poliza.pdf"' },
+        body: '%PDF-1.4 firmada',
+      }),
+    );
+  }
+
+  private rejectCode(route: Route): Promise<void> {
+    this.otpAttemptsLeft--;
+    if (this.otpAttemptsLeft > 0) {
+      return route.fulfill({
+        status: 403,
+        json: {
+          error: {
+            code: 'OTP_INVALIDO',
+            message: 'El código no es correcto.',
+            details: [{ campo: 'codigo', motivo: `intentos restantes: ${this.otpAttemptsLeft}` }],
+            trace_id: 't',
+          },
+        },
+      });
+    }
+    this.subscription = {
+      ...this.subscription,
+      puede_gestionar_firma: false,
+      compensacion: {
+        estado: 'SOLICITADA',
+        motivo: 'FIRMA_FALLIDA',
+        solicitada_en: '2026-10-30T12:00:00Z',
+      },
+    };
+    return route.fulfill({
+      status: 409,
+      json: { error: { code: 'FIRMA_FALLIDA', message: 'x', details: [], trace_id: 't' } },
+    });
+  }
+
   async install(): Promise<void> {
     // Las rutas registradas después tienen prioridad: esta, la más general, va primero.
     await this.page.route(/\/api\//, (route) => {
       this.unhandled.push(`${route.request().method()} ${new URL(route.request().url()).pathname}`);
       return route.fulfill({ status: 501, json: {} });
     });
+
+    await this.installAssistedSubscriptions();
 
     await this.page.route(new RegExp(`${IDENTIDAD}/sesiones-internas$`), (route) => {
       const body = route.request().postDataJSON() as { email?: string; password?: string };

@@ -1,0 +1,267 @@
+<a routerLink="/subscriptions" i18n="@@subscriptions.back">← Volver a las suscripciones</a>
+<h1 i18n="@@subscriptions.detail.title">Suscripción</h1>
+
+<p class="sol-visually-hidden" role="status">
+  @if (loading()) {
+    <ng-container i18n="@@subscriptions.detail.loading">Cargando la suscripción…</ng-container>
+  }
+</p>
+
+@if (loadError(); as e) {
+  <sol-alert kind="error">
+    {{ loadErrorText(e) }}
+    @if (e.kind !== 'not-found' && e.kind !== 'forbidden') {
+      <button
+        type="button"
+        class="sol-btn sol-btn--outline sub__inline-action"
+        (click)="load()"
+        i18n="@@subscriptions.reload"
+      >
+        Volver a cargar
+      </button>
+    }
+  </sol-alert>
+}
+
+@if (!subscription() && loading()) {
+  <p class="sub__loading" aria-hidden="true" i18n="@@subscriptions.detail.loading-visible">
+    Cargando la suscripción…
+  </p>
+}
+
+<div #signStatus tabindex="-1" class="page__result">
+  @if (signResult(); as r) {
+    <sol-alert kind="success">
+      @if (r.replay) {
+        <ng-container i18n="@@subscriptions.sign.replay"
+          >Esta póliza ya estaba firmada: se conserva la firma original.</ng-container
+        >
+      } @else {
+        <ng-container i18n="@@subscriptions.sign.done"
+          >Póliza firmada y emitida. Ya puedes descargarla.</ng-container
+        >
+      }
+    </sol-alert>
+  }
+  @if (signError(); as e) {
+    <sol-alert kind="error">{{ signErrorText(e) }}</sol-alert>
+  }
+</div>
+
+@if (subscription(); as s) {
+  <sol-card class="page__card">
+    <sol-stepper
+      [steps]="stepNames()"
+      [current]="currentStep()"
+      [label]="stepperLabel"
+      [doneLabel]="doneLabel"
+    />
+    <dl class="sub__summary">
+      <div>
+        <dt i18n="@@subscriptions.col.status">Estado</dt>
+        <dd>{{ statusLabel(s.status) }}</dd>
+      </div>
+      <div>
+        <dt i18n="@@subscriptions.col.client">Cliente</dt>
+        <dd>
+          @if (s.client; as c) {
+            {{ c.name }} {{ c.lastNameInitial }}. · {{ c.documentType }} {{ c.maskedDocument }}
+          } @else {
+            <ng-container i18n="@@subscriptions.detail.client-unavailable"
+              >No disponible por ahora</ng-container
+            >
+          }
+        </dd>
+      </div>
+      <div>
+        <dt i18n="@@subscriptions.col.product">Producto</dt>
+        <dd>{{ productText(s.productCode) }}</dd>
+      </div>
+      <div>
+        <dt i18n="@@subscriptions.detail.insured">Valor asegurado</dt>
+        <dd>
+          {{
+            s.insuredAmount.amount | currency: s.insuredAmount.currency : 'symbol-narrow' : digits
+          }}
+        </dd>
+      </div>
+      @if (s.policy; as p) {
+        <div>
+          <dt i18n="@@subscriptions.detail.policy">Póliza</dt>
+          <dd>{{ p.number }}</dd>
+        </div>
+      }
+      @if (s.signature?.expiresAt && s.canManageSignature) {
+        <div>
+          <dt i18n="@@subscriptions.detail.expires">Firmar antes de</dt>
+          <dd>{{ s.signature?.expiresAt | date: 'medium' }}</dd>
+        </div>
+      }
+    </dl>
+
+    @if (s.compensation; as c) {
+      <sol-alert kind="warning">{{ compensationText(c.status, c.reason) }}</sol-alert>
+    }
+    @if (s.status === 'RECHAZADA') {
+      <sol-alert kind="warning">
+        <ng-container i18n="@@subscriptions.detail.rejected"
+          >La decisión automática rechazó esta solicitud. No se hizo ningún cobro.</ng-container
+        >
+      </sol-alert>
+    }
+    @if (s.chargeStatus === 'RECHAZADO' && s.status === 'APROBADA') {
+      <sol-alert kind="warning">
+        <ng-container i18n="@@subscriptions.detail.charge-rejected"
+          >La pasarela rechazó el cobro. Puedes gestionarlo en Cobros fallidos.</ng-container
+        >
+        @if (s.chargeReason; as reason) {
+          ({{ reason }})
+        }
+      </sol-alert>
+    }
+    @if (s.decision === 'DERIVADA') {
+      <sol-alert kind="info">
+        <ng-container i18n="@@subscriptions.detail.referred"
+          >Este caso se derivó a revisión asistida.</ng-container
+        >
+      </sol-alert>
+    }
+
+    <div class="sol-actions">
+      <button
+        type="button"
+        class="sol-btn sol-btn--outline"
+        (click)="load()"
+        i18n="@@subscriptions.reload"
+      >
+        Volver a cargar
+      </button>
+      @if (canDownload()) {
+        <button
+          type="button"
+          class="sol-btn sol-btn--primary"
+          [disabled]="downloading()"
+          [attr.aria-busy]="downloading()"
+          (click)="downloadSigned()"
+          i18n="@@subscriptions.detail.download"
+        >
+          Descargar póliza firmada
+        </button>
+      }
+      @if (s.canManageSignature && !managing()) {
+        <button
+          type="button"
+          class="sol-btn sol-btn--primary"
+          (click)="manage()"
+          i18n="@@subscriptions.detail.manage"
+        >
+          Gestionar firma
+        </button>
+      }
+    </div>
+    @if (downloadError(); as e) {
+      <sol-alert kind="error">{{ downloadErrorText(e) }}</sol-alert>
+    }
+  </sol-card>
+
+  @if (managing()) {
+    <sol-card class="page__card">
+      <h2 class="page__step" i18n="@@subscriptions.sign.title">Gestionar firma</h2>
+
+      <div class="sol-actions">
+        <button
+          type="button"
+          class="sol-btn sol-btn--outline"
+          disabled
+          aria-describedby="sub-email-note"
+          i18n="@@subscriptions.sign.email"
+        >
+          Enviar por correo
+        </button>
+      </div>
+      <p id="sub-email-note" class="sub__hint" i18n="@@subscriptions.sign.email-note">
+        El envío del enlace por correo estará disponible cuando exista el servicio de
+        notificaciones. Por ahora, firma en pantalla con el cliente presente.
+      </p>
+
+      <h3 i18n="@@subscriptions.sign.review-title">1. Revisar el documento</h3>
+      <div class="sol-actions">
+        <button
+          type="button"
+          class="sol-btn sol-btn--outline"
+          [disabled]="openingPdf() || !document()"
+          [attr.aria-busy]="openingPdf()"
+          (click)="openPdf()"
+          i18n="@@subscriptions.sign.open-pdf"
+        >
+          Abrir el documento
+        </button>
+      </div>
+      @if (pdfUrl(); as url) {
+        <iframe
+          class="sub__pdf"
+          [src]="url"
+          i18n-title="@@subscriptions.sign.pdf-title"
+          title="Documento de la póliza por firmar"
+        ></iframe>
+      }
+      <label class="sub__check">
+        <input type="checkbox" name="reviewed" [disabled]="!pdfUrl()" [(ngModel)]="reviewed" />
+        <ng-container i18n="@@subscriptions.sign.reviewed"
+          >El cliente revisó el documento completo.</ng-container
+        >
+      </label>
+
+      <h3 i18n="@@subscriptions.sign.code-title">2. Confirmar con el código del cliente</h3>
+      <div class="sol-actions">
+        <button
+          type="button"
+          class="sol-btn sol-btn--outline"
+          [disabled]="!reviewed || requestingCode()"
+          [attr.aria-busy]="requestingCode()"
+          (click)="requestCode()"
+          i18n="@@subscriptions.sign.request-code"
+        >
+          Enviar código al cliente
+        </button>
+      </div>
+      <form class="sol-form" (ngSubmit)="sign()">
+        <div class="sub__field">
+          <label class="sub__label" for="sub-code" i18n="@@subscriptions.sign.code"
+            >Código de un solo uso</label
+          >
+          <input
+            id="sub-code"
+            name="code"
+            class="sol-input sub__code"
+            type="text"
+            inputmode="numeric"
+            autocomplete="one-time-code"
+            maxlength="12"
+            [disabled]="!codeRequested()"
+            [(ngModel)]="code"
+            aria-describedby="sub-code-hint"
+          />
+          <small id="sub-code-hint" class="sub__hint" i18n="@@subscriptions.sign.code-hint"
+            >Lo digita el cliente. Si se agotan los intentos, la firma falla y se devuelve el
+            cobro.</small
+          >
+        </div>
+        <div class="sol-actions">
+          <button
+            type="submit"
+            class="sol-btn sol-btn--primary"
+            [disabled]="!reviewed || !codeRequested() || !code.trim() || signing()"
+            [attr.aria-busy]="signing()"
+          >
+            @if (signing()) {
+              <ng-container i18n="@@subscriptions.sign.busy">Firmando…</ng-container>
+            } @else {
+              <ng-container i18n="@@subscriptions.sign.action">Firmar</ng-container>
+            }
+          </button>
+        </div>
+      </form>
+    </sol-card>
+  }
+}

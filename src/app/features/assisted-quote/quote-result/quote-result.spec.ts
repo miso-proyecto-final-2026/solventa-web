@@ -2,6 +2,7 @@ import { registerLocaleData } from '@angular/common';
 import localeEsCo from '@angular/common/locales/es-CO';
 import { LOCALE_ID } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { Quote } from '../domain/models';
 import { QUOTE } from '../testing/fixtures';
 import { QuoteResult } from './quote-result';
@@ -23,7 +24,7 @@ describe('QuoteResult', () => {
   const create = async (locale: string) => {
     await TestBed.configureTestingModule({
       imports: [QuoteResult],
-      providers: [{ provide: LOCALE_ID, useValue: locale }],
+      providers: [provideRouter([]), { provide: LOCALE_ID, useValue: locale }],
     }).compileComponents();
     fixture = TestBed.createComponent(QuoteResult);
     fixture.componentInstance.newQuote.subscribe(() => newQuotes++);
@@ -110,17 +111,21 @@ describe('QuoteResult', () => {
     expect(el.querySelector('sol-price-breakdown table')).toBeNull();
   });
 
-  it('should keep acceptance disabled (next sprint) and allow a new quote', async () => {
+  it('should link to starting the subscription of this quote and allow a new quote', async () => {
     await render();
 
-    const [accept, again] = Array.from(
-      el.querySelectorAll<HTMLButtonElement>('.sol-actions button'),
-    );
-    expect(accept.disabled).toBeTrue();
-    expect(accept.getAttribute('aria-describedby')).toBe('accept-note');
-    expect(el.querySelector('#accept-note')?.textContent).toContain('siguiente sprint');
+    const start = el.querySelector<HTMLAnchorElement>('a.sol-btn')!;
+    expect(start.textContent).toContain('Iniciar suscripción');
+    expect(start.getAttribute('href')).toBe(`/subscriptions/new/${QUOTE.id}`);
 
-    again.click();
+    el.querySelector<HTMLButtonElement>('button.sol-btn')!.click();
     expect(newQuotes).toBe(1);
+  });
+
+  it('should not offer the subscription to a person without an account', async () => {
+    await render({ ...QUOTE, withoutAccount: true });
+
+    expect(el.querySelector('a.sol-btn')).toBeNull();
+    expect(text()).toContain('el cliente debe registrarse');
   });
 });

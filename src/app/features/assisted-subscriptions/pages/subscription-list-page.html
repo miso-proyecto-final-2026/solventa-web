@@ -1,0 +1,142 @@
+<h1 i18n="@@subscriptions.list.title">Suscripciones</h1>
+<p class="page__lead" i18n="@@subscriptions.list.lead">
+  Las suscripciones de los clientes que atendiste, con el avance de cada paso.
+</p>
+
+<sol-card class="page__card">
+  <form class="sub__filter" (submit)="$event.preventDefault()">
+    <label for="sub-status" i18n="@@subscriptions.filter.status">Estado</label>
+    <select
+      id="sub-status"
+      class="sol-input"
+      [ngModel]="query().status"
+      name="status"
+      (ngModelChange)="setStatus($event)"
+    >
+      @for (o of statusOptions; track o.value) {
+        <option [value]="o.value">{{ o.label }}</option>
+      }
+    </select>
+  </form>
+
+  <p class="sol-visually-hidden" role="status">
+    @if (loading()) {
+      <ng-container i18n="@@subscriptions.loading">Cargando suscripciones…</ng-container>
+    } @else if (result(); as r) {
+      <ng-container i18n="@@subscriptions.list.count">{{ r.total }} suscripciones</ng-container>
+    }
+  </p>
+
+  @if (error(); as e) {
+    <sol-alert kind="error">
+      {{ errorText(e) }}
+      <button
+        type="button"
+        class="sol-btn sol-btn--outline sub__inline-action"
+        (click)="load()"
+        i18n="@@subscriptions.reload"
+      >
+        Volver a cargar
+      </button>
+    </sol-alert>
+  }
+
+  @if (loading() && !result()) {
+    <p class="sub__loading" aria-hidden="true" i18n="@@subscriptions.loading-visible">
+      Cargando suscripciones…
+    </p>
+  }
+
+  @if (result(); as r) {
+    @if (r.items.length === 0) {
+      <sol-alert kind="info">
+        <ng-container i18n="@@subscriptions.list.empty"
+          >No hay suscripciones con este filtro.</ng-container
+        >
+      </sol-alert>
+    } @else {
+      <div class="sub__table-wrap">
+        <table class="sub__table" [attr.aria-busy]="loading()">
+          <caption class="sol-visually-hidden" i18n="@@subscriptions.list.caption">
+            Suscripciones, las más recientes primero
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col" i18n="@@subscriptions.col.client">Cliente</th>
+              <th scope="col" i18n="@@subscriptions.col.product">Producto</th>
+              <th scope="col" i18n="@@subscriptions.col.status">Estado</th>
+              <th scope="col" i18n="@@subscriptions.col.step">Paso actual</th>
+              <th scope="col" i18n="@@subscriptions.col.created">Creada</th>
+              <th scope="col">
+                <span class="sol-visually-hidden" i18n="@@subscriptions.col.actions">Acciones</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (s of r.items; track s.id) {
+              <tr>
+                <td>
+                  @if (s.client; as c) {
+                    {{ c.name }} {{ c.lastNameInitial }}. · {{ c.documentType }}
+                    {{ c.maskedDocument }}
+                  } @else {
+                    —
+                  }
+                </td>
+                <td>{{ productText(s.productCode) }}</td>
+                <td>
+                  {{ statusLabel(s.status) }}
+                  @if (s.compensation) {
+                    <span class="sub__error" i18n="@@subscriptions.list.compensation"
+                      >· Cobro en devolución</span
+                    >
+                  }
+                </td>
+                <td>{{ stepText(s.step) }}</td>
+                <td>{{ s.createdAt | date: 'short' }}</td>
+                <td>
+                  <a [routerLink]="['/subscriptions', s.id]">
+                    @if (s.canManageSignature) {
+                      <ng-container i18n="@@subscriptions.list.manage"
+                        >Gestionar firma</ng-container
+                      >
+                    } @else {
+                      <ng-container i18n="@@subscriptions.list.open">Ver detalle</ng-container>
+                    }
+                    <span class="sol-visually-hidden">
+                      ({{ s.client?.maskedDocument ?? s.id }}, {{ s.createdAt | date: 'short' }})
+                    </span>
+                  </a>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <nav class="sub__pager" i18n-aria-label="@@subscriptions.pager.label" aria-label="Paginación">
+        <button
+          type="button"
+          class="sol-btn sol-btn--outline"
+          [disabled]="query().page <= 1 || loading()"
+          (click)="goToPage(query().page - 1)"
+          i18n="@@subscriptions.pager.previous"
+        >
+          Anterior
+        </button>
+        <span i18n="@@subscriptions.pager.position"
+          >Página {{ query().page }} de {{ pages() }}</span
+        >
+        <button
+          type="button"
+          class="sol-btn sol-btn--outline"
+          [disabled]="query().page >= pages() || loading()"
+          (click)="goToPage(query().page + 1)"
+          i18n="@@subscriptions.pager.next"
+        >
+          Siguiente
+        </button>
+      </nav>
+    }
+  }
+</sol-card>

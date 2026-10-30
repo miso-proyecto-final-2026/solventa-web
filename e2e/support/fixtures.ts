@@ -290,3 +290,61 @@ export function failedCaseDetail(
     notas: notes,
   };
 }
+
+/** HU39: una saga con el cobro hecho, lista para gestionar la firma. */
+export interface AssistedSubscriptionDto {
+  id: string;
+  cotizacion_id: string;
+  cliente: Record<string, string> | null;
+  producto: string;
+  moneda: string;
+  monto_asegurado: number;
+  periodicidad_pago: string;
+  estado_saga: string;
+  paso_actual: string;
+  pasos: string[];
+  decision: string | null;
+  motivos: string[];
+  cobro_estado: string | null;
+  cobro_motivo: string | null;
+  firma: { estado: string; vence_en: string | null; compensacion: string | null } | null;
+  compensacion: { estado: string; motivo: string | null; solicitada_en: string | null } | null;
+  poliza: Record<string, unknown> | null;
+  puede_gestionar_firma: boolean;
+  creada_en: string;
+}
+
+export function assistedSubscription(): AssistedSubscriptionDto {
+  return {
+    id: 'sus-e2e-1',
+    cotizacion_id: 'cot-e2e-1',
+    cliente: {
+      nombre: 'Ana',
+      inicial_apellido: 'P',
+      tipo_documento: 'CC',
+      documento_enmascarado: '******300',
+    },
+    producto: 'microseguro_vida',
+    moneda: 'COP',
+    monto_asegurado: 40000000,
+    periodicidad_pago: 'ANUAL',
+    estado_saga: 'COBRO_REALIZADO',
+    paso_actual: 'FIRMA',
+    pasos: ['DECISION', 'COBRO', 'FIRMA', 'EMISION'],
+    decision: 'APROBADA',
+    motivos: [],
+    cobro_estado: 'APROBADO',
+    cobro_motivo: null,
+    firma: { estado: 'PENDIENTE', vence_en: '2030-01-01T00:00:00Z', compensacion: null },
+    compensacion: null,
+    poliza: {
+      numero_poliza: 'SOLV-E2E-1',
+      estado: 'PENDIENTE_FIRMA',
+      documento_estado: 'GENERADO',
+      documento_intentos: 1,
+      documento_error: null,
+    },
+    puede_gestionar_firma: true,
+    creada_en: '2026-10-30T12:00:00Z',
+  };
+}

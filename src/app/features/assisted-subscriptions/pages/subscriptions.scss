@@ -1,0 +1,123 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sol-space-4);
+}
+
+.page {
+  &__lead {
+    color: var(--sol-text-muted);
+  }
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sol-space-4);
+    width: 100%;
+  }
+
+  &__step {
+    font-size: 1.25rem;
+  }
+
+  &__result:focus {
+    // Recibe el foco por código al mostrar el resultado; no es un control, no lleva anillo.
+    outline: none;
+  }
+}
+
+.sub {
+  &__filter {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sol-space-1);
+    align-self: flex-start;
+
+    label {
+      font-weight: 600;
+    }
+  }
+
+  &__check {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--sol-space-2);
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sol-space-1);
+    border: 0;
+    padding: 0;
+    margin: 0;
+  }
+
+  &__label {
+    font-weight: 600;
+  }
+
+  &__hint,
+  &__loading {
+    color: var(--sol-text-muted);
+  }
+
+  &__error {
+    font-weight: 600;
+    color: var(--sol-danger-text);
+  }
+
+  &__inline-action {
+    margin-left: var(--sol-space-3);
+  }
+
+  // La tabla se desplaza dentro de su caja en pantallas angostas; la página no.
+  &__table-wrap {
+    overflow-x: auto;
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+      padding: var(--sol-space-2) var(--sol-space-3);
+      text-align: left;
+      border-bottom: 1px solid var(--sol-border);
+      vertical-align: top;
+    }
+  }
+
+  &__pager {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sol-space-3);
+  }
+
+  &__summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: var(--sol-space-3);
+
+    dt {
+      font-weight: 600;
+    }
+
+    dd {
+      margin: 0;
+    }
+  }
+
+  &__pdf {
+    width: 100%;
+    height: 32rem;
+    border: 1px solid var(--sol-border);
+    border-radius: var(--sol-radius-sm);
+  }
+
+  &__code {
+    max-width: 12rem;
+  }
+}

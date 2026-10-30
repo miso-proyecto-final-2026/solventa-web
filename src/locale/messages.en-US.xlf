@@ -487,18 +487,9 @@
         <source>Válida hasta</source>
         <target>Valid until</target>
       </trans-unit>
-      <trans-unit id="assistedQuote.result.accept" datatype="html">
-        <source> Registrar aceptación </source>
-        <target>Record acceptance</target>
-      </trans-unit>
       <trans-unit id="assistedQuote.result.new" datatype="html">
         <source>Nueva cotización</source>
         <target>New quote</target>
-      </trans-unit>
-      <trans-unit id="assistedQuote.result.accept-note" datatype="html">
-        <source> Registrar la aceptación de la oferta estará disponible en el siguiente sprint.
-</source>
-        <target>Recording the acceptance of the offer will be available in the next sprint.</target>
       </trans-unit>
       <trans-unit id="auth.login.document-title" datatype="html">
         <source>Solventa — Iniciar sesión</source>
@@ -945,6 +936,424 @@
       <trans-unit id="nav.failed-payments" datatype="html">
         <source>Cobros fallidos</source>
         <target>Failed payments</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.result.start-subscription" datatype="html">
+        <source> Iniciar suscripción </source>
+        <target>Start subscription</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.list.document-title" datatype="html">
+        <source>Solventa — Suscripciones</source>
+        <target>Solventa — Subscriptions</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.start.document-title" datatype="html">
+        <source>Solventa — Iniciar suscripción</source>
+        <target>Solventa — Start subscription</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.detail.document-title" datatype="html">
+        <source>Solventa — Detalle de la suscripción</source>
+        <target>Solventa — Subscription details</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.status.in-progress" datatype="html">
+        <source>En decisión</source>
+        <target>In decision</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.status.approved" datatype="html">
+        <source>Aprobada, por cobrar</source>
+        <target>Approved, pending charge</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.status.charged" datatype="html">
+        <source>Cobro realizado</source>
+        <target>Charge completed</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.status.signed" datatype="html">
+        <source>Firmada</source>
+        <target>Signed</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.status.issued" datatype="html">
+        <source>Emitida</source>
+        <target>Issued</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.status.rejected" datatype="html">
+        <source>Rechazada</source>
+        <target>Rejected</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.status.compensated" datatype="html">
+        <source>Compensada</source>
+        <target>Compensated</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.step.decision" datatype="html">
+        <source>Decisión</source>
+        <target>Decision</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.step.charge" datatype="html">
+        <source>Cobro</source>
+        <target>Charge</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.step.signature" datatype="html">
+        <source>Firma</source>
+        <target>Signature</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.step.issue" datatype="html">
+        <source>Emisión</source>
+        <target>Issue</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.compensation.failed" datatype="html">
+        <source>No se pudo verificar la identidad del cliente al firmar.</source>
+        <target>The client's identity could not be verified at signing.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.compensation.expired" datatype="html">
+        <source>El plazo para firmar terminó.</source>
+        <target>The signing period ended.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.compensation.done" datatype="html">
+        <source>El cobro ya se devolvió y la póliza quedó anulada. El cliente puede volver a cotizar.</source>
+        <target>The charge was refunded and the policy was voided. The client can request a new quote.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.compensation.requested" datatype="html">
+        <source>Se solicitó la devolución del cobro; la saga termina cuando Pagos la confirme.</source>
+        <target>A refund was requested; the process ends when Payments confirms it.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.error.unauthenticated" datatype="html">
+        <source>Tu sesión venció. Inicia sesión de nuevo para continuar.</source>
+        <target>Your session expired. Sign in again to continue.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.error.forbidden" datatype="html">
+        <source>Esta suscripción es de un cliente que no atendiste. Solo su asesor puede gestionarla.</source>
+        <target>This subscription belongs to a client you did not serve. Only that client's advisor can manage it.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.error.not-found" datatype="html">
+        <source>Esta suscripción no existe. Vuelve a la lista y elige otra.</source>
+        <target>This subscription does not exist. Go back to the list and choose another one.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.error.network" datatype="html">
+        <source>No hay conexión con el servidor. Revisa tu red e inténtalo de nuevo.</source>
+        <target>There is no connection to the server. Check your network and try again.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.error.server" datatype="html">
+        <source>No pudimos completar la operación por un problema del servidor. Inténtalo de nuevo en unos minutos.</source>
+        <target>We could not complete the operation due to a server problem. Try again in a few minutes.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.start.error.no-account" datatype="html">
+        <source>Esta cotización es de una persona sin cuenta. Debe registrarse para poder suscribirse y firmar.</source>
+        <target>This quote belongs to a person without an account. They must register to subscribe and sign.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.start.error.expired" datatype="html">
+        <source>La cotización venció. Genera una nueva para continuar.</source>
+        <target>The quote expired. Create a new one to continue.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.start.error.used" datatype="html">
+        <source>Esta cotización ya tiene una suscripción en curso. Búscala en la lista de suscripciones.</source>
+        <target>This quote already has a subscription in progress. Look for it in the subscription list.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.start.error.not-found" datatype="html">
+        <source>Esta cotización no existe. Vuelve a cotizar.</source>
+        <target>This quote does not exist. Create a new one.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.start.error.forbidden" datatype="html">
+        <source>Esta cotización la hizo otro asesor. Solo quien la hizo puede iniciar la suscripción.</source>
+        <target>Another advisor created this quote. Only that advisor can start the subscription.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.start.error.validation" datatype="html">
+        <source>Revisa los datos del pago y confirma que el cliente aceptó.</source>
+        <target>Check the payment details and confirm that the client accepted.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.sign.error.otp" datatype="html">
+        <source>El código no es correcto. Si se agotan los intentos, la firma falla y se devuelve el cobro.</source>
+        <target>The code is incorrect. If the attempts run out, the signature fails and the charge is refunded.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.sign.error.otp-left" datatype="html">
+        <source>El código no es correcto. Intentos restantes: <x id="left" equiv-text="left"/>. Si se agotan, la firma falla y se devuelve el cobro.</source>
+        <target>The code is incorrect. Attempts left: <x id="left" equiv-text="left"/>. If they run out, the signature fails and the charge is refunded.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.sign.error.expired" datatype="html">
+        <source>El plazo para firmar terminó y el cobro se devolverá. El cliente puede volver a cotizar.</source>
+        <target>The signing period ended and the charge will be refunded. The client can request a new quote.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.sign.error.failed" datatype="html">
+        <source>No se pudo verificar la identidad y el cobro se devolverá. El cliente puede volver a cotizar.</source>
+        <target>The identity could not be verified and the charge will be refunded. The client can request a new quote.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.sign.error.unavailable" datatype="html">
+        <source>Esta suscripción ya no está en el paso de firma. Vuelve a cargarla para ver su estado.</source>
+        <target>This subscription is no longer at the signature step. Reload it to see its status.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.sign.error.not-ready" datatype="html">
+        <source>El documento de la póliza aún no está listo. Inténtalo de nuevo en unos minutos.</source>
+        <target>The policy document is not ready yet. Try again in a few minutes.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.sign.error.altered" datatype="html">
+        <source>El documento cambió. Ábrelo de nuevo y revísalo antes de firmar.</source>
+        <target>The document changed. Open it again and review it before signing.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.download.error.conflict" datatype="html">
+        <source>El documento aún no está disponible. Vuelve a cargar la suscripción para ver su estado.</source>
+        <target>The document is not available yet. Reload the subscription to see its status.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.back" datatype="html">
+        <source>← Volver a las suscripciones</source>
+        <target>← Back to subscriptions</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.start.title" datatype="html">
+        <source>Iniciar suscripción</source>
+        <target>Start subscription</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.start.lead" datatype="html">
+        <source> Hazlo con el cliente presente: el cliente digita su tarjeta y confirma que acepta. Después de la decisión y el cobro, podrás gestionar la firma.
+</source>
+        <target>Do this with the client present: the client enters the card and confirms acceptance. After the decision and the charge, you can manage the signature.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.start.frequency" datatype="html">
+        <source> Periodicidad de pago </source>
+        <target>Payment frequency</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.start.annual" datatype="html">
+        <source>Anual</source>
+        <target>Annual</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.start.monthly" datatype="html">
+        <source>Mensual</source>
+        <target>Monthly</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.start.card" datatype="html">
+        <source>Número de tarjeta</source>
+        <target>Card number</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.start.card-hint" datatype="html">
+        <source>Pago simulado: usa solo tarjetas de prueba, nunca una real. El número no se envía ni se guarda.</source>
+        <target>Simulated payment: use test cards only, never a real one. The number is neither sent nor stored.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.start.card-error" datatype="html">
+        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span aria-hidden=&quot;true&quot;&gt;"/>✕<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> Escribe un número de 13 a 19 dígitos.</source>
+        <target><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span aria-hidden=&quot;true&quot;&gt;"/>✕<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> Enter a number with 13 to 19 digits.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.start.accepted" datatype="html">
+        <source>El cliente está al tanto de esta transacción y aceptó los términos.</source>
+        <target>The client is aware of this transaction and accepted the terms.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.start.accepted-error" datatype="html">
+        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span aria-hidden=&quot;true&quot;&gt;"/>✕<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> Confirma que el cliente aceptó antes de continuar.</source>
+        <target><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span aria-hidden=&quot;true&quot;&gt;"/>✕<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> Confirm that the client accepted before continuing.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.start.busy" datatype="html">
+        <source>Iniciando…</source>
+        <target>Starting…</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.start.action" datatype="html">
+        <source>Iniciar suscripción</source>
+        <target>Start subscription</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.detail.title" datatype="html">
+        <source>Suscripción</source>
+        <target>Subscription</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.detail.loading" datatype="html">
+        <source>Cargando la suscripción…</source>
+        <target>Loading the subscription…</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.reload" datatype="html">
+        <source> Volver a cargar </source>
+        <target>Reload</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.detail.loading-visible" datatype="html">
+        <source> Cargando la suscripción… </source>
+        <target>Loading the subscription…</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.sign.replay" datatype="html">
+        <source>Esta póliza ya estaba firmada: se conserva la firma original.</source>
+        <target>This policy was already signed: the original signature is kept.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.sign.done" datatype="html">
+        <source>Póliza firmada y emitida. Ya puedes descargarla.</source>
+        <target>Policy signed and issued. You can download it now.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.col.status" datatype="html">
+        <source>Estado</source>
+        <target>Status</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.col.client" datatype="html">
+        <source>Cliente</source>
+        <target>Client</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.detail.client-unavailable" datatype="html">
+        <source>No disponible por ahora</source>
+        <target>Not available right now</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.col.product" datatype="html">
+        <source>Producto</source>
+        <target>Product</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.detail.insured" datatype="html">
+        <source>Valor asegurado</source>
+        <target>Insured amount</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.detail.policy" datatype="html">
+        <source>Póliza</source>
+        <target>Policy</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.detail.expires" datatype="html">
+        <source>Firmar antes de</source>
+        <target>Sign before</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.detail.rejected" datatype="html">
+        <source>La decisión automática rechazó esta solicitud. No se hizo ningún cobro.</source>
+        <target>The automatic decision rejected this request. No charge was made.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.detail.charge-rejected" datatype="html">
+        <source>La pasarela rechazó el cobro. Puedes gestionarlo en Cobros fallidos.</source>
+        <target>The gateway declined the charge. You can manage it in Failed payments.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.detail.referred" datatype="html">
+        <source>Este caso se derivó a revisión asistida.</source>
+        <target>This case was referred to assisted review.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.detail.download" datatype="html">
+        <source> Descargar póliza firmada </source>
+        <target>Download signed policy</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.detail.manage" datatype="html">
+        <source> Gestionar firma </source>
+        <target>Manage signature</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.sign.title" datatype="html">
+        <source>Gestionar firma</source>
+        <target>Manage signature</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.sign.email" datatype="html">
+        <source> Enviar por correo </source>
+        <target>Send by email</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.sign.email-note" datatype="html">
+        <source> El envío del enlace por correo estará disponible cuando exista el servicio de notificaciones. Por ahora, firma en pantalla con el cliente presente. </source>
+        <target>Sending the link by email will be available once the notification service exists. For now, sign on screen with the client present.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.sign.review-title" datatype="html">
+        <source>1. Revisar el documento</source>
+        <target>1. Review the document</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.sign.open-pdf" datatype="html">
+        <source> Abrir el documento </source>
+        <target>Open the document</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.sign.pdf-title" datatype="html">
+        <source>Documento de la póliza por firmar</source>
+        <target>Policy document to sign</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.sign.reviewed" datatype="html">
+        <source>El cliente revisó el documento completo.</source>
+        <target>The client reviewed the full document.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.sign.code-title" datatype="html">
+        <source>2. Confirmar con el código del cliente</source>
+        <target>2. Confirm with the client's code</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.sign.request-code" datatype="html">
+        <source> Enviar código al cliente </source>
+        <target>Send code to the client</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.sign.code" datatype="html">
+        <source>Código de un solo uso</source>
+        <target>One-time code</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.sign.code-hint" datatype="html">
+        <source>Lo digita el cliente. Si se agotan los intentos, la firma falla y se devuelve el cobro.</source>
+        <target>The client enters it. If the attempts run out, the signature fails and the charge is refunded.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.sign.busy" datatype="html">
+        <source>Firmando…</source>
+        <target>Signing…</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.sign.action" datatype="html">
+        <source>Firmar</source>
+        <target>Sign</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.detail.stepper" datatype="html">
+        <source>Avance de la suscripción</source>
+        <target>Subscription progress</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.detail.step-done" datatype="html">
+        <source>Completado</source>
+        <target>Completed</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.list.title" datatype="html">
+        <source>Suscripciones</source>
+        <target>Subscriptions</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.list.lead" datatype="html">
+        <source> Las suscripciones de los clientes que atendiste, con el avance de cada paso.
+</source>
+        <target>Subscriptions of the clients you served, with the progress of each step.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.filter.status" datatype="html">
+        <source>Estado</source>
+        <target>Status</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.loading" datatype="html">
+        <source>Cargando suscripciones…</source>
+        <target>Loading subscriptions…</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.list.count" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ r.total }}"/> suscripciones</source>
+        <target><x id="INTERPOLATION" equiv-text="{{ r.total }}"/> subscriptions</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.loading-visible" datatype="html">
+        <source> Cargando suscripciones… </source>
+        <target>Loading subscriptions…</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.list.empty" datatype="html">
+        <source>No hay suscripciones con este filtro.</source>
+        <target>There are no subscriptions with this filter.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.list.caption" datatype="html">
+        <source> Suscripciones, las más recientes primero </source>
+        <target>Subscriptions, most recent first</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.col.step" datatype="html">
+        <source>Paso actual</source>
+        <target>Current step</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.col.created" datatype="html">
+        <source>Creada</source>
+        <target>Created</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.col.actions" datatype="html">
+        <source>Acciones</source>
+        <target>Actions</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.list.compensation" datatype="html">
+        <source>· Cobro en devolución</source>
+        <target>· Charge being refunded</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.list.manage" datatype="html">
+        <source>Gestionar firma</source>
+        <target>Manage signature</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.list.open" datatype="html">
+        <source>Ver detalle</source>
+        <target>View details</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.pager.label" datatype="html">
+        <source>Paginación</source>
+        <target>Pagination</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.pager.previous" datatype="html">
+        <source> Anterior </source>
+        <target>Previous</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.pager.position" datatype="html">
+        <source>Página <x id="INTERPOLATION" equiv-text="{{ query().page }}"/> de <x id="INTERPOLATION_1" equiv-text="{{ pages() }}"/></source>
+        <target>Page <x id="INTERPOLATION" equiv-text="{{ query().page }}"/> of <x id="INTERPOLATION_1" equiv-text="{{ pages() }}"/></target>
+      </trans-unit>
+      <trans-unit id="subscriptions.pager.next" datatype="html">
+        <source> Siguiente </source>
+        <target>Next</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.filter.all" datatype="html">
+        <source>Todas</source>
+        <target>All</target>
+      </trans-unit>
+      <trans-unit id="nav.subscriptions" datatype="html">
+        <source>Suscripciones</source>
+        <target>Subscriptions</target>
       </trans-unit>
     </body>
   </file>

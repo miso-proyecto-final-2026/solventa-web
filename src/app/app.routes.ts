@@ -34,6 +34,15 @@ export const routes: Routes = [
         (m) => m.FAILED_PAYMENTS_ROUTES,
       ),
   },
+  {
+    // HU39: el asesor inicia y sigue las suscripciones de sus cotizaciones. La API valida rol y relación con el cliente.
+    path: 'subscriptions',
+    canMatch: [roleGuard('ASESOR')],
+    loadChildren: () =>
+      import('@features/assisted-subscriptions/assisted-subscriptions.routes').then(
+        (m) => m.ASSISTED_SUBSCRIPTIONS_ROUTES,
+      ),
+  },
   // Mientras no existan las demás pantallas (cotizar, pólizas…), vuelven al inicio.
   { path: '**', redirectTo: '' },
 ];

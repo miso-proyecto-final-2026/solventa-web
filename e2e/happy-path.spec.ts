@@ -47,7 +47,7 @@ test.describe('Cotización asistida: camino feliz', () => {
       page.getByRole('row', { name: /Ajuste por el perfil de riesgo\s+-\$\s?17\.062/ }),
     ).toBeVisible();
     await expect(page.getByText('Precio estimado')).toHaveCount(0);
-    await expect(page.getByRole('button', { name: 'Registrar aceptación' })).toBeDisabled();
+    await expect(page.getByRole('link', { name: 'Iniciar suscripción' })).toBeVisible();
 
     expect(backend.quoteRequests).toEqual([
       {
