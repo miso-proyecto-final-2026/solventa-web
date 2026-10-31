@@ -41,7 +41,8 @@
     align-items: center;
     gap: var(--sol-space-1);
     min-height: 2.75rem; // objetivo táctil de al menos 44 px
-    padding: var(--sol-space-1) var(--sol-space-2);
+    // Compacto a lo ancho: con las nueve opciones del asesor (HU39) el menú debe seguir cabiendo en una línea a 1280 px.
+    padding: var(--sol-space-1);
     font-size: 0.9rem;
     color: var(--sol-text-on-dark-muted);
     text-decoration: none;

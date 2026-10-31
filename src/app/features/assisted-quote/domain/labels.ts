@@ -1,16 +1,12 @@
 import { ApiError } from '@core/http/api-error';
 import { ConsentState, ProfileSource, RiskLevel } from './models';
+import { productLabel } from '@shared/models/product-labels';
 
 /**
  * Textos por código. El backend envía códigos estables (producto, cobertura, concepto, señal), no
  * texto traducible: aquí se convierten a recursos por idioma. Un código que aún no tiene
  * traducción se muestra tal cual, para que un producto nuevo no rompa la pantalla.
  */
-
-const PRODUCTS: Record<string, string> = {
-  microseguro_vida: $localize`:@@assistedQuote.product.microseguro_vida:Microseguro de vida`,
-  proteccion_dispositivos: $localize`:@@assistedQuote.product.proteccion_dispositivos:Protección de dispositivos`,
-};
 
 const FIELDS: Record<string, string> = {
   edad: $localize`:@@assistedQuote.field.edad:Edad`,
@@ -49,8 +45,7 @@ const SIGNALS: Record<string, string> = {
 const lookup = (dictionary: Record<string, string>, code: string): string =>
   dictionary[code] ?? code;
 
-export const productLabel = (code: string, fallback?: string): string =>
-  PRODUCTS[code] ?? fallback ?? code;
+export { productLabel };
 export const fieldLabel = (name: string): string => lookup(FIELDS, name);
 export const optionLabel = (value: string): string => lookup(OPTIONS, value);
 export const coverageLabel = (type: string): string => lookup(COVERAGES, type);

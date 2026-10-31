@@ -70,19 +70,16 @@
 <sol-price-breakdown [components]="q.components" [source]="q.profileSource" />
 
 <div class="sol-actions">
-  <button
-    type="button"
-    class="sol-btn sol-btn--primary"
-    disabled
-    aria-describedby="accept-note"
-    i18n="@@assistedQuote.result.accept"
-  >
-    Registrar aceptación
-  </button>
+  @if (!q.withoutAccount) {
+    <a
+      class="sol-btn sol-btn--primary"
+      [routerLink]="['/subscriptions/new', q.id]"
+      i18n="@@assistedQuote.result.start-subscription"
+    >
+      Iniciar suscripción
+    </a>
+  }
   <button type="button" class="sol-btn sol-btn--outline" (click)="newQuote.emit()">
     <ng-container i18n="@@assistedQuote.result.new">Nueva cotización</ng-container>
   </button>
 </div>
-<p id="accept-note" class="result__note" i18n="@@assistedQuote.result.accept-note">
-  Registrar la aceptación de la oferta estará disponible en el siguiente sprint.
-</p>

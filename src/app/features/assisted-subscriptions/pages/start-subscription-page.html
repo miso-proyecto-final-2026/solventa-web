@@ -1,0 +1,95 @@
+<a routerLink="/subscriptions" i18n="@@subscriptions.back">← Volver a las suscripciones</a>
+<h1 i18n="@@subscriptions.start.title">Iniciar suscripción</h1>
+<p class="page__lead" i18n="@@subscriptions.start.lead">
+  Hazlo con el cliente presente: el cliente digita su tarjeta y confirma que acepta. Después de la
+  decisión y el cobro, podrás gestionar la firma.
+</p>
+
+<sol-card class="page__card">
+  <form class="sol-form" novalidate (ngSubmit)="start()">
+    <fieldset class="sub__field">
+      <legend class="sub__label" i18n="@@subscriptions.start.frequency">
+        Periodicidad de pago
+      </legend>
+      <label class="sub__check">
+        <input type="radio" name="frequency" value="ANUAL" [(ngModel)]="frequency" />
+        <ng-container i18n="@@subscriptions.start.annual">Anual</ng-container>
+      </label>
+      <label class="sub__check">
+        <input type="radio" name="frequency" value="MENSUAL" [(ngModel)]="frequency" />
+        <ng-container i18n="@@subscriptions.start.monthly">Mensual</ng-container>
+      </label>
+    </fieldset>
+
+    <div class="sub__field">
+      <label class="sub__label" for="sub-card" i18n="@@subscriptions.start.card"
+        >Número de tarjeta</label
+      >
+      <input
+        id="sub-card"
+        name="card"
+        class="sol-input"
+        type="text"
+        inputmode="numeric"
+        autocomplete="off"
+        maxlength="23"
+        [(ngModel)]="card"
+        [attr.aria-invalid]="cardInvalid() ? true : null"
+        [attr.aria-describedby]="describedBy('sub-card', true, cardInvalid())"
+      />
+      <small id="sub-card-hint" class="sub__hint" i18n="@@subscriptions.start.card-hint"
+        >Pago simulado: usa solo tarjetas de prueba, nunca una real. El número no se envía ni se
+        guarda.</small
+      >
+      @if (cardInvalid()) {
+        <small id="sub-card-error" class="sub__error" i18n="@@subscriptions.start.card-error"
+          ><span aria-hidden="true">✕</span> Escribe un número de 13 a 19 dígitos.</small
+        >
+      }
+    </div>
+
+    <div class="sub__field">
+      <label class="sub__check">
+        <input
+          id="sub-accepted"
+          type="checkbox"
+          name="accepted"
+          [(ngModel)]="accepted"
+          [attr.aria-invalid]="acceptedMissing() ? true : null"
+          [attr.aria-describedby]="acceptedMissing() ? 'sub-accepted-error' : null"
+        />
+        <ng-container i18n="@@subscriptions.start.accepted"
+          >El cliente está al tanto de esta transacción y aceptó los términos.</ng-container
+        >
+      </label>
+      @if (acceptedMissing()) {
+        <small
+          id="sub-accepted-error"
+          class="sub__error"
+          i18n="@@subscriptions.start.accepted-error"
+          ><span aria-hidden="true">✕</span> Confirma que el cliente aceptó antes de
+          continuar.</small
+        >
+      }
+    </div>
+
+    @if (error(); as e) {
+      <sol-alert kind="error">{{ errorText(e) }}</sol-alert>
+    }
+
+    <div class="sol-actions">
+      <button
+        type="submit"
+        class="sol-btn sol-btn--primary"
+        [disabled]="starting()"
+        [attr.aria-busy]="starting()"
+      >
+        @if (starting()) {
+          <ng-container i18n="@@subscriptions.start.busy">Iniciando…</ng-container>
+        } @else {
+          <ng-container i18n="@@subscriptions.start.action">Iniciar suscripción</ng-container>
+        }
+      </button>
+    </div>
+  </form>
+</sol-card>

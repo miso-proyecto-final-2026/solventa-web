@@ -68,3 +68,23 @@ test('los cobros fallidos (HU-19) se ven en inglés, con montos de en-US', async
   await expect(page.getByRole('button', { name: 'Retry payment' })).toBeEnabled();
   await expectNoSeriousA11yViolations(page);
 });
+
+test('la venta asistida (HU-39) usa los textos y los formatos de en-US', async ({ page }) => {
+  await signIn(page);
+  await page.goto('/subscriptions');
+
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Subscriptions');
+  await expect(page.getByRole('row').nth(1)).toContainText('Charge completed');
+  await page.getByRole('link', { name: /Manage signature/ }).click();
+
+  await expect(page.getByText('$40,000,000')).toBeVisible();
+  await page.getByRole('button', { name: 'Manage signature' }).click();
+  await expect(page.getByRole('button', { name: 'Send by email' })).toBeDisabled();
+  await expect(page.getByRole('button', { name: 'Open the document' })).toBeEnabled();
+  await expectNoSeriousA11yViolations(page);
+
+  await page.goto('/subscriptions/new/cot-e2e-1');
+  await expect(page.getByLabel('Card number')).toBeVisible();
+  await expect(page.getByLabel('The client is aware of this transaction')).not.toBeChecked();
+  await expectNoSeriousA11yViolations(page);
+});

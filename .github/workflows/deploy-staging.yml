@@ -1,0 +1,93 @@
+name: deploy-staging
+
+# Despliegue de la consola a staging por comentario, como en el backend: un colaborador escribe
+# `cicd/deploy-staging` en un PR. `issue_comment` ejecuta siempre el workflow de `main`, así que esta
+# lógica no la puede cambiar el PR que se está desplegando. La infraestructura la crea solventa-infra (HU39).
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: read
+
+env:
+  AWS_REGION: us-east-1
+
+jobs:
+  preparar:
+    name: preparar
+    if: github.event.issue.pull_request && github.event.comment.body == 'cicd/deploy-staging'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    outputs:
+      sha: ${{ steps.validar.outputs.sha }}
+      motivo: ${{ steps.validar.outputs.motivo }}
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PR: ${{ github.event.issue.number }}
+      AUTOR: ${{ github.event.comment.user.login }}
+      REPO: ${{ github.repository }}
+    steps:
+      - name: Confirmar recepción
+        run: gh api "repos/$REPO/issues/comments/${{ github.event.comment.id }}/reactions" -f content=eyes >/dev/null
+      - id: validar
+        name: Validar permisos y PR
+        run: |
+          rechazar() { echo "sha=" >> "$GITHUB_OUTPUT"; echo "motivo=$1" >> "$GITHUB_OUTPUT"; exit 0; }
+
+          PERMISO=$(gh api "repos/$REPO/collaborators/$AUTOR/permission" --jq .permission 2>/dev/null || echo none)
+          case "$PERMISO" in admin|maintain|write) ;; *) rechazar "@$AUTOR no tiene permiso de escritura en este repositorio." ;; esac
+
+          read -r ESTADO SHA REPO_CABEZA < <(gh api "repos/$REPO/pulls/$PR" --jq '[.state, .head.sha, .head.repo.full_name] | @tsv')
+          [ "$ESTADO" = open ] || rechazar "El PR no está abierto."
+          [ "$REPO_CABEZA" = "$REPO" ] || rechazar "El PR viene de un fork; no se despliega."
+
+          echo "sha=$SHA" >> "$GITHUB_OUTPUT"
+          echo "motivo=" >> "$GITHUB_OUTPUT"
+      - name: Avisar el rechazo
+        if: steps.validar.outputs.motivo != ''
+        env:
+          MOTIVO: ${{ steps.validar.outputs.motivo }}
+        run: gh pr comment "$PR" --repo "$REPO" --body "No se desplegó: $MOTIVO"
+
+  desplegar:
+    name: desplegar
+    needs: preparar
+    if: needs.preparar.outputs.sha != ''
+    runs-on: ubuntu-latest
+    # La confianza OIDC del rol de despliegue exige el environment `staging`.
+    environment: staging
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      # Salidas de `bootstrap` (web_deploy_role_arn) y de `platform` (web_bucket_name, cloudfront_distribution_id).
+      ROLE: ${{ vars.AWS_WEB_DEPLOY_ROLE_ARN }}
+      BUCKET: ${{ vars.WEB_BUCKET }}
+      DISTRIBUTION: ${{ vars.WEB_DISTRIBUTION_ID }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.preparar.outputs.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Construir un sitio por idioma
+        run: npx ng build --configuration production --localize
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.ROLE }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Publicar en S3
+        run: |
+          # Los archivos llevan hash en el nombre; el index.html no, y siempre se revalida.
+          aws s3 sync dist/solventa-web/browser "s3://$BUCKET" --delete \
+            --exclude '*index.html' --cache-control 'public,max-age=31536000,immutable'
+          aws s3 sync dist/solventa-web/browser "s3://$BUCKET" --delete \
+            --exclude '*' --include '*index.html' --cache-control 'no-cache'
+      - name: Invalidar los index.html en CloudFront
+        run: aws cloudfront create-invalidation --distribution-id "$DISTRIBUTION" --paths '/es-CO/*' '/en-US/*'
