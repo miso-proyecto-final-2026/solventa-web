@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { Injectable, LOCALE_ID, inject } from '@angular/core';
 import { environment } from '@env/environment';
 import { Observable, map } from 'rxjs';
 import {
@@ -38,6 +38,7 @@ const NO_CACHE = { 'Cache-Control': 'no-cache' };
 @Injectable()
 export class HttpAssistedSubscriptionsGateway extends AssistedSubscriptionsGateway {
   private readonly http = inject(HttpClient);
+  private readonly locale = inject(LOCALE_ID);
 
   start(request: StartRequest, idempotencyKey: string): Observable<string> {
     return this.http
@@ -89,6 +90,17 @@ export class HttpAssistedSubscriptionsGateway extends AssistedSubscriptionsGatew
       responseType: 'blob',
       headers: NO_CACHE,
     });
+  }
+
+  getCertificate(id: string): Observable<Blob> {
+    return this.http.get(`${this.url(id)}/certificado`, {
+      responseType: 'blob',
+      headers: { ...NO_CACHE, 'Accept-Language': this.locale },
+    });
+  }
+
+  resendConfirmation(id: string): Observable<void> {
+    return this.http.post<void>(`${this.url(id)}/confirmacion/reenvio`, null);
   }
 
   private url(id: string): string {

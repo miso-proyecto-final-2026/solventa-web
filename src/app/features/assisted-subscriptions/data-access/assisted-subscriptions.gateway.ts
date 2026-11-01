@@ -23,4 +23,8 @@ export abstract class AssistedSubscriptionsGateway {
   abstract requestCode(id: string): Observable<void>;
   abstract sign(id: string, request: SignRequest): Observable<SignatureResult>;
   abstract downloadSignedPolicy(id: string): Observable<Blob>;
+  /** El certificado de cobertura, en el idioma de la consola. */
+  abstract getCertificate(id: string): Observable<Blob>;
+  /** Pide otro correo de confirmación. La entrega es asíncrona: aceptar no significa que ya llegó. */
+  abstract resendConfirmation(id: string): Observable<void>;
 }

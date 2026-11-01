@@ -3,6 +3,7 @@ import {
   Component,
   DestroyRef,
   ElementRef,
+  WritableSignal,
   computed,
   effect,
   inject,
@@ -24,17 +25,22 @@ import {
   compensationMessage,
   downloadErrorMessage,
   loadErrorMessage,
+  resendErrorMessage,
   sagaStatusLabel,
   signErrorMessage,
   stepLabel,
 } from '../domain/labels';
 import {
   AssistedSubscription,
+  CODE_LENGTH,
+  RESEND_WAIT_SECONDS,
   SignatureDocument,
   SignatureResult,
   canDownloadSigned,
+  canGetCertificate,
   currentStepIndex,
   isAdvancing,
+  normalizeCode,
 } from '../domain/models';
 
 const POLL_INTERVAL_MS = 3000;
@@ -42,7 +48,8 @@ const MAX_POLLS = 20;
 
 /**
  * HU39: el avance de la saga, sus compensaciones y la firma en pantalla con el cliente presente:
- * abrir el PDF, confirmar la revisión, pedir el código y firmar. Al firmarse, la póliza se emite sola.
+ * abrir el PDF, confirmar la revisión, pedir el código y firmar. Al firmarse, la póliza se emite sola,
+ * el cliente recibe la confirmación por correo y el asesor puede ver el certificado y reenviar ese correo.
  */
 @Component({
   selector: 'sol-subscription-detail',
@@ -61,6 +68,8 @@ export class SubscriptionDetailPage {
   private pollTimer: ReturnType<typeof setTimeout> | null = null;
   private polls = 0;
   private pdfObjectUrl: string | null = null;
+  private certificateObjectUrl: string | null = null;
+  private readonly countdowns = new Set<ReturnType<typeof setInterval>>();
 
   protected readonly subscription = signal<AssistedSubscription | null>(null);
   protected readonly loading = signal(false);
@@ -73,12 +82,22 @@ export class SubscriptionDetailPage {
   protected reviewed = false;
   protected readonly codeRequested = signal(false);
   protected readonly requestingCode = signal(false);
-  protected code = '';
+  protected readonly codeWait = signal(0);
+  protected readonly code = signal('');
+  protected readonly codeLength = CODE_LENGTH;
   protected readonly signing = signal(false);
   protected readonly signError = signal<ApiError | null>(null);
   protected readonly signResult = signal<SignatureResult | null>(null);
   protected readonly downloading = signal(false);
   protected readonly downloadError = signal<ApiError | null>(null);
+  protected readonly certificateUrl = signal<SafeResourceUrl | null>(null);
+  protected readonly openingCertificate = signal(false);
+  protected readonly downloadingCertificate = signal(false);
+  protected readonly certificateError = signal<ApiError | null>(null);
+  protected readonly resending = signal(false);
+  protected readonly resendWait = signal(0);
+  protected readonly resendDone = signal(false);
+  protected readonly resendError = signal<ApiError | null>(null);
 
   protected readonly stepNames = computed(() =>
     (this.subscription()?.steps ?? []).map((s) => stepLabel(s)),
@@ -91,6 +110,10 @@ export class SubscriptionDetailPage {
     const s = this.subscription();
     return !!s && canDownloadSigned(s);
   });
+  protected readonly hasCertificate = computed(() => {
+    const s = this.subscription();
+    return !!s && canGetCertificate(s);
+  });
 
   protected readonly digits = CURRENCY_DIGITS;
   protected readonly statusLabel = sagaStatusLabel;
@@ -98,6 +121,7 @@ export class SubscriptionDetailPage {
   protected readonly loadErrorText = loadErrorMessage;
   protected readonly signErrorText = signErrorMessage;
   protected readonly downloadErrorText = downloadErrorMessage;
+  protected readonly resendErrorText = resendErrorMessage;
   protected readonly compensationText = compensationMessage;
   protected readonly stepperLabel = $localize`:@@subscriptions.detail.stepper:Avance de la suscripción`;
   protected readonly doneLabel = $localize`:@@subscriptions.detail.step-done:Completado`;
@@ -113,6 +137,8 @@ export class SubscriptionDetailPage {
     inject(DestroyRef).onDestroy(() => {
       this.stopPolling();
       this.releasePdf();
+      this.releaseCertificate();
+      this.countdowns.forEach((timer) => clearInterval(timer));
     });
     this.load();
   }
@@ -125,7 +151,13 @@ export class SubscriptionDetailPage {
       next: (s) => {
         this.loading.set(false);
         this.subscription.set(s);
-        if (!s.canManageSignature) this.managing.set(false);
+        if (!s.canManageSignature) {
+          this.managing.set(false);
+          // Se perdió la respuesta al firmar, pero la firma sí quedó: la pantalla ya muestra cómo terminó.
+          if (this.isConnectionError(this.signError()) && canDownloadSigned(s)) {
+            this.signError.set(null);
+          }
+        }
         this.schedulePoll(s);
       },
       error: (e: unknown) => {
@@ -170,6 +202,7 @@ export class SubscriptionDetailPage {
       next: () => {
         this.requestingCode.set(false);
         this.codeRequested.set(true);
+        this.startCountdown(this.codeWait);
       },
       error: (e: unknown) => {
         this.requestingCode.set(false);
@@ -178,13 +211,19 @@ export class SubscriptionDetailPage {
     });
   }
 
+  protected onCodeInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    input.value = normalizeCode(input.value);
+    this.code.set(input.value);
+  }
+
   protected sign(): void {
     const d = this.document();
-    const code = this.code.trim();
-    if (!d || !code || !this.reviewed || this.signing()) return;
+    const code = this.code();
+    if (!d || code.length !== CODE_LENGTH || !this.reviewed || this.signing()) return;
     this.signing.set(true);
     this.signError.set(null);
-    this.code = '';
+    this.code.set('');
     this.gateway.sign(this.id, { hash: d.hash, reviewed: true, code }).subscribe({
       next: (result) => {
         this.signing.set(false);
@@ -196,7 +235,22 @@ export class SubscriptionDetailPage {
       error: (e: unknown) => {
         this.signing.set(false);
         this.failSign(e);
+        const error = this.signError();
+        if (error?.code === 'DOCUMENTO_ALTERADO') this.reloadDocument();
+        // No se sabe si la firma llegó: se consulta antes de pedirle otro código al cliente.
+        if (this.isConnectionError(error)) this.load();
       },
+    });
+  }
+
+  /** El PDF cambió: hash nuevo y el cliente lo revisa de nuevo. No gastó ningún intento. */
+  private reloadDocument(): void {
+    this.reviewed = false;
+    this.releasePdf();
+    this.pdfUrl.set(null);
+    this.gateway.getSignatureDocument(this.id).subscribe({
+      next: (d) => this.document.set(d),
+      error: (e: unknown) => this.failSign(e),
     });
   }
 
@@ -214,6 +268,78 @@ export class SubscriptionDetailPage {
         this.downloadError.set(e instanceof ApiError ? e : new ApiError('server', 500));
       },
     });
+  }
+
+  protected openCertificate(): void {
+    if (this.openingCertificate()) return;
+    this.openingCertificate.set(true);
+    this.certificateError.set(null);
+    this.gateway.getCertificate(this.id).subscribe({
+      next: (blob) => {
+        this.openingCertificate.set(false);
+        this.releaseCertificate();
+        this.certificateObjectUrl = URL.createObjectURL(blob);
+        this.certificateUrl.set(
+          this.sanitizer.bypassSecurityTrustResourceUrl(this.certificateObjectUrl),
+        );
+      },
+      error: (e: unknown) => {
+        this.openingCertificate.set(false);
+        this.certificateError.set(e instanceof ApiError ? e : new ApiError('server', 500));
+      },
+    });
+  }
+
+  protected downloadCertificate(): void {
+    if (this.downloadingCertificate()) return;
+    this.downloadingCertificate.set(true);
+    this.certificateError.set(null);
+    this.gateway.getCertificate(this.id).subscribe({
+      next: (blob) => {
+        this.downloadingCertificate.set(false);
+        this.saveFile(blob, `certificado-${this.subscription()?.policy?.number ?? this.id}.pdf`);
+      },
+      error: (e: unknown) => {
+        this.downloadingCertificate.set(false);
+        this.certificateError.set(e instanceof ApiError ? e : new ApiError('server', 500));
+      },
+    });
+  }
+
+  protected resendConfirmation(): void {
+    if (this.resending() || this.resendWait() > 0) return;
+    this.resending.set(true);
+    this.resendDone.set(false);
+    this.resendError.set(null);
+    this.gateway.resendConfirmation(this.id).subscribe({
+      next: () => {
+        this.resending.set(false);
+        this.resendDone.set(true);
+        this.startCountdown(this.resendWait);
+      },
+      error: (e: unknown) => {
+        this.resending.set(false);
+        const error = e instanceof ApiError ? e : new ApiError('server', 500);
+        this.resendError.set(error);
+        if (error.code === 'CORREO_MUY_SEGUIDO') this.startCountdown(this.resendWait);
+      },
+    });
+  }
+
+  private isConnectionError(error: ApiError | null): boolean {
+    return error?.kind === 'network' || error?.kind === 'server';
+  }
+
+  private startCountdown(seconds: WritableSignal<number>): void {
+    seconds.set(RESEND_WAIT_SECONDS);
+    const timer = setInterval(() => {
+      seconds.update((left) => left - 1);
+      if (seconds() <= 0) {
+        clearInterval(timer);
+        this.countdowns.delete(timer);
+      }
+    }, 1000);
+    this.countdowns.add(timer);
   }
 
   private failSign(e: unknown): void {
@@ -239,6 +365,11 @@ export class SubscriptionDetailPage {
   private releasePdf(): void {
     if (this.pdfObjectUrl) URL.revokeObjectURL(this.pdfObjectUrl);
     this.pdfObjectUrl = null;
+  }
+
+  private releaseCertificate(): void {
+    if (this.certificateObjectUrl) URL.revokeObjectURL(this.certificateObjectUrl);
+    this.certificateObjectUrl = null;
   }
 
   private saveFile(blob: Blob, name: string): void {

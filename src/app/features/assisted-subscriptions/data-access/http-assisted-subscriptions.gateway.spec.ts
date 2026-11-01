@@ -1,3 +1,4 @@
+import { LOCALE_ID } from '@angular/core';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
@@ -147,6 +148,17 @@ describe('HttpAssistedSubscriptionsGateway', () => {
   it('should ask for the code and read the PDFs as files', () => {
     gateway.requestCode('sus-1').subscribe();
     gateway.getSignaturePdf('sus-1').subscribe();
+    gateway.getCertificate('sus-1').subscribe();
+    const certificate = http.expectOne(`${BASE}/sus-1/certificado`);
+    expect(certificate.request.responseType).toBe('blob');
+    expect(certificate.request.headers.get('Accept-Language')).toBe(TestBed.inject(LOCALE_ID));
+    certificate.flush(new Blob(['%PDF']));
+
+    gateway.resendConfirmation('sus-1').subscribe();
+    const resend = http.expectOne(`${BASE}/sus-1/confirmacion/reenvio`);
+    expect(resend.request.method).toBe('POST');
+    resend.flush(null, { status: 202, statusText: 'Accepted' });
+
     gateway.downloadSignedPolicy('sus-1').subscribe();
 
     http.expectOne({ url: `${BASE}/sus-1/firma/codigo`, method: 'POST' }).flush(null);

@@ -920,11 +920,25 @@
           <context context-type="linenumber">111</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="subscriptions.resend.error.too-soon" datatype="html">
+        <source>Acabas de enviarlo. Espera un minuto antes de intentarlo de nuevo.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-subscriptions/domain/labels.ts</context>
+          <context context-type="linenumber">119</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="subscriptions.resend.error.not-issued" datatype="html">
+        <source>El correo se puede reenviar cuando la póliza esté emitida.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-subscriptions/domain/labels.ts</context>
+          <context context-type="linenumber">121</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="subscriptions.download.error.conflict" datatype="html">
         <source>El documento aún no está disponible. Vuelve a cargar la suscripción para ver su estado.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/domain/labels.ts</context>
-          <context context-type="linenumber">119</context>
+          <context context-type="linenumber">129</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.back" datatype="html">
@@ -992,7 +1006,7 @@
         <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span aria-hidden=&quot;true&quot;&gt;"/>✕<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> Escribe un número de 13 a 19 dígitos.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/start-subscription-page.html</context>
-          <context context-type="linenumber">46,48</context>
+          <context context-type="linenumber">46,47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.start.accepted" datatype="html">
@@ -1006,7 +1020,7 @@
         <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span aria-hidden=&quot;true&quot;&gt;"/>✕<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> Confirma que el cliente aceptó antes de continuar.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/start-subscription-page.html</context>
-          <context context-type="linenumber">70,72</context>
+          <context context-type="linenumber">70,71</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.start.busy" datatype="html">
@@ -1067,7 +1081,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.sign.done" datatype="html">
-        <source>Póliza firmada y emitida. Ya puedes descargarla.</source>
+        <source>Póliza firmada y emitida. El cliente recibirá la confirmación por correo.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
           <context context-type="linenumber">41,44</context>
@@ -1138,7 +1152,7 @@
         <source>La decisión automática rechazó esta solicitud. No se hizo ningún cobro.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">108,111</context>
+          <context context-type="linenumber">108,110</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.detail.charge-rejected" datatype="html">
@@ -1152,7 +1166,7 @@
         <source>Este caso se derivó a revisión asistida.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">125,128</context>
+          <context context-type="linenumber">125,127</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.detail.download" datatype="html">
@@ -1169,109 +1183,186 @@
           <context context-type="linenumber">158,161</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="subscriptions.certificate.title" datatype="html">
+        <source>Certificado de cobertura</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
+          <context context-type="linenumber">169,170</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="subscriptions.certificate.note" datatype="html">
+        <source> El cliente recibe un correo de confirmación con el enlace de descarga. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
+          <context context-type="linenumber">171,173</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="subscriptions.certificate.open" datatype="html">
+        <source> Ver certificado </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
+          <context context-type="linenumber">182,184</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="subscriptions.certificate.download" datatype="html">
+        <source> Descargar certificado </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
+          <context context-type="linenumber">192,195</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="subscriptions.resend.wait" datatype="html">
+        <source>Reenviar correo en <x id="INTERPOLATION" equiv-text="{{ resendWait() }}"/> s</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
+          <context context-type="linenumber">203,204</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="subscriptions.resend.action" datatype="html">
+        <source>Reenviar correo al cliente</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
+          <context context-type="linenumber">207,209</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="subscriptions.resend.done" datatype="html">
+        <source>Solicitamos el reenvío del correo al cliente.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
+          <context context-type="linenumber">216,218</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="subscriptions.certificate.pdf-title" datatype="html">
+        <source>Certificado de cobertura</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
+          <context context-type="linenumber">232,236</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="subscriptions.sign.title" datatype="html">
         <source>Gestionar firma</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">169,172</context>
+          <context context-type="linenumber">240,242</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.sign.email" datatype="html">
         <source> Enviar por correo </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">179,181</context>
+          <context context-type="linenumber">250,252</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.sign.email-note" datatype="html">
-        <source> El envío del enlace por correo estará disponible cuando exista el servicio de notificaciones. Por ahora, firma en pantalla con el cliente presente. </source>
+        <source> El envío del enlace de firma por correo aún no está disponible. Por ahora, firma en pantalla con el cliente presente. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">183,187</context>
+          <context context-type="linenumber">254,258</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.sign.review-title" datatype="html">
         <source>1. Revisar el documento</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">187,189</context>
+          <context context-type="linenumber">258,260</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.sign.open-pdf" datatype="html">
         <source> Abrir el documento </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">197,200</context>
+          <context context-type="linenumber">268,270</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.sign.pdf-title" datatype="html">
         <source>Documento de la póliza por firmar</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">205,208</context>
+          <context context-type="linenumber">276,279</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.sign.reviewed" datatype="html">
         <source>El cliente revisó el documento completo.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">211,215</context>
+          <context context-type="linenumber">282,284</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.sign.code-title" datatype="html">
         <source>2. Confirmar con el código del cliente</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">215,217</context>
+          <context context-type="linenumber">286,288</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="subscriptions.sign.request-code-wait" datatype="html">
+        <source>Volver a enviar en <x id="INTERPOLATION" equiv-text="{{ codeWait() }}"/> s</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
+          <context context-type="linenumber">297,298</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="subscriptions.sign.request-code-again" datatype="html">
+        <source>Volver a enviar el código</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
+          <context context-type="linenumber">301,304</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.sign.request-code" datatype="html">
-        <source> Enviar código al cliente </source>
+        <source>Enviar código al cliente</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">225,228</context>
+          <context context-type="linenumber">305,308</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="subscriptions.sign.code-sent" datatype="html">
+        <source>Código enviado. Pídele al cliente que lo digite.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
+          <context context-type="linenumber">313,316</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.sign.code" datatype="html">
         <source>Código de un solo uso</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">231,234</context>
+          <context context-type="linenumber">320,322</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.sign.code-hint" datatype="html">
         <source>Lo digita el cliente. Si se agotan los intentos, la firma falla y se devuelve el cobro.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">246,249</context>
+          <context context-type="linenumber">336,339</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.sign.busy" datatype="html">
         <source>Firmando…</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">258,260</context>
+          <context context-type="linenumber">348,349</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.sign.action" datatype="html">
         <source>Firmar</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">260,262</context>
+          <context context-type="linenumber">350,352</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.detail.stepper" datatype="html">
         <source>Avance de la suscripción</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.ts</context>
-          <context context-type="linenumber">102</context>
+          <context context-type="linenumber">126</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.detail.step-done" datatype="html">
         <source>Completado</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.ts</context>
-          <context context-type="linenumber">103</context>
+          <context context-type="linenumber">127</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.list.title" datatype="html">
@@ -1286,7 +1377,7 @@
 </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-list-page.html</context>
-          <context context-type="linenumber">3,7</context>
+          <context context-type="linenumber">3,6</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.filter.status" datatype="html">
@@ -1363,14 +1454,14 @@
         <source>Gestionar firma</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-list-page.html</context>
-          <context context-type="linenumber">101,103</context>
+          <context context-type="linenumber">101,102</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.list.open" datatype="html">
         <source>Ver detalle</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-list-page.html</context>
-          <context context-type="linenumber">104,106</context>
+          <context context-type="linenumber">104,105</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.pager.label" datatype="html">

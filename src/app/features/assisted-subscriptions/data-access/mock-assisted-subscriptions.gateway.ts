@@ -153,6 +153,14 @@ export class MockAssistedSubscriptionsGateway extends AssistedSubscriptionsGatew
     return this.find(id) ? of(this.pdf()).pipe(delay(LATENCY_MS)) : this.notFound();
   }
 
+  getCertificate(id: string): Observable<Blob> {
+    return this.find(id) ? of(this.pdf()).pipe(delay(LATENCY_MS)) : this.notFound();
+  }
+
+  resendConfirmation(id: string): Observable<void> {
+    return this.find(id) ? of(undefined).pipe(delay(LATENCY_MS)) : this.notFound();
+  }
+
   private find(id: string): AssistedSubscription | undefined {
     return this.subscriptions.find((s) => s.id === id);
   }

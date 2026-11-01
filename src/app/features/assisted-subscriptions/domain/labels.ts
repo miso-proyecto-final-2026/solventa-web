@@ -113,6 +113,16 @@ export function signErrorMessage(error: ApiError): string {
   return loadErrorMessage(error);
 }
 
+export function resendErrorMessage(error: ApiError): string {
+  switch (error.code) {
+    case 'CORREO_MUY_SEGUIDO':
+      return $localize`:@@subscriptions.resend.error.too-soon:Acabas de enviarlo. Espera un minuto antes de intentarlo de nuevo.`;
+    case 'CERTIFICADO_NO_DISPONIBLE':
+      return $localize`:@@subscriptions.resend.error.not-issued:El correo se puede reenviar cuando la póliza esté emitida.`;
+  }
+  return loadErrorMessage(error);
+}
+
 /** Las descargas piden un `Blob`: su error no trae el código del backend, solo el estado HTTP. */
 export function downloadErrorMessage(error: ApiError): string {
   return error.status === 409

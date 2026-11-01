@@ -29,6 +29,8 @@ export class FakeAssistedSubscriptionsGateway extends AssistedSubscriptionsGatew
   failCode: ApiError | null = null;
   failSign: ApiError | null = null;
   failDownload: ApiError | null = null;
+  failCertificate: ApiError | null = null;
+  failResend: ApiError | null = null;
   /** Si se define, `list` queda esperando (para ver el estado de carga). */
   holdList: Subject<SubscriptionPage> | null = null;
   /** Si se define, `start` queda esperando (para probar el doble clic). */
@@ -40,6 +42,8 @@ export class FakeAssistedSubscriptionsGateway extends AssistedSubscriptionsGatew
   detailCalls = 0;
   codeCalls = 0;
   downloads = 0;
+  certificateCalls = 0;
+  resends = 0;
 
   start(request: StartRequest, key: string): Observable<string> {
     this.starts.push({ request, key });
@@ -89,5 +93,17 @@ export class FakeAssistedSubscriptionsGateway extends AssistedSubscriptionsGatew
     return this.failDownload
       ? throwError(() => this.failDownload)
       : of(new Blob(['%PDF'], { type: 'application/pdf' }));
+  }
+
+  getCertificate(): Observable<Blob> {
+    this.certificateCalls++;
+    return this.failCertificate
+      ? throwError(() => this.failCertificate)
+      : of(new Blob(['%PDF'], { type: 'application/pdf' }));
+  }
+
+  resendConfirmation(): Observable<void> {
+    this.resends++;
+    return this.failResend ? throwError(() => this.failResend) : of(undefined);
   }
 }
