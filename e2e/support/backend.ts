@@ -88,6 +88,11 @@ export class Backend {
   nextStartFailure: Failure | null = null;
   nextResendFailure: Failure | null = null;
   resendRequests = 0;
+  linkRequests = 0;
+  /** Firma por enlace: lo que responde `documento` y las cabeceras que llegaron. */
+  linkDocument: Failure | null = null;
+  readonly linkHeaders: Record<string, string>[] = [];
+  readonly linkCodes: string[] = [];
   subscriptionForbidden = false;
 
   private nextSearchFailure: Failure | null = null;
@@ -180,6 +185,19 @@ export class Backend {
         },
       });
     });
+    await this.page.route(new RegExp(`${ASISTIDAS}/[^/]+/firma/enlace$`), (route) => {
+      this.linkRequests++;
+      const enlace = {
+        estado: 'ACTIVO',
+        vence_en: '2030-01-01T00:00:00Z',
+        creado_en: '2029-12-31T00:00:00Z',
+      };
+      this.subscription = { ...this.subscription, enlace_firma: enlace };
+      return route.fulfill({ status: 202, json: enlace });
+    });
+    await this.page.route(/\/api\/suscripcion\/v1\/suscripciones\/enlace-firma\/.*/, (route) =>
+      this.handleSignLink(route),
+    );
     await this.page.route(new RegExp(`${ASISTIDAS}/[^/]+/certificado$`), (route) =>
       route.fulfill({ contentType: 'application/pdf', body: '%PDF-1.4 certificado' }),
     );
@@ -196,6 +214,32 @@ export class Backend {
         body: '%PDF-1.4 firmada',
       }),
     );
+  }
+
+  private handleSignLink(route: Route): Promise<void> {
+    const url = route.request().url();
+    this.linkHeaders.push(route.request().headers());
+    if (url.endsWith('/documento')) {
+      if (this.linkDocument) return route.fulfill(this.linkDocument);
+      return route.fulfill({
+        json: {
+          suscripcion_id: 'sus-e2e-1',
+          numero_poliza: 'SOLV-E2E-1',
+          documento_sha256: 'a'.repeat(64),
+          estado: 'PENDIENTE',
+          vence_en: '2030-01-01T00:00:00Z',
+          autenticacion: 'OTP',
+        },
+      });
+    }
+    if (url.endsWith('/documento/pdf')) {
+      return route.fulfill({ contentType: 'application/pdf', body: '%PDF-1.4 e2e' });
+    }
+    if (url.endsWith('/codigo')) return route.fulfill({ status: 202, body: '' });
+    const { codigo } = route.request().postDataJSON() as { codigo: string };
+    this.linkCodes.push(codigo);
+    if (codigo !== '123456') return this.rejectCode(route);
+    return route.fulfill({ json: { estado_saga: 'EMITIDA' } });
   }
 
   private rejectCode(route: Route): Promise<void> {

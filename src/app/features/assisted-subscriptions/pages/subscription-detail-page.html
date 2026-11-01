@@ -239,119 +239,72 @@
     <sol-card class="page__card">
       <h2 class="page__step" i18n="@@subscriptions.sign.title">Gestionar firma</h2>
 
-      <div class="sol-actions">
-        <button
-          type="button"
-          class="sol-btn sol-btn--outline"
-          disabled
-          aria-describedby="sub-email-note"
-          i18n="@@subscriptions.sign.email"
-        >
-          Enviar por correo
-        </button>
-      </div>
+      <h3 i18n="@@subscriptions.sign.email-title">Enviar al cliente</h3>
       <p id="sub-email-note" class="sub__hint" i18n="@@subscriptions.sign.email-note">
-        El envío del enlace de firma por correo aún no está disponible. Por ahora, firma en pantalla
-        con el cliente presente.
+        El cliente recibe en su correo registrado un enlace para revisar y firmar con su código.
       </p>
-
-      <h3 i18n="@@subscriptions.sign.review-title">1. Revisar el documento</h3>
       <div class="sol-actions">
         <button
           type="button"
           class="sol-btn sol-btn--outline"
-          [disabled]="openingPdf() || !document()"
-          [attr.aria-busy]="openingPdf()"
-          (click)="openPdf()"
-          i18n="@@subscriptions.sign.open-pdf"
+          [disabled]="sendingLink() || linkWait() > 0"
+          [attr.aria-busy]="sendingLink()"
+          aria-describedby="sub-email-note"
+          (click)="sendLink()"
         >
-          Abrir el documento
-        </button>
-      </div>
-      @if (pdfUrl(); as url) {
-        <iframe
-          class="sub__pdf"
-          [src]="url"
-          i18n-title="@@subscriptions.sign.pdf-title"
-          title="Documento de la póliza por firmar"
-        ></iframe>
-      }
-      <label class="sub__check">
-        <input type="checkbox" name="reviewed" [disabled]="!pdfUrl()" [(ngModel)]="reviewed" />
-        <ng-container i18n="@@subscriptions.sign.reviewed"
-          >El cliente revisó el documento completo.</ng-container
-        >
-      </label>
-
-      <h3 i18n="@@subscriptions.sign.code-title">2. Confirmar con el código del cliente</h3>
-      <div class="sol-actions">
-        <button
-          type="button"
-          class="sol-btn sol-btn--outline"
-          [disabled]="!reviewed || requestingCode() || codeWait() > 0"
-          [attr.aria-busy]="requestingCode()"
-          (click)="requestCode()"
-        >
-          @if (codeWait() > 0) {
-            <ng-container i18n="@@subscriptions.sign.request-code-wait"
-              >Volver a enviar en {{ codeWait() }} s</ng-container
-            >
-          } @else if (codeRequested()) {
-            <ng-container i18n="@@subscriptions.sign.request-code-again"
-              >Volver a enviar el código</ng-container
+          @if (linkWait() > 0) {
+            <ng-container i18n="@@subscriptions.sign.email-wait"
+              >Volver a enviar en {{ linkWait() }} s</ng-container
             >
           } @else {
-            <ng-container i18n="@@subscriptions.sign.request-code"
-              >Enviar código al cliente</ng-container
-            >
+            <ng-container i18n="@@subscriptions.sign.email">Enviar por correo</ng-container>
           }
         </button>
       </div>
-      <p class="sub__hint" role="status">
-        @if (codeRequested()) {
-          <ng-container i18n="@@subscriptions.sign.code-sent"
-            >Código enviado. Pídele al cliente que lo digite.</ng-container
-          >
+      <div role="status">
+        @if (s.signatureLink; as link) {
+          @if (link.status === 'ACTIVO') {
+            <sol-alert kind="info">
+              <ng-container i18n="@@subscriptions.sign.email-sent"
+                >Solicitamos el envío del enlace. Vencimiento:
+                {{ link.expiresAt | date: 'medium' }}</ng-container
+              >
+            </sol-alert>
+          }
         }
-      </p>
-      <form class="sol-form" (ngSubmit)="sign()">
-        <div class="sub__field">
-          <label class="sub__label" for="sub-code" i18n="@@subscriptions.sign.code"
-            >Código de un solo uso</label
+      </div>
+      @if (confirmingLink()) {
+        <sol-alert kind="warning">
+          <ng-container i18n="@@subscriptions.sign.email-confirm"
+            >Si envías otro enlace, el anterior dejará de servir.</ng-container
           >
-          <input
-            id="sub-code"
-            name="code"
-            class="sol-input sub__code"
-            type="text"
-            inputmode="numeric"
-            autocomplete="one-time-code"
-            maxlength="12"
-            [disabled]="!codeRequested()"
-            [value]="code()"
-            (input)="onCodeInput($event)"
-            aria-describedby="sub-code-hint"
-          />
-          <small id="sub-code-hint" class="sub__hint" i18n="@@subscriptions.sign.code-hint"
-            >Lo digita el cliente. Si se agotan los intentos, la firma falla y se devuelve el
-            cobro.</small
-          >
-        </div>
-        <div class="sol-actions">
           <button
-            type="submit"
-            class="sol-btn sol-btn--primary"
-            [disabled]="!reviewed || !codeRequested() || code().length !== codeLength || signing()"
-            [attr.aria-busy]="signing()"
+            type="button"
+            class="sol-btn sol-btn--outline sub__inline-action"
+            (click)="sendLink()"
+            i18n="@@subscriptions.sign.email-confirm-action"
           >
-            @if (signing()) {
-              <ng-container i18n="@@subscriptions.sign.busy">Firmando…</ng-container>
-            } @else {
-              <ng-container i18n="@@subscriptions.sign.action">Firmar</ng-container>
-            }
+            Enviar otro enlace
           </button>
-        </div>
-      </form>
+        </sol-alert>
+      }
+      @if (linkError(); as e) {
+        <sol-alert kind="error">{{ linkErrorText(e) }}</sol-alert>
+      }
+
+      <h3 i18n="@@subscriptions.sign.screen-title">
+        O firmar en pantalla, con el cliente presente
+      </h3>
+      <sol-signature-steps
+        assisted
+        [actions]="signatureActions"
+        [hash]="document()?.hash ?? null"
+        [revision]="documentRevision()"
+        (started)="signError.set(null)"
+        (signed)="onSigned($event)"
+        (failed)="failSign($event)"
+        (signFailed)="onSignFailed($event)"
+      />
     </sol-card>
   }
 }

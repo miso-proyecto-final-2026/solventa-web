@@ -10,13 +10,14 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SessionStore } from '@core/auth/session.store';
 import { ApiError } from '@core/http/api-error';
 import { CURRENCY_DIGITS } from '@core/money/money';
 import { productLabel } from '@shared/models/product-labels';
+import { RESEND_WAIT_SECONDS } from '@shared/signature/signature-rules';
+import { SignatureActions, SignatureSteps } from '@shared/signature/signature-steps';
 import { Alert } from '@shared/ui/alert/alert';
 import { Card } from '@shared/ui/card/card';
 import { Stepper } from '@shared/ui/stepper/stepper';
@@ -24,6 +25,7 @@ import { AssistedSubscriptionsGateway } from '../data-access/assisted-subscripti
 import {
   compensationMessage,
   downloadErrorMessage,
+  linkErrorMessage,
   loadErrorMessage,
   resendErrorMessage,
   sagaStatusLabel,
@@ -32,15 +34,12 @@ import {
 } from '../domain/labels';
 import {
   AssistedSubscription,
-  CODE_LENGTH,
-  RESEND_WAIT_SECONDS,
   SignatureDocument,
   SignatureResult,
   canDownloadSigned,
   canGetCertificate,
   currentStepIndex,
   isAdvancing,
-  normalizeCode,
 } from '../domain/models';
 
 const POLL_INTERVAL_MS = 3000;
@@ -48,12 +47,13 @@ const MAX_POLLS = 20;
 
 /**
  * HU39: el avance de la saga, sus compensaciones y la firma en pantalla con el cliente presente:
- * abrir el PDF, confirmar la revisión, pedir el código y firmar. Al firmarse, la póliza se emite sola,
+ * abrir el PDF, confirmar la revisión, pedir el código y firmar; o el envío del enlace por correo para
+ * que firme el cliente. Al firmarse, la póliza se emite sola,
  * el cliente recibe la confirmación por correo y el asesor puede ver el certificado y reenviar ese correo.
  */
 @Component({
   selector: 'sol-subscription-detail',
-  imports: [Alert, Card, CurrencyPipe, DatePipe, FormsModule, RouterLink, Stepper],
+  imports: [Alert, Card, CurrencyPipe, DatePipe, RouterLink, SignatureSteps, Stepper],
   templateUrl: './subscription-detail-page.html',
   styleUrl: './subscriptions.scss',
 })
@@ -67,7 +67,6 @@ export class SubscriptionDetailPage {
 
   private pollTimer: ReturnType<typeof setTimeout> | null = null;
   private polls = 0;
-  private pdfObjectUrl: string | null = null;
   private certificateObjectUrl: string | null = null;
   private readonly countdowns = new Set<ReturnType<typeof setInterval>>();
 
@@ -77,15 +76,11 @@ export class SubscriptionDetailPage {
 
   protected readonly managing = signal(false);
   protected readonly document = signal<SignatureDocument | null>(null);
-  protected readonly pdfUrl = signal<SafeResourceUrl | null>(null);
-  protected readonly openingPdf = signal(false);
-  protected reviewed = false;
-  protected readonly codeRequested = signal(false);
-  protected readonly requestingCode = signal(false);
-  protected readonly codeWait = signal(0);
-  protected readonly code = signal('');
-  protected readonly codeLength = CODE_LENGTH;
-  protected readonly signing = signal(false);
+  protected readonly documentRevision = signal(0);
+  protected readonly sendingLink = signal(false);
+  protected readonly linkWait = signal(0);
+  protected readonly confirmingLink = signal(false);
+  protected readonly linkError = signal<ApiError | null>(null);
   protected readonly signError = signal<ApiError | null>(null);
   protected readonly signResult = signal<SignatureResult | null>(null);
   protected readonly downloading = signal(false);
@@ -122,6 +117,12 @@ export class SubscriptionDetailPage {
   protected readonly signErrorText = signErrorMessage;
   protected readonly downloadErrorText = downloadErrorMessage;
   protected readonly resendErrorText = resendErrorMessage;
+  protected readonly linkErrorText = linkErrorMessage;
+  protected readonly signatureActions: SignatureActions<SignatureResult> = {
+    getPdf: () => this.gateway.getSignaturePdf(this.id),
+    requestCode: () => this.gateway.requestCode(this.id),
+    sign: (submission) => this.gateway.sign(this.id, submission),
+  };
   protected readonly compensationText = compensationMessage;
   protected readonly stepperLabel = $localize`:@@subscriptions.detail.stepper:Avance de la suscripción`;
   protected readonly doneLabel = $localize`:@@subscriptions.detail.step-done:Completado`;
@@ -136,7 +137,6 @@ export class SubscriptionDetailPage {
     });
     inject(DestroyRef).onDestroy(() => {
       this.stopPolling();
-      this.releasePdf();
       this.releaseCertificate();
       this.countdowns.forEach((timer) => clearInterval(timer));
     });
@@ -176,80 +176,53 @@ export class SubscriptionDetailPage {
     });
   }
 
-  protected openPdf(): void {
-    if (this.openingPdf()) return;
-    this.openingPdf.set(true);
-    this.signError.set(null);
-    this.gateway.getSignaturePdf(this.id).subscribe({
-      next: (blob) => {
-        this.openingPdf.set(false);
-        this.releasePdf();
-        this.pdfObjectUrl = URL.createObjectURL(blob);
-        this.pdfUrl.set(this.sanitizer.bypassSecurityTrustResourceUrl(this.pdfObjectUrl));
-      },
-      error: (e: unknown) => {
-        this.openingPdf.set(false);
-        this.failSign(e);
-      },
-    });
+  protected onSigned(result: SignatureResult): void {
+    this.signResult.set(result);
+    this.managing.set(false);
+    this.announceResult();
+    this.load();
   }
 
-  protected requestCode(): void {
-    if (this.requestingCode()) return;
-    this.requestingCode.set(true);
-    this.signError.set(null);
-    this.gateway.requestCode(this.id).subscribe({
+  protected onSignFailed(error: ApiError): void {
+    this.failSign(error);
+    if (error.code === 'DOCUMENTO_ALTERADO') this.reloadDocument();
+    // No se sabe si la firma llegó: se consulta antes de pedirle otro código al cliente.
+    if (this.isConnectionError(error)) this.load();
+  }
+
+  /** Con un enlace activo, enviar otro invalida el anterior: se pide confirmar. */
+  protected sendLink(): void {
+    if (this.sendingLink() || this.linkWait() > 0) return;
+    if (this.subscription()?.signatureLink?.status === 'ACTIVO' && !this.confirmingLink()) {
+      this.confirmingLink.set(true);
+      return;
+    }
+    this.confirmingLink.set(false);
+    this.sendingLink.set(true);
+    this.linkError.set(null);
+    this.gateway.sendSignatureLink(this.id).subscribe({
       next: () => {
-        this.requestingCode.set(false);
-        this.codeRequested.set(true);
-        this.startCountdown(this.codeWait);
-      },
-      error: (e: unknown) => {
-        this.requestingCode.set(false);
-        this.failSign(e);
-      },
-    });
-  }
-
-  protected onCodeInput(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    input.value = normalizeCode(input.value);
-    this.code.set(input.value);
-  }
-
-  protected sign(): void {
-    const d = this.document();
-    const code = this.code();
-    if (!d || code.length !== CODE_LENGTH || !this.reviewed || this.signing()) return;
-    this.signing.set(true);
-    this.signError.set(null);
-    this.code.set('');
-    this.gateway.sign(this.id, { hash: d.hash, reviewed: true, code }).subscribe({
-      next: (result) => {
-        this.signing.set(false);
-        this.signResult.set(result);
-        this.managing.set(false);
-        this.announceResult();
+        this.sendingLink.set(false);
+        this.startCountdown(this.linkWait);
         this.load();
       },
       error: (e: unknown) => {
-        this.signing.set(false);
-        this.failSign(e);
-        const error = this.signError();
-        if (error?.code === 'DOCUMENTO_ALTERADO') this.reloadDocument();
-        // No se sabe si la firma llegó: se consulta antes de pedirle otro código al cliente.
-        if (this.isConnectionError(error)) this.load();
+        this.sendingLink.set(false);
+        const error = e instanceof ApiError ? e : new ApiError('server', 500);
+        this.linkError.set(error);
+        if (error.code === 'CORREO_MUY_SEGUIDO') this.startCountdown(this.linkWait);
+        if (error.code === 'FIRMA_NO_DISPONIBLE') this.load();
       },
     });
   }
 
   /** El PDF cambió: hash nuevo y el cliente lo revisa de nuevo. No gastó ningún intento. */
   private reloadDocument(): void {
-    this.reviewed = false;
-    this.releasePdf();
-    this.pdfUrl.set(null);
     this.gateway.getSignatureDocument(this.id).subscribe({
-      next: (d) => this.document.set(d),
+      next: (d) => {
+        this.document.set(d);
+        this.documentRevision.update((r) => r + 1);
+      },
       error: (e: unknown) => this.failSign(e),
     });
   }
@@ -342,7 +315,7 @@ export class SubscriptionDetailPage {
     this.countdowns.add(timer);
   }
 
-  private failSign(e: unknown): void {
+  protected failSign(e: unknown): void {
     const error = e instanceof ApiError ? e : new ApiError('server', 500);
     this.signError.set(error);
     this.announceResult();
@@ -360,11 +333,6 @@ export class SubscriptionDetailPage {
   private stopPolling(): void {
     if (this.pollTimer !== null) clearTimeout(this.pollTimer);
     this.pollTimer = null;
-  }
-
-  private releasePdf(): void {
-    if (this.pdfObjectUrl) URL.revokeObjectURL(this.pdfObjectUrl);
-    this.pdfObjectUrl = null;
   }
 
   private releaseCertificate(): void {

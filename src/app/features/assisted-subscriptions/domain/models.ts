@@ -51,6 +51,14 @@ export interface SignatureSummary {
   readonly expiresAt: Date | null;
 }
 
+/** El enlace de firma más reciente. Nunca trae el token: el asesor no puede firmar por el cliente. */
+export interface SignatureLink {
+  /** `ACTIVO`, `REEMPLAZADO` o `USADO`. */
+  readonly status: string;
+  readonly expiresAt: Date;
+  readonly createdAt: Date;
+}
+
 export interface AssistedSubscription {
   readonly id: string;
   readonly quoteId: string;
@@ -67,6 +75,7 @@ export interface AssistedSubscription {
   readonly signature: SignatureSummary | null;
   readonly compensation: Compensation | null;
   readonly policy: PolicySummary | null;
+  readonly signatureLink: SignatureLink | null;
   /** Lo decide el backend: el estado no basta porque con un reembolso pedido sigue en `COBRO_REALIZADO`. */
   readonly canManageSignature: boolean;
   readonly createdAt: Date;
@@ -137,14 +146,4 @@ export function canDownloadSigned(s: AssistedSubscription): boolean {
 /** El certificado de cobertura (HU22) solo existe con la póliza ya emitida. */
 export function canGetCertificate(s: AssistedSubscription): boolean {
   return s.status === 'EMITIDA' && s.policy?.status === 'VIGENTE';
-}
-
-export const CODE_LENGTH = 6;
-
-/** Segundos entre dos envíos del mismo código o correo. El backend vuelve a validar los correos. */
-export const RESEND_WAIT_SECONDS = 60;
-
-/** Solo dígitos: pegar `123 456` no debe gastar un intento, porque tres errores devuelven el cobro. */
-export function normalizeCode(raw: string): string {
-  return raw.replace(/\D/g, '').slice(0, CODE_LENGTH);
 }

@@ -5,6 +5,7 @@ import {
   SagaStep,
   SignRequest,
   SignatureDocument,
+  SignatureLink,
   SignatureResult,
   SignatureStatus,
   StartRequest,
@@ -14,6 +15,7 @@ import {
   AssistedSubscriptionDto,
   SignatureDocumentDto,
   SignatureDto,
+  SignatureLinkDto,
   SubscriptionPageDto,
 } from '../dto/assisted-subscriptions.dto';
 
@@ -59,8 +61,17 @@ export function toSubscription(dto: AssistedSubscriptionDto): AssistedSubscripti
       status: dto.poliza.estado,
       documentStatus: dto.poliza.documento_estado,
     },
+    signatureLink: dto.enlace_firma ? toSignatureLink(dto.enlace_firma) : null,
     canManageSignature: dto.puede_gestionar_firma,
     createdAt: new Date(dto.creada_en),
+  };
+}
+
+export function toSignatureLink(dto: SignatureLinkDto): SignatureLink {
+  return {
+    status: dto.estado,
+    expiresAt: new Date(dto.vence_en),
+    createdAt: new Date(dto.creado_en),
   };
 }
 

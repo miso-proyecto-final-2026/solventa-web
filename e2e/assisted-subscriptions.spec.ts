@@ -177,12 +177,20 @@ test.describe('Venta asistida (HU-39)', () => {
       await expect(page.getByRole('button', { name: 'Gestionar firma' })).toHaveCount(0);
     });
 
-    test('el correo aparece deshabilitado y explica por qué', async ({ page }) => {
+    test('envía el enlace por correo y espera antes de permitir otro envío', async ({
+      page,
+      backend,
+    }) => {
       await page.goto('/subscriptions/sus-e2e-1');
       await page.getByRole('button', { name: 'Gestionar firma' }).click();
 
-      await expect(page.getByRole('button', { name: 'Enviar por correo' })).toBeDisabled();
-      await expect(page.getByText('aún no está disponible')).toBeVisible();
+      await page.getByRole('button', { name: 'Enviar por correo' }).click();
+
+      await expect(page.getByText('Solicitamos el envío del enlace')).toBeVisible();
+      expect(backend.linkRequests).toBe(1);
+      await expect(
+        page.getByRole('button', { name: /Volver a enviar en \d+ s/ }).first(),
+      ).toBeDisabled();
     });
 
     test('explica el 403 de una suscripción de un cliente que no atendió', async ({

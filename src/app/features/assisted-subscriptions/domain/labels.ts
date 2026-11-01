@@ -113,6 +113,18 @@ export function signErrorMessage(error: ApiError): string {
   return loadErrorMessage(error);
 }
 
+export function linkErrorMessage(error: ApiError): string {
+  switch (error.code) {
+    case 'CORREO_MUY_SEGUIDO':
+      return $localize`:@@subscriptions.resend.error.too-soon:Acabas de enviarlo. Espera un minuto antes de intentarlo de nuevo.`;
+    case 'FIRMA_NO_DISPONIBLE':
+      return $localize`:@@subscriptions.sign.error.unavailable:Esta suscripción ya no está en el paso de firma. Vuelve a cargarla para ver su estado.`;
+    case 'ENLACES_NO_CONFIGURADOS':
+      return $localize`:@@subscriptions.sign.email-error.unavailable:El envío por correo no está disponible por ahora. Firma en pantalla con el cliente presente.`;
+  }
+  return loadErrorMessage(error);
+}
+
 export function resendErrorMessage(error: ApiError): string {
   switch (error.code) {
     case 'CORREO_MUY_SEGUIDO':

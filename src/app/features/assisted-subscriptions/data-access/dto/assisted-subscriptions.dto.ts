@@ -6,6 +6,12 @@ export interface ClientSummaryDto {
   documento_enmascarado: string;
 }
 
+export interface SignatureLinkDto {
+  estado: string;
+  vence_en: string;
+  creado_en: string;
+}
+
 export interface AssistedSubscriptionDto {
   id: string;
   cotizacion_id: string;
@@ -30,6 +36,7 @@ export interface AssistedSubscriptionDto {
     documento_intentos: number;
     documento_error: string | null;
   } | null;
+  enlace_firma?: SignatureLinkDto | null;
   puede_gestionar_firma: boolean;
   creada_en: string;
 }
