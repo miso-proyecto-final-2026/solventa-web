@@ -50,7 +50,8 @@ jobs:
         if: steps.validar.outputs.motivo != ''
         env:
           MOTIVO: ${{ steps.validar.outputs.motivo }}
-        run: gh pr comment "$PR" --repo "$REPO" --body "No se desplegó: $MOTIVO"
+        run: |
+          gh pr comment "$PR" --repo "$REPO" --body "No se desplegó: $MOTIVO"
 
   desplegar:
     name: desplegar
