@@ -1,8 +1,20 @@
+import type { Page } from '@playwright/test';
 import { SERVER_ERROR } from './support/backend';
 import { expectNoSeriousA11yViolations } from './support/journey';
 import { expect, signIn, test } from './support/test';
 
 const CARD = '4242 4242 4242 4242';
+
+async function signOnScreen(page: Page): Promise<void> {
+  await page.goto('/subscriptions/sus-e2e-1');
+  await page.getByRole('button', { name: 'Gestionar firma' }).click();
+  await page.getByRole('button', { name: 'Abrir el documento' }).click();
+  await page.getByLabel('El cliente revisó el documento completo.').check();
+  await page.getByRole('button', { name: 'Enviar código al cliente' }).click();
+  await page.getByLabel('Código de un solo uso').fill('123456');
+  await page.getByRole('button', { name: 'Firmar', exact: true }).click();
+  await expect(page.getByText('Póliza firmada y emitida')).toBeVisible();
+}
 
 test.describe('Venta asistida (HU-39)', () => {
   test.describe('como asesor', () => {
@@ -70,6 +82,59 @@ test.describe('Venta asistida (HU-39)', () => {
       expect((await download).suggestedFilename()).toBe('poliza-SOLV-E2E-1-firmada.pdf');
     });
 
+    test('tras firmar deja ver y descargar el certificado y reenviar el correo', async ({
+      page,
+      backend,
+    }) => {
+      await signOnScreen(page);
+
+      await page.getByRole('button', { name: 'Ver certificado' }).click();
+      await expect(page.locator('iframe[title="Certificado de cobertura"]')).toBeVisible();
+
+      const download = page.waitForEvent('download');
+      await page.getByRole('button', { name: 'Descargar certificado' }).click();
+      expect((await download).suggestedFilename()).toBe('certificado-SOLV-E2E-1.pdf');
+
+      await page.getByRole('button', { name: 'Reenviar correo al cliente' }).click();
+      await expect(page.getByText('Solicitamos el reenvío')).toBeVisible();
+      await expect(page.getByRole('button', { name: /Reenviar correo en \d+ s/ })).toBeDisabled();
+      expect(backend.resendRequests).toBe(1);
+    });
+
+    test('explica que el correo se acaba de enviar', async ({ page, backend }) => {
+      backend.nextResendFailure = {
+        status: 429,
+        json: {
+          error: { code: 'CORREO_MUY_SEGUIDO', message: 'x', details: [], trace_id: 't' },
+        },
+      };
+      await signOnScreen(page);
+
+      await page.getByRole('button', { name: 'Reenviar correo al cliente' }).click();
+
+      await expect(page.getByRole('alert')).toContainText('Espera un minuto');
+    });
+
+    test('un código pegado con espacios se normaliza antes de firmar', async ({
+      page,
+      backend,
+    }) => {
+      await page.goto('/subscriptions/sus-e2e-1');
+      await page.getByRole('button', { name: 'Gestionar firma' }).click();
+      await page.getByRole('button', { name: 'Abrir el documento' }).click();
+      await page.getByLabel('El cliente revisó el documento completo.').check();
+      await page.getByRole('button', { name: 'Enviar código al cliente' }).click();
+      await expect(page.getByText('Código enviado')).toBeVisible();
+
+      await page.getByLabel('Código de un solo uso').fill('123 45');
+      await expect(page.getByRole('button', { name: 'Firmar', exact: true })).toBeDisabled();
+      await page.getByLabel('Código de un solo uso').fill('123 456');
+      await page.getByRole('button', { name: 'Firmar', exact: true }).click();
+
+      await expect(page.getByText('Póliza firmada y emitida')).toBeVisible();
+      expect(backend.signCodes).toEqual(['123456']);
+    });
+
     test('avisa los intentos que quedan y, al agotarlos, explica la devolución del cobro', async ({
       page,
     }) => {
@@ -117,7 +182,7 @@ test.describe('Venta asistida (HU-39)', () => {
       await page.getByRole('button', { name: 'Gestionar firma' }).click();
 
       await expect(page.getByRole('button', { name: 'Enviar por correo' })).toBeDisabled();
-      await expect(page.getByText('cuando exista el servicio de notificaciones')).toBeVisible();
+      await expect(page.getByText('aún no está disponible')).toBeVisible();
     });
 
     test('explica el 403 de una suscripción de un cliente que no atendió', async ({

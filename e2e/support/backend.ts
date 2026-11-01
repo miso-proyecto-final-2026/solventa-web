@@ -86,6 +86,8 @@ export class Backend {
   readonly signCodes: string[] = [];
   otpAttemptsLeft = 3;
   nextStartFailure: Failure | null = null;
+  nextResendFailure: Failure | null = null;
+  resendRequests = 0;
   subscriptionForbidden = false;
 
   private nextSearchFailure: Failure | null = null;
@@ -162,6 +164,7 @@ export class Backend {
         estado_saga: 'EMITIDA',
         paso_actual: 'EMISION',
         puede_gestionar_firma: false,
+        poliza: { ...(this.subscription.poliza as object), estado: 'VIGENTE' },
       };
       return route.fulfill({
         json: {
@@ -176,6 +179,15 @@ export class Backend {
           asesor_id: 'a-1',
         },
       });
+    });
+    await this.page.route(new RegExp(`${ASISTIDAS}/[^/]+/certificado$`), (route) =>
+      route.fulfill({ contentType: 'application/pdf', body: '%PDF-1.4 certificado' }),
+    );
+    await this.page.route(new RegExp(`${ASISTIDAS}/[^/]+/confirmacion/reenvio$`), (route) => {
+      this.resendRequests++;
+      return this.nextResendFailure
+        ? route.fulfill(this.nextResendFailure)
+        : route.fulfill({ status: 202 });
     });
     await this.page.route(new RegExp(`${ASISTIDAS}/[^/]+/firma/documento$`), (route) =>
       route.fulfill({

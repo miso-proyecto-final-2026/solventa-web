@@ -106,7 +106,7 @@ describe('SubscriptionDetailPage', () => {
     const email = button('Enviar por correo')!;
     expect(email.disabled).toBeTrue();
     expect(email.getAttribute('aria-describedby')).toBe('sub-email-note');
-    expect(el.querySelector('#sub-email-note')?.textContent).toContain('notificaciones');
+    expect(el.querySelector('#sub-email-note')?.textContent).toContain('aún no está disponible');
   });
 
   it('should require opening the document, confirming it and asking for the code before signing', async () => {
@@ -217,6 +217,230 @@ describe('SubscriptionDetailPage', () => {
     await click('Descargar póliza firmada');
 
     expect(text()).toContain('aún no está disponible');
+  });
+
+  describe('igual que la app móvil', () => {
+    const requestCode = async () => {
+      await review();
+      await click('Enviar código al cliente');
+    };
+
+    it('should reload the hash and ask for a new review when the document changed', async () => {
+      await create();
+      await requestCode();
+      gateway.failSign = new ApiError('validation', 409, 'DOCUMENTO_ALTERADO');
+      gateway.document = { ...gateway.document, hash: 'b'.repeat(64) };
+
+      await signWith('123456');
+
+      expect(text()).toContain('El documento cambió');
+      expect(el.querySelector<HTMLInputElement>('input[name="reviewed"]')!.checked).toBeFalse();
+      expect(el.querySelector('iframe')).toBeNull();
+
+      gateway.failSign = null;
+      await click('Abrir el documento');
+      el.querySelector<HTMLInputElement>('input[name="reviewed"]')!.click();
+      await settle();
+      await signWith('123456');
+      expect(gateway.signs[1].request.hash).toBe('b'.repeat(64));
+    });
+
+    it('should keep only the digits of a pasted code and require all of them', async () => {
+      await create();
+      await requestCode();
+
+      await typeCode('123 45');
+      expect(el.querySelector<HTMLInputElement>('#sub-code')!.value).toBe('12345');
+      expect(button('Firmar')!.disabled).toBeTrue();
+
+      await signWith('123-456');
+      expect(gateway.signs[0].request.code).toBe('123456');
+    });
+
+    it('should check the saga when the connection failed while signing', async () => {
+      await create();
+      await requestCode();
+      gateway.failSign = new ApiError('network', 0);
+      gateway.detail = ISSUED;
+      const calls = gateway.detailCalls;
+
+      await signWith('123456');
+
+      expect(gateway.detailCalls).toBe(calls + 1);
+      expect(text()).not.toContain('No hay conexión');
+      expect(button('Descargar póliza firmada')).toBeDefined();
+    });
+
+    it('should keep the error when the connection failed and the saga is still unsigned', async () => {
+      await create();
+      await requestCode();
+      gateway.failSign = new ApiError('network', 0);
+
+      await signWith('123456');
+
+      expect(text()).toContain('No hay conexión');
+      expect(button('Firmar')).toBeDefined();
+    });
+
+    it('should say the code was sent and wait before sending it again', () => {
+      jasmine.clock().install();
+      try {
+        fixture = TestBed.createComponent(SubscriptionDetailPage);
+        el = fixture.nativeElement;
+        fixture.detectChanges();
+        button('Gestionar firma')!.click();
+        fixture.detectChanges();
+        button('Abrir el documento')!.click();
+        fixture.detectChanges();
+        el.querySelector<HTMLInputElement>('input[name="reviewed"]')!.click();
+        fixture.detectChanges();
+        button('Enviar código al cliente')!.click();
+        fixture.detectChanges();
+
+        expect(text()).toContain('Código enviado');
+        expect(button('Volver a enviar en 60 s')!.disabled).toBeTrue();
+
+        jasmine.clock().tick(60_000);
+        fixture.detectChanges();
+        expect(button('Volver a enviar el código')!.disabled).toBeFalse();
+        fixture.destroy();
+      } finally {
+        jasmine.clock().uninstall();
+      }
+    });
+
+    it('should keep checking until the document is generated', () => {
+      jasmine.clock().install();
+      try {
+        gateway.detail = {
+          ...SUBSCRIPTION,
+          canManageSignature: false,
+          policy: { number: 'SOLV-1', status: 'PENDIENTE_FIRMA', documentStatus: 'PENDIENTE' },
+        };
+        fixture = TestBed.createComponent(SubscriptionDetailPage);
+        expect(gateway.detailCalls).toBe(1);
+
+        jasmine.clock().tick(3000);
+        expect(gateway.detailCalls).toBe(2);
+
+        gateway.detail = SUBSCRIPTION;
+        jasmine.clock().tick(3000);
+        expect(gateway.detailCalls).toBe(3);
+        jasmine.clock().tick(30000);
+        expect(gateway.detailCalls).toBe(3);
+        fixture.destroy();
+      } finally {
+        jasmine.clock().uninstall();
+      }
+    });
+  });
+
+  describe('certificado y correo de confirmación', () => {
+    it('should appear only once the policy is issued', async () => {
+      await create();
+      expect(text()).not.toContain('Certificado de cobertura');
+
+      gateway.detail = ISSUED;
+      await click('Volver a cargar');
+
+      expect(text()).toContain('Certificado de cobertura');
+      expect(text()).toContain('correo de confirmación');
+    });
+
+    it('should not appear while the policy is not in force', async () => {
+      gateway.detail = { ...ISSUED, policy: { ...ISSUED.policy!, status: 'ANULADA' } };
+      await create();
+
+      expect(text()).not.toContain('Ver certificado');
+    });
+
+    it('should show the certificate in the page', async () => {
+      gateway.detail = ISSUED;
+      await create();
+
+      await click('Ver certificado');
+
+      expect(gateway.certificateCalls).toBe(1);
+      expect(el.querySelector('iframe')?.getAttribute('title')).toBe('Certificado de cobertura');
+    });
+
+    it('should download it with the policy number in its name', async () => {
+      gateway.detail = ISSUED;
+      await create();
+      const save = HTMLAnchorElement.prototype.click as jasmine.Spy;
+      let name = '';
+      save.and.callFake(function (this: HTMLAnchorElement) {
+        name = this.download;
+      });
+
+      await click('Descargar certificado');
+
+      expect(name).toBe('certificado-SOLV-2.pdf');
+    });
+
+    it('should explain a certificate that is not available yet', async () => {
+      gateway.detail = ISSUED;
+      gateway.failCertificate = new ApiError('validation', 409);
+      await create();
+
+      await click('Ver certificado');
+
+      expect(text()).toContain('aún no está disponible');
+    });
+
+    it('should not say the email arrived, only that it was requested, and wait to resend', () => {
+      jasmine.clock().install();
+      try {
+        gateway.detail = ISSUED;
+        fixture = TestBed.createComponent(SubscriptionDetailPage);
+        el = fixture.nativeElement;
+        fixture.detectChanges();
+        button('Reenviar correo al cliente')!.click();
+        fixture.detectChanges();
+
+        expect(gateway.resends).toBe(1);
+        expect(text()).toContain('Solicitamos el reenvío');
+        expect(button('Reenviar correo en 60 s')!.disabled).toBeTrue();
+
+        jasmine.clock().tick(60_000);
+        fixture.detectChanges();
+        expect(button('Reenviar correo al cliente')!.disabled).toBeFalse();
+        fixture.destroy();
+      } finally {
+        jasmine.clock().uninstall();
+      }
+    });
+
+    it('should explain a resend rejected for being too soon, and also wait', () => {
+      jasmine.clock().install();
+      try {
+        gateway.detail = ISSUED;
+        gateway.failResend = new ApiError('server', 429, 'CORREO_MUY_SEGUIDO');
+        fixture = TestBed.createComponent(SubscriptionDetailPage);
+        el = fixture.nativeElement;
+        fixture.detectChanges();
+        button('Reenviar correo al cliente')!.click();
+        fixture.detectChanges();
+
+        expect(text()).toContain('Espera un minuto');
+        expect(text()).not.toContain('Solicitamos el reenvío');
+        expect(button('Reenviar correo en')!.disabled).toBeTrue();
+        fixture.destroy();
+      } finally {
+        jasmine.clock().uninstall();
+      }
+    });
+
+    it('should explain any other resend failure and allow retrying', async () => {
+      gateway.detail = ISSUED;
+      gateway.failResend = new ApiError('server', 500);
+      await create();
+
+      await click('Reenviar correo al cliente');
+
+      expect(text()).toContain('problema del servidor');
+      expect(button('Reenviar correo al cliente')!.disabled).toBeFalse();
+    });
   });
 
   it('should keep checking while the saga advances, and stop when it settles', () => {

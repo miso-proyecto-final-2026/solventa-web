@@ -123,9 +123,28 @@ export function currentStepIndex(s: AssistedSubscription): number {
 export function isAdvancing(s: AssistedSubscription): boolean {
   // Un caso derivado espera a una persona: consultar otra vez no lo hace avanzar.
   if (s.decision === 'DERIVADA') return false;
+  // Tras el cobro, el PDF se genera aparte: hasta que esté no se puede gestionar la firma.
+  if (s.status === 'COBRO_REALIZADO') {
+    return s.step === 'FIRMA' && !s.compensation && s.policy?.documentStatus !== 'GENERADO';
+  }
   return s.status === 'EN_PROGRESO' || (s.status === 'APROBADA' && s.chargeStatus === null);
 }
 
 export function canDownloadSigned(s: AssistedSubscription): boolean {
   return s.status === 'FIRMADA' || s.status === 'EMITIDA';
+}
+
+/** El certificado de cobertura (HU22) solo existe con la póliza ya emitida. */
+export function canGetCertificate(s: AssistedSubscription): boolean {
+  return s.status === 'EMITIDA' && s.policy?.status === 'VIGENTE';
+}
+
+export const CODE_LENGTH = 6;
+
+/** Segundos entre dos envíos del mismo código o correo. El backend vuelve a validar los correos. */
+export const RESEND_WAIT_SECONDS = 60;
+
+/** Solo dígitos: pegar `123 456` no debe gastar un intento, porque tres errores devuelven el cobro. */
+export function normalizeCode(raw: string): string {
+  return raw.replace(/\D/g, '').slice(0, CODE_LENGTH);
 }

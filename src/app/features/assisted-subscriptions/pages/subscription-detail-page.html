@@ -38,7 +38,7 @@
         >
       } @else {
         <ng-container i18n="@@subscriptions.sign.done"
-          >Póliza firmada y emitida. Ya puedes descargarla.</ng-container
+          >Póliza firmada y emitida. El cliente recibirá la confirmación por correo.</ng-container
         >
       }
     </sol-alert>
@@ -164,6 +164,77 @@
     }
   </sol-card>
 
+  @if (hasCertificate()) {
+    <sol-card class="page__card">
+      <h2 class="page__step" i18n="@@subscriptions.certificate.title">Certificado de cobertura</h2>
+      <p class="sub__hint" i18n="@@subscriptions.certificate.note">
+        El cliente recibe un correo de confirmación con el enlace de descarga.
+      </p>
+      <div class="sol-actions">
+        <button
+          type="button"
+          class="sol-btn sol-btn--outline"
+          [disabled]="openingCertificate()"
+          [attr.aria-busy]="openingCertificate()"
+          (click)="openCertificate()"
+          i18n="@@subscriptions.certificate.open"
+        >
+          Ver certificado
+        </button>
+        <button
+          type="button"
+          class="sol-btn sol-btn--outline"
+          [disabled]="downloadingCertificate()"
+          [attr.aria-busy]="downloadingCertificate()"
+          (click)="downloadCertificate()"
+          i18n="@@subscriptions.certificate.download"
+        >
+          Descargar certificado
+        </button>
+        <button
+          type="button"
+          class="sol-btn sol-btn--outline"
+          [disabled]="resending() || resendWait() > 0"
+          [attr.aria-busy]="resending()"
+          (click)="resendConfirmation()"
+        >
+          @if (resendWait() > 0) {
+            <ng-container i18n="@@subscriptions.resend.wait"
+              >Reenviar correo en {{ resendWait() }} s</ng-container
+            >
+          } @else {
+            <ng-container i18n="@@subscriptions.resend.action"
+              >Reenviar correo al cliente</ng-container
+            >
+          }
+        </button>
+      </div>
+      <div role="status">
+        @if (resendDone()) {
+          <sol-alert kind="success">
+            <ng-container i18n="@@subscriptions.resend.done"
+              >Solicitamos el reenvío del correo al cliente.</ng-container
+            >
+          </sol-alert>
+        }
+      </div>
+      @if (resendError(); as e) {
+        <sol-alert kind="error">{{ resendErrorText(e) }}</sol-alert>
+      }
+      @if (certificateError(); as e) {
+        <sol-alert kind="error">{{ downloadErrorText(e) }}</sol-alert>
+      }
+      @if (certificateUrl(); as url) {
+        <iframe
+          class="sub__pdf"
+          [src]="url"
+          i18n-title="@@subscriptions.certificate.pdf-title"
+          title="Certificado de cobertura"
+        ></iframe>
+      }
+    </sol-card>
+  }
+
   @if (managing()) {
     <sol-card class="page__card">
       <h2 class="page__step" i18n="@@subscriptions.sign.title">Gestionar firma</h2>
@@ -180,8 +251,8 @@
         </button>
       </div>
       <p id="sub-email-note" class="sub__hint" i18n="@@subscriptions.sign.email-note">
-        El envío del enlace por correo estará disponible cuando exista el servicio de
-        notificaciones. Por ahora, firma en pantalla con el cliente presente.
+        El envío del enlace de firma por correo aún no está disponible. Por ahora, firma en pantalla
+        con el cliente presente.
       </p>
 
       <h3 i18n="@@subscriptions.sign.review-title">1. Revisar el documento</h3>
@@ -217,14 +288,32 @@
         <button
           type="button"
           class="sol-btn sol-btn--outline"
-          [disabled]="!reviewed || requestingCode()"
+          [disabled]="!reviewed || requestingCode() || codeWait() > 0"
           [attr.aria-busy]="requestingCode()"
           (click)="requestCode()"
-          i18n="@@subscriptions.sign.request-code"
         >
-          Enviar código al cliente
+          @if (codeWait() > 0) {
+            <ng-container i18n="@@subscriptions.sign.request-code-wait"
+              >Volver a enviar en {{ codeWait() }} s</ng-container
+            >
+          } @else if (codeRequested()) {
+            <ng-container i18n="@@subscriptions.sign.request-code-again"
+              >Volver a enviar el código</ng-container
+            >
+          } @else {
+            <ng-container i18n="@@subscriptions.sign.request-code"
+              >Enviar código al cliente</ng-container
+            >
+          }
         </button>
       </div>
+      <p class="sub__hint" role="status">
+        @if (codeRequested()) {
+          <ng-container i18n="@@subscriptions.sign.code-sent"
+            >Código enviado. Pídele al cliente que lo digite.</ng-container
+          >
+        }
+      </p>
       <form class="sol-form" (ngSubmit)="sign()">
         <div class="sub__field">
           <label class="sub__label" for="sub-code" i18n="@@subscriptions.sign.code"
@@ -239,7 +328,8 @@
             autocomplete="one-time-code"
             maxlength="12"
             [disabled]="!codeRequested()"
-            [(ngModel)]="code"
+            [value]="code()"
+            (input)="onCodeInput($event)"
             aria-describedby="sub-code-hint"
           />
           <small id="sub-code-hint" class="sub__hint" i18n="@@subscriptions.sign.code-hint"
@@ -251,7 +341,7 @@
           <button
             type="submit"
             class="sol-btn sol-btn--primary"
-            [disabled]="!reviewed || !codeRequested() || !code.trim() || signing()"
+            [disabled]="!reviewed || !codeRequested() || code().length !== codeLength || signing()"
             [attr.aria-busy]="signing()"
           >
             @if (signing()) {

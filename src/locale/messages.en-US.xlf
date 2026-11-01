@@ -1163,8 +1163,8 @@
         <target>This policy was already signed: the original signature is kept.</target>
       </trans-unit>
       <trans-unit id="subscriptions.sign.done" datatype="html">
-        <source>Póliza firmada y emitida. Ya puedes descargarla.</source>
-        <target>Policy signed and issued. You can download it now.</target>
+        <source>Póliza firmada y emitida. El cliente recibirá la confirmación por correo.</source>
+        <target>Policy signed and issued. The client will receive the confirmation by email.</target>
       </trans-unit>
       <trans-unit id="subscriptions.col.status" datatype="html">
         <source>Estado</source>
@@ -1223,8 +1223,8 @@
         <target>Send by email</target>
       </trans-unit>
       <trans-unit id="subscriptions.sign.email-note" datatype="html">
-        <source> El envío del enlace por correo estará disponible cuando exista el servicio de notificaciones. Por ahora, firma en pantalla con el cliente presente. </source>
-        <target>Sending the link by email will be available once the notification service exists. For now, sign on screen with the client present.</target>
+        <source>El envío del enlace de firma por correo aún no está disponible. Por ahora, firma en pantalla con el cliente presente.</source>
+        <target>Sending the signature link by email is not available yet. For now, sign on screen with the client present.</target>
       </trans-unit>
       <trans-unit id="subscriptions.sign.review-title" datatype="html">
         <source>1. Revisar el documento</source>
@@ -1354,6 +1354,58 @@
       <trans-unit id="nav.subscriptions" datatype="html">
         <source>Suscripciones</source>
         <target>Subscriptions</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.certificate.title" datatype="html">
+        <source>Certificado de cobertura</source>
+        <target>Certificate of coverage</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.certificate.note" datatype="html">
+        <source>El cliente recibe un correo de confirmación con el enlace de descarga.</source>
+        <target>The client receives a confirmation email with the download link.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.certificate.open" datatype="html">
+        <source>Ver certificado</source>
+        <target>View certificate</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.certificate.download" datatype="html">
+        <source>Descargar certificado</source>
+        <target>Download certificate</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.certificate.pdf-title" datatype="html">
+        <source>Certificado de cobertura</source>
+        <target>Certificate of coverage</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.resend.wait" datatype="html">
+        <source>Reenviar correo en <x id="INTERPOLATION" equiv-text="{{ resendWait() }}"/> s</source>
+        <target>Resend email in <x id="INTERPOLATION" equiv-text="{{ resendWait() }}"/> s</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.resend.action" datatype="html">
+        <source>Reenviar correo al cliente</source>
+        <target>Resend email to the client</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.resend.done" datatype="html">
+        <source>Solicitamos el reenvío del correo al cliente.</source>
+        <target>We requested that the email be resent to the client.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.resend.error.too-soon" datatype="html">
+        <source>Acabas de enviarlo. Espera un minuto antes de intentarlo de nuevo.</source>
+        <target>You just sent it. Wait a minute before trying again.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.resend.error.not-issued" datatype="html">
+        <source>El correo se puede reenviar cuando la póliza esté emitida.</source>
+        <target>The email can be resent once the policy is issued.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.sign.request-code-wait" datatype="html">
+        <source>Volver a enviar en <x id="INTERPOLATION" equiv-text="{{ codeWait() }}"/> s</source>
+        <target>Send again in <x id="INTERPOLATION" equiv-text="{{ codeWait() }}"/> s</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.sign.request-code-again" datatype="html">
+        <source>Volver a enviar el código</source>
+        <target>Send the code again</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.sign.code-sent" datatype="html">
+        <source>Código enviado. Pídele al cliente que lo digite.</source>
+        <target>Code sent. Ask the client to enter it.</target>
       </trans-unit>
     </body>
   </file>
