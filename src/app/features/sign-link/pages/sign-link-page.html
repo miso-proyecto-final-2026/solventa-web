@@ -1,0 +1,61 @@
+<h1 i18n="@@sign-link.title">Firma de tu póliza</h1>
+
+<p class="sol-visually-hidden" role="status">
+  @if (stage() === 'loading') {
+    <ng-container i18n="@@sign-link.loading">Cargando el documento…</ng-container>
+  }
+</p>
+
+<div #status tabindex="-1" class="sign__status">
+  @if (stage() === 'closed') {
+    <sol-alert kind="error">{{ closedText() }}</sol-alert>
+  }
+  @if (stage() === 'signed') {
+    <sol-alert kind="success">
+      <ng-container i18n="@@sign-link.done"
+        >Tu póliza está firmada. Te enviamos la confirmación por correo.</ng-container
+      >
+    </sol-alert>
+  }
+  @if (error(); as e) {
+    <sol-alert kind="error">
+      {{ retryText(e) }}
+      @if (!document()) {
+        <button
+          type="button"
+          class="sol-btn sol-btn--outline sign__retry"
+          (click)="load()"
+          i18n="@@sign-link.retry"
+        >
+          Volver a intentar
+        </button>
+      }
+    </sol-alert>
+  }
+</div>
+
+@if (stage() === 'ready' && document(); as d) {
+  <sol-card class="sign__card">
+    <dl class="sign__summary">
+      <div>
+        <dt i18n="@@sign-link.policy">Póliza</dt>
+        <dd>{{ d.policyNumber }}</dd>
+      </div>
+      @if (d.expiresAt) {
+        <div>
+          <dt i18n="@@sign-link.expires">Firmar antes de</dt>
+          <dd>{{ d.expiresAt | date: 'medium' }}</dd>
+        </div>
+      }
+    </dl>
+    <sol-signature-steps
+      [actions]="actions"
+      [hash]="hash()"
+      [revision]="revision()"
+      (started)="error.set(null)"
+      (signed)="onSigned()"
+      (failed)="fail($event)"
+      (signFailed)="onSignFailed($event)"
+    />
+  </sol-card>
+}

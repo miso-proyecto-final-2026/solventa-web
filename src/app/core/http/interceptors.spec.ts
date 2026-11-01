@@ -1,10 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { SessionStore } from '../auth/session.store';
 import { ApiError } from './api-error';
-import { apiErrorInterceptor, authTokenInterceptor } from './interceptors';
+import { PUBLIC_REQUEST, apiErrorInterceptor, authTokenInterceptor } from './interceptors';
 
 describe('HTTP interceptors', () => {
   let http: HttpClient;
@@ -54,6 +54,22 @@ describe('HTTP interceptors', () => {
     const req = backend.expectOne('https://otro.example.com/datos');
     expect(req.request.headers.has('Authorization')).toBeFalse();
     req.flush({});
+  });
+
+  it('should not send the advisor token on a public request nor expire the session on its 401', () => {
+    signIn();
+    let failure: unknown;
+
+    http
+      .get('/api/suscripcion/v1/publica', { context: new HttpContext().set(PUBLIC_REQUEST, true) })
+      .subscribe({ error: (e: unknown) => (failure = e) });
+
+    const req = backend.expectOne('/api/suscripcion/v1/publica');
+    expect(req.request.headers.has('Authorization')).toBeFalse();
+    req.flush({ error: { code: 'ENLACE_INVALIDO' } }, { status: 401, statusText: 'Unauthorized' });
+    expect((failure as ApiError).code).toBe('ENLACE_INVALIDO');
+    expect(session.expired()).toBeFalse();
+    expect(session.isAuthenticated()).toBeTrue();
   });
 
   it('should send no header without a session', () => {

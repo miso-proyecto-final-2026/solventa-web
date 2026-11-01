@@ -7,6 +7,7 @@ import {
   PAGE_SIZE,
   SignRequest,
   SignatureDocument,
+  SignatureLink,
   SignatureResult,
   StartRequest,
   SubscriptionPage,
@@ -17,12 +18,14 @@ import {
   AssistedSubscriptionDto,
   SignatureDocumentDto,
   SignatureDto,
+  SignatureLinkDto,
   StartedSubscriptionDto,
   SubscriptionPageDto,
 } from './dto/assisted-subscriptions.dto';
 import {
   toSignBody,
   toSignatureDocument,
+  toSignatureLink,
   toSignatureResult,
   toStartBody,
   toSubscription,
@@ -90,6 +93,12 @@ export class HttpAssistedSubscriptionsGateway extends AssistedSubscriptionsGatew
       responseType: 'blob',
       headers: NO_CACHE,
     });
+  }
+
+  sendSignatureLink(id: string): Observable<SignatureLink> {
+    return this.http
+      .post<SignatureLinkDto>(`${this.url(id)}/firma/enlace`, null)
+      .pipe(map(toSignatureLink));
   }
 
   getCertificate(id: string): Observable<Blob> {

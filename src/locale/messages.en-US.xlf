@@ -1223,8 +1223,8 @@
         <target>Send by email</target>
       </trans-unit>
       <trans-unit id="subscriptions.sign.email-note" datatype="html">
-        <source>El envío del enlace de firma por correo aún no está disponible. Por ahora, firma en pantalla con el cliente presente.</source>
-        <target>Sending the signature link by email is not available yet. For now, sign on screen with the client present.</target>
+        <source>El cliente recibe en su correo registrado un enlace para revisar y firmar con su código.</source>
+        <target>The client receives a link at their registered email to review and sign with their code.</target>
       </trans-unit>
       <trans-unit id="subscriptions.sign.review-title" datatype="html">
         <source>1. Revisar el documento</source>
@@ -1406,6 +1406,134 @@
       <trans-unit id="subscriptions.sign.code-sent" datatype="html">
         <source>Código enviado. Pídele al cliente que lo digite.</source>
         <target>Code sent. Ask the client to enter it.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.sign.email-title" datatype="html">
+        <source>Enviar al cliente</source>
+        <target>Send to the client</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.sign.email-wait" datatype="html">
+        <source>Volver a enviar en <x id="INTERPOLATION" equiv-text="{{ linkWait() }}"/> s</source>
+        <target>Send again in <x id="INTERPOLATION" equiv-text="{{ linkWait() }}"/> s</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.sign.email-sent" datatype="html">
+        <source>Solicitamos el envío del enlace. Vencimiento: <x id="INTERPOLATION" equiv-text="{{ link.expiresAt | date: 'medium' }}"/></source>
+        <target>We requested that the link be sent. Expires: <x id="INTERPOLATION" equiv-text="{{ link.expiresAt | date: 'medium' }}"/></target>
+      </trans-unit>
+      <trans-unit id="subscriptions.sign.email-confirm" datatype="html">
+        <source>Si envías otro enlace, el anterior dejará de servir.</source>
+        <target>If you send another link, the previous one will stop working.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.sign.email-confirm-action" datatype="html">
+        <source>Enviar otro enlace</source>
+        <target>Send another link</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.sign.email-error.unavailable" datatype="html">
+        <source>El envío por correo no está disponible por ahora. Firma en pantalla con el cliente presente.</source>
+        <target>Sending by email is not available right now. Sign on screen with the client present.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.sign.screen-title" datatype="html">
+        <source>O firmar en pantalla, con el cliente presente</source>
+        <target>Or sign on screen, with the client present</target>
+      </trans-unit>
+      <trans-unit id="sign-link.title" datatype="html">
+        <source>Firma de tu póliza</source>
+        <target>Sign your policy</target>
+      </trans-unit>
+      <trans-unit id="sign-link.document-title" datatype="html">
+        <source>Solventa — Firma de tu póliza</source>
+        <target>Solventa — Sign your policy</target>
+      </trans-unit>
+      <trans-unit id="sign-link.loading" datatype="html">
+        <source>Cargando el documento…</source>
+        <target>Loading the document…</target>
+      </trans-unit>
+      <trans-unit id="sign-link.done" datatype="html">
+        <source>Tu póliza está firmada. Te enviamos la confirmación por correo.</source>
+        <target>Your policy is signed. We sent you the confirmation by email.</target>
+      </trans-unit>
+      <trans-unit id="sign-link.retry" datatype="html">
+        <source>Volver a intentar</source>
+        <target>Try again</target>
+      </trans-unit>
+      <trans-unit id="sign-link.policy" datatype="html">
+        <source>Póliza</source>
+        <target>Policy</target>
+      </trans-unit>
+      <trans-unit id="sign-link.expires" datatype="html">
+        <source>Firmar antes de</source>
+        <target>Sign before</target>
+      </trans-unit>
+      <trans-unit id="sign-link.reviewed" datatype="html">
+        <source>Revisé el documento completo.</source>
+        <target>I reviewed the entire document.</target>
+      </trans-unit>
+      <trans-unit id="sign-link.code-title" datatype="html">
+        <source>2. Confirmar con tu código</source>
+        <target>2. Confirm with your code</target>
+      </trans-unit>
+      <trans-unit id="sign-link.request-code" datatype="html">
+        <source>Enviarme el código</source>
+        <target>Send me the code</target>
+      </trans-unit>
+      <trans-unit id="sign-link.code-sent" datatype="html">
+        <source>Código enviado.</source>
+        <target>Code sent.</target>
+      </trans-unit>
+      <trans-unit id="sign-link.code-hint" datatype="html">
+        <source>Si se agotan los intentos, la firma falla y se devuelve el cobro.</source>
+        <target>If the attempts run out, the signature fails and the charge is refunded.</target>
+      </trans-unit>
+      <trans-unit id="sign-link.error.invalid" datatype="html">
+        <source>Este enlace no es válido. Pídele a tu asesor uno nuevo.</source>
+        <target>This link is not valid. Ask your advisor for a new one.</target>
+      </trans-unit>
+      <trans-unit id="sign-link.error.expired" datatype="html">
+        <source>Este enlace venció. Pídele a tu asesor uno nuevo.</source>
+        <target>This link expired. Ask your advisor for a new one.</target>
+      </trans-unit>
+      <trans-unit id="sign-link.error.replaced" datatype="html">
+        <source>Este enlace fue reemplazado. Usa el más reciente que recibiste en tu correo.</source>
+        <target>This link was replaced. Use the most recent one you received by email.</target>
+      </trans-unit>
+      <trans-unit id="sign-link.error.gone" datatype="html">
+        <source>Este enlace ya no sirve. Usa el más reciente que recibiste o pídele uno nuevo a tu asesor.</source>
+        <target>This link no longer works. Use the most recent one you received or ask your advisor for a new one.</target>
+      </trans-unit>
+      <trans-unit id="sign-link.error.signature-expired" datatype="html">
+        <source>El plazo para firmar terminó y el cobro se devolverá. Puedes volver a cotizar con tu asesor.</source>
+        <target>The signing period ended and the charge will be refunded. You can get a new quote with your advisor.</target>
+      </trans-unit>
+      <trans-unit id="sign-link.error.signature-failed" datatype="html">
+        <source>No se pudo verificar tu identidad y el cobro se devolverá. Puedes volver a cotizar con tu asesor.</source>
+        <target>We could not verify your identity and the charge will be refunded. You can get a new quote with your advisor.</target>
+      </trans-unit>
+      <trans-unit id="sign-link.error.unavailable" datatype="html">
+        <source>Esta póliza ya no se puede firmar con este enlace. Consulta con tu asesor.</source>
+        <target>This policy can no longer be signed with this link. Check with your advisor.</target>
+      </trans-unit>
+      <trans-unit id="sign-link.error.otp" datatype="html">
+        <source>El código no es correcto. Si se agotan los intentos, la firma falla y se devuelve el cobro.</source>
+        <target>The code is not correct. If the attempts run out, the signature fails and the charge is refunded.</target>
+      </trans-unit>
+      <trans-unit id="sign-link.error.otp-left" datatype="html">
+        <source>El código no es correcto. Intentos restantes: <x id="left" equiv-text="left"/>. Si se agotan, la firma falla y se devuelve el cobro.</source>
+        <target>The code is not correct. Attempts left: <x id="left" equiv-text="left"/>. If they run out, the signature fails and the charge is refunded.</target>
+      </trans-unit>
+      <trans-unit id="sign-link.error.altered" datatype="html">
+        <source>El documento cambió. Ábrelo de nuevo y revísalo antes de firmar.</source>
+        <target>The document changed. Open it again and review it before signing.</target>
+      </trans-unit>
+      <trans-unit id="sign-link.error.not-ready" datatype="html">
+        <source>El documento aún no está listo. Inténtalo de nuevo en unos minutos.</source>
+        <target>The document is not ready yet. Try again in a few minutes.</target>
+      </trans-unit>
+      <trans-unit id="sign-link.error.network" datatype="html">
+        <source>No hay conexión con el servidor. Revisa tu red e inténtalo de nuevo.</source>
+        <target>There is no connection to the server. Check your network and try again.</target>
+      </trans-unit>
+      <trans-unit id="sign-link.error.server" datatype="html">
+        <source>No pudimos completar la operación. Inténtalo de nuevo en unos minutos.</source>
+        <target>We could not complete the operation. Try again in a few minutes.</target>
       </trans-unit>
     </body>
   </file>

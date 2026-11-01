@@ -6,6 +6,7 @@ import {
   PAGE_SIZE,
   SignRequest,
   SignatureDocument,
+  SignatureLink,
   SignatureResult,
   StartRequest,
   SubscriptionPage,
@@ -31,6 +32,7 @@ export class FakeAssistedSubscriptionsGateway extends AssistedSubscriptionsGatew
   failDownload: ApiError | null = null;
   failCertificate: ApiError | null = null;
   failResend: ApiError | null = null;
+  failLink: ApiError | null = null;
   /** Si se define, `list` queda esperando (para ver el estado de carga). */
   holdList: Subject<SubscriptionPage> | null = null;
   /** Si se define, `start` queda esperando (para probar el doble clic). */
@@ -44,6 +46,7 @@ export class FakeAssistedSubscriptionsGateway extends AssistedSubscriptionsGatew
   downloads = 0;
   certificateCalls = 0;
   resends = 0;
+  linksSent = 0;
 
   start(request: StartRequest, key: string): Observable<string> {
     this.starts.push({ request, key });
@@ -93,6 +96,18 @@ export class FakeAssistedSubscriptionsGateway extends AssistedSubscriptionsGatew
     return this.failDownload
       ? throwError(() => this.failDownload)
       : of(new Blob(['%PDF'], { type: 'application/pdf' }));
+  }
+
+  sendSignatureLink(): Observable<SignatureLink> {
+    this.linksSent++;
+    if (this.failLink) return throwError(() => this.failLink);
+    const link: SignatureLink = {
+      status: 'ACTIVO',
+      expiresAt: new Date('2026-11-02T12:00:00Z'),
+      createdAt: new Date('2026-11-01T12:00:00Z'),
+    };
+    this.detail = { ...this.detail, signatureLink: link };
+    return of(link);
   }
 
   getCertificate(): Observable<Blob> {

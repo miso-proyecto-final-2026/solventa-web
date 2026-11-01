@@ -9,6 +9,7 @@ import {
   SagaStep,
   SignRequest,
   SignatureDocument,
+  SignatureLink,
   SignatureResult,
   StartRequest,
   SubscriptionPage,
@@ -47,6 +48,7 @@ function demo(n: number, status: SagaStatus, step: SagaStep): AssistedSubscripti
     signature: { status: 'PENDING', expiresAt: new Date(now + 20 * HOUR_MS) },
     compensation: null,
     policy: { number: `SOLV-DEMO-${n}`, status: 'PENDIENTE_FIRMA', documentStatus: 'GENERADO' },
+    signatureLink: null,
     canManageSignature: canManage,
     createdAt: new Date(now - n * HOUR_MS),
   };
@@ -151,6 +153,19 @@ export class MockAssistedSubscriptionsGateway extends AssistedSubscriptionsGatew
 
   downloadSignedPolicy(id: string): Observable<Blob> {
     return this.find(id) ? of(this.pdf()).pipe(delay(LATENCY_MS)) : this.notFound();
+  }
+
+  sendSignatureLink(id: string): Observable<SignatureLink> {
+    if (!this.find(id)) return this.notFound();
+    const link: SignatureLink = {
+      status: 'ACTIVO',
+      expiresAt: new Date(Date.now() + 86_400_000),
+      createdAt: new Date(),
+    };
+    this.subscriptions = this.subscriptions.map((s) =>
+      s.id === id ? { ...s, signatureLink: link } : s,
+    );
+    return of(link).pipe(delay(LATENCY_MS));
   }
 
   getCertificate(id: string): Observable<Blob> {

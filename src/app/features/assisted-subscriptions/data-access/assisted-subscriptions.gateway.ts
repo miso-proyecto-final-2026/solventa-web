@@ -3,6 +3,7 @@ import {
   AssistedSubscription,
   SignRequest,
   SignatureDocument,
+  SignatureLink,
   SignatureResult,
   StartRequest,
   SubscriptionPage,
@@ -24,6 +25,8 @@ export abstract class AssistedSubscriptionsGateway {
   abstract sign(id: string, request: SignRequest): Observable<SignatureResult>;
   abstract downloadSignedPolicy(id: string): Observable<Blob>;
   /** El certificado de cobertura, en el idioma de la consola. */
+  /** Envía o reenvía el enlace de firma. Reenviarlo invalida el anterior. La entrega es asíncrona. */
+  abstract sendSignatureLink(id: string): Observable<SignatureLink>;
   abstract getCertificate(id: string): Observable<Blob>;
   /** Pide otro correo de confirmación. La entrega es asíncrona: aceptar no significa que ya llegó. */
   abstract resendConfirmation(id: string): Observable<void>;

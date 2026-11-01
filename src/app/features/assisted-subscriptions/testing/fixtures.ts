@@ -19,6 +19,7 @@ export const SUBSCRIPTION: AssistedSubscription = {
   signature: { status: 'PENDING', expiresAt: new Date('2026-11-01T12:00:00Z') },
   compensation: null,
   policy: { number: 'SOLV-1', status: 'PENDIENTE_FIRMA', documentStatus: 'GENERADO' },
+  signatureLink: null,
   canManageSignature: true,
   createdAt: new Date('2026-10-30T12:00:00Z'),
 };
