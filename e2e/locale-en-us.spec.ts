@@ -79,7 +79,7 @@ test('la venta asistida (HU-39) usa los textos y los formatos de en-US', async (
 
   await expect(page.getByText('$40,000,000')).toBeVisible();
   await page.getByRole('button', { name: 'Manage signature' }).click();
-  await expect(page.getByRole('button', { name: 'Send by email' })).toBeDisabled();
+  await expect(page.getByRole('button', { name: 'Send by email' })).toBeEnabled();
   await expect(page.getByRole('button', { name: 'Open the document' })).toBeEnabled();
   await expectNoSeriousA11yViolations(page);
 

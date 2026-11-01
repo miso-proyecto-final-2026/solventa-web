@@ -1,0 +1,37 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sol-space-4);
+}
+
+.sign {
+  &__status:focus {
+    // Recibe el foco por código al mostrar el resultado; no es un control, no lleva anillo.
+    outline: none;
+  }
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sol-space-4);
+    width: 100%;
+  }
+
+  &__retry {
+    margin-left: var(--sol-space-3);
+  }
+
+  &__summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: var(--sol-space-3);
+
+    dt {
+      font-weight: 600;
+    }
+
+    dd {
+      margin: 0;
+    }
+  }
+}

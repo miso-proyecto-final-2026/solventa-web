@@ -1,0 +1,115 @@
+<h3 i18n="@@subscriptions.sign.review-title">1. Revisar el documento</h3>
+<div class="sol-actions">
+  <button
+    type="button"
+    class="sol-btn sol-btn--outline"
+    [disabled]="openingPdf() || !hash()"
+    [attr.aria-busy]="openingPdf()"
+    (click)="openPdf()"
+    i18n="@@subscriptions.sign.open-pdf"
+  >
+    Abrir el documento
+  </button>
+</div>
+@if (pdfUrl(); as url) {
+  <iframe
+    class="steps__pdf"
+    [src]="url"
+    i18n-title="@@subscriptions.sign.pdf-title"
+    title="Documento de la póliza por firmar"
+  ></iframe>
+}
+<label class="steps__check">
+  <input type="checkbox" name="reviewed" [disabled]="!pdfUrl()" [(ngModel)]="reviewed" />
+  @if (assisted()) {
+    <ng-container i18n="@@subscriptions.sign.reviewed"
+      >El cliente revisó el documento completo.</ng-container
+    >
+  } @else {
+    <ng-container i18n="@@sign-link.reviewed">Revisé el documento completo.</ng-container>
+  }
+</label>
+
+@if (assisted()) {
+  <h3 i18n="@@subscriptions.sign.code-title">2. Confirmar con el código del cliente</h3>
+} @else {
+  <h3 i18n="@@sign-link.code-title">2. Confirmar con tu código</h3>
+}
+<div class="sol-actions">
+  <button
+    type="button"
+    class="sol-btn sol-btn--outline"
+    [disabled]="!reviewed || requestingCode() || codeWait() > 0"
+    [attr.aria-busy]="requestingCode()"
+    (click)="requestCode()"
+  >
+    @if (codeWait() > 0) {
+      <ng-container i18n="@@subscriptions.sign.request-code-wait"
+        >Volver a enviar en {{ codeWait() }} s</ng-container
+      >
+    } @else if (codeRequested()) {
+      <ng-container i18n="@@subscriptions.sign.request-code-again"
+        >Volver a enviar el código</ng-container
+      >
+    } @else if (assisted()) {
+      <ng-container i18n="@@subscriptions.sign.request-code">Enviar código al cliente</ng-container>
+    } @else {
+      <ng-container i18n="@@sign-link.request-code">Enviarme el código</ng-container>
+    }
+  </button>
+</div>
+<p class="steps__hint" role="status">
+  @if (codeRequested()) {
+    @if (assisted()) {
+      <ng-container i18n="@@subscriptions.sign.code-sent"
+        >Código enviado. Pídele al cliente que lo digite.</ng-container
+      >
+    } @else {
+      <ng-container i18n="@@sign-link.code-sent">Código enviado.</ng-container>
+    }
+  }
+</p>
+<form class="sol-form" (ngSubmit)="sign()">
+  <div class="steps__field">
+    <label class="steps__label" for="sub-code" i18n="@@subscriptions.sign.code"
+      >Código de un solo uso</label
+    >
+    <input
+      id="sub-code"
+      name="code"
+      class="sol-input steps__code"
+      type="text"
+      inputmode="numeric"
+      autocomplete="one-time-code"
+      maxlength="12"
+      [disabled]="!codeRequested()"
+      [value]="code()"
+      (input)="onCodeInput($event)"
+      aria-describedby="sub-code-hint"
+    />
+    @if (assisted()) {
+      <small id="sub-code-hint" class="steps__hint" i18n="@@subscriptions.sign.code-hint"
+        >Lo digita el cliente. Si se agotan los intentos, la firma falla y se devuelve el
+        cobro.</small
+      >
+    } @else {
+      <small id="sub-code-hint" class="steps__hint" i18n="@@sign-link.code-hint"
+        >Si se agotan los intentos, la firma falla y se devuelve el cobro.</small
+      >
+    }
+  </div>
+  <div class="sol-actions">
+    <button
+      type="submit"
+      class="sol-btn sol-btn--primary"
+      [disabled]="!reviewed || !codeRequested() || !codeComplete() || signing()"
+      [attr.aria-busy]="signing()"
+    >
+      @if (signing()) {
+        <ng-container i18n="@@subscriptions.sign.busy">Firmando…</ng-container>
+      } @else {
+        <ng-container i18n="@@subscriptions.sign.action">Firmar</ng-container>
+      }
+    </button>
+  </div>
+</form>

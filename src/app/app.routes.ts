@@ -43,6 +43,12 @@ export const routes: Routes = [
         (m) => m.ASSISTED_SUBSCRIPTIONS_ROUTES,
       ),
   },
+  {
+    // HU39: el cliente firma con el enlace del correo. Pública a propósito: la credencial es el enlace más su código.
+    path: 'sign',
+    loadChildren: () =>
+      import('@features/sign-link/sign-link.routes').then((m) => m.SIGN_LINK_ROUTES),
+  },
   // Mientras no existan las demás pantallas (cotizar, pólizas…), vuelven al inicio.
   { path: '**', redirectTo: '' },
 ];

@@ -99,14 +99,55 @@ describe('SubscriptionDetailPage', () => {
     expect(text()).toContain('devolución del cobro');
   });
 
-  it('should keep the email option disabled with an explanation', async () => {
-    await create();
-    await click('Gestionar firma');
+  describe('enlace de firma por correo', () => {
+    it('should send it and say it was requested, without the address', async () => {
+      await create();
+      await click('Gestionar firma');
 
-    const email = button('Enviar por correo')!;
-    expect(email.disabled).toBeTrue();
-    expect(email.getAttribute('aria-describedby')).toBe('sub-email-note');
-    expect(el.querySelector('#sub-email-note')?.textContent).toContain('aún no está disponible');
+      await click('Enviar por correo');
+
+      expect(gateway.linksSent).toBe(1);
+      expect(text()).toContain('Solicitamos el envío del enlace');
+      expect(button('Volver a enviar en 60 s')?.disabled).toBeTrue();
+    });
+
+    it('should ask for confirmation before replacing an active link', async () => {
+      gateway.detail = {
+        ...SUBSCRIPTION,
+        signatureLink: { status: 'ACTIVO', expiresAt: new Date(), createdAt: new Date() },
+      };
+      await create();
+      await click('Gestionar firma');
+
+      await click('Enviar por correo');
+      expect(gateway.linksSent).toBe(0);
+      expect(text()).toContain('el anterior dejará de servir');
+
+      await click('Enviar otro enlace');
+      expect(gateway.linksSent).toBe(1);
+    });
+
+    it('should explain each failure and offer signing on screen', async () => {
+      gateway.failLink = new ApiError('server', 503, 'ENLACES_NO_CONFIGURADOS');
+      await create();
+      await click('Gestionar firma');
+
+      await click('Enviar por correo');
+
+      expect(text()).toContain('Firma en pantalla con el cliente presente');
+      expect(button('Abrir el documento')).toBeDefined();
+    });
+
+    it('should wait when the server says it was sent too soon', async () => {
+      gateway.failLink = new ApiError('server', 429, 'CORREO_MUY_SEGUIDO');
+      await create();
+      await click('Gestionar firma');
+
+      await click('Enviar por correo');
+
+      expect(text()).toContain('Espera un minuto');
+      expect(button('Volver a enviar en 60 s')?.disabled).toBeTrue();
+    });
   });
 
   it('should require opening the document, confirming it and asking for the code before signing', async () => {

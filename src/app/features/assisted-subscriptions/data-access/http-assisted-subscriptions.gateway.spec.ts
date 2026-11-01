@@ -154,6 +154,20 @@ describe('HttpAssistedSubscriptionsGateway', () => {
     expect(certificate.request.headers.get('Accept-Language')).toBe(TestBed.inject(LOCALE_ID));
     certificate.flush(new Blob(['%PDF']));
 
+    let link: unknown;
+    gateway.sendSignatureLink('sus-1').subscribe((l) => (link = l));
+    http
+      .expectOne(`${BASE}/sus-1/firma/enlace`)
+      .flush(
+        { estado: 'ACTIVO', vence_en: '2026-11-02T12:00:00Z', creado_en: '2026-11-01T12:00:00Z' },
+        { status: 202, statusText: 'Accepted' },
+      );
+    expect(link).toEqual({
+      status: 'ACTIVO',
+      expiresAt: new Date('2026-11-02T12:00:00Z'),
+      createdAt: new Date('2026-11-01T12:00:00Z'),
+    });
+
     gateway.resendConfirmation('sus-1').subscribe();
     const resend = http.expectOne(`${BASE}/sus-1/confirmacion/reenvio`);
     expect(resend.request.method).toBe('POST');
