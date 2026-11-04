@@ -1126,6 +1126,46 @@
         <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span aria-hidden=&quot;true&quot;&gt;"/>✕<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> Escribe un número de 13 a 19 dígitos.</source>
         <target><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span aria-hidden=&quot;true&quot;&gt;"/>✕<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> Enter a number with 13 to 19 digits.</target>
       </trans-unit>
+      <trans-unit id="subscriptions.start.expiry" datatype="html">
+        <source>Vencimiento (MMAA)</source>
+        <target>Expiry (MMYY)</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.start.expiry-hint" datatype="html">
+        <source>Cuatro dígitos, por ejemplo 1128. Se oculta mientras se digita.</source>
+        <target>Four digits, for example 1128. Hidden while typing.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.start.cvc" datatype="html">
+        <source>Código de seguridad (CVC)</source>
+        <target>Security code (CVC)</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.start.cvc-hint-4" datatype="html">
+        <source>4 dígitos (AMEX). Se oculta mientras se digita.</source>
+        <target>4 digits (AMEX). Hidden while typing.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.start.cvc-hint-3" datatype="html">
+        <source>3 dígitos. Se oculta mientras se digita.</source>
+        <target>3 digits. Hidden while typing.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.start.cvc-error-4" datatype="html">
+        <source>Escribe el código de 4 dígitos.</source>
+        <target>Enter the 4-digit code.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.start.cvc-error-3" datatype="html">
+        <source>Escribe el código de 3 dígitos.</source>
+        <target>Enter the 3-digit code.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.start.expiry-error-format" datatype="html">
+        <source>Escribe mes y año, por ejemplo 1128.</source>
+        <target>Enter month and year, for example 1128.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.start.expiry-error-past" datatype="html">
+        <source>La tarjeta está vencida.</source>
+        <target>The card has expired.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.start.expiry-error-far" datatype="html">
+        <source>La fecha de vencimiento es demasiado lejana.</source>
+        <target>The expiry date is too far in the future.</target>
+      </trans-unit>
       <trans-unit id="subscriptions.start.accepted" datatype="html">
         <source>El cliente está al tanto de esta transacción y aceptó los términos.</source>
         <target>The client is aware of this transaction and accepted the terms.</target>

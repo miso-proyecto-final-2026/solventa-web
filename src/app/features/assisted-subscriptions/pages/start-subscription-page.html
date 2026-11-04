@@ -33,7 +33,8 @@
         inputmode="numeric"
         autocomplete="off"
         maxlength="23"
-        [(ngModel)]="card"
+        [ngModel]="card()"
+        (ngModelChange)="onCardChange($event)"
         [attr.aria-invalid]="cardInvalid() ? true : null"
         [attr.aria-describedby]="describedBy('sub-card', true, cardInvalid())"
       />
@@ -45,6 +46,77 @@
         <small id="sub-card-error" class="sub__error" i18n="@@subscriptions.start.card-error"
           ><span aria-hidden="true">✕</span> Escribe un número de 13 a 19 dígitos.</small
         >
+      }
+    </div>
+
+    <div class="sub__field">
+      <label class="sub__label" for="sub-expiry" i18n="@@subscriptions.start.expiry"
+        >Vencimiento (MMAA)</label
+      >
+      <input
+        id="sub-expiry"
+        name="expiry"
+        class="sol-input"
+        type="password"
+        inputmode="numeric"
+        autocomplete="off"
+        maxlength="4"
+        [ngModel]="expiry()"
+        (ngModelChange)="expiry.set(onlyDigits($event, 4))"
+        [attr.aria-invalid]="expiryError() ? true : null"
+        [attr.aria-describedby]="describedBy('sub-expiry', true, !!expiryError())"
+      />
+      <small id="sub-expiry-hint" class="sub__hint" i18n="@@subscriptions.start.expiry-hint"
+        >Cuatro dígitos, por ejemplo 1128. Se oculta mientras se digita.</small
+      >
+      @if (expiryError(); as e) {
+        <small id="sub-expiry-error" class="sub__error"
+          ><span aria-hidden="true">✕</span> {{ expiryErrorText(e) }}</small
+        >
+      }
+    </div>
+
+    <div class="sub__field">
+      <label class="sub__label" for="sub-cvc" i18n="@@subscriptions.start.cvc"
+        >Código de seguridad (CVC)</label
+      >
+      <input
+        id="sub-cvc"
+        name="cvc"
+        class="sol-input"
+        type="password"
+        inputmode="numeric"
+        autocomplete="off"
+        [attr.maxlength]="cvcMax()"
+        [ngModel]="cvc()"
+        (ngModelChange)="cvc.set(onlyDigits($event, cvcMax()))"
+        [attr.aria-invalid]="cvcInvalid() ? true : null"
+        [attr.aria-describedby]="describedBy('sub-cvc', true, cvcInvalid())"
+      />
+      <small id="sub-cvc-hint" class="sub__hint">
+        @if (cvcMax() === 4) {
+          <ng-container i18n="@@subscriptions.start.cvc-hint-4"
+            >4 dígitos (AMEX). Se oculta mientras se digita.</ng-container
+          >
+        } @else {
+          <ng-container i18n="@@subscriptions.start.cvc-hint-3"
+            >3 dígitos. Se oculta mientras se digita.</ng-container
+          >
+        }
+      </small>
+      @if (cvcInvalid()) {
+        <small id="sub-cvc-error" class="sub__error">
+          <span aria-hidden="true">✕</span>
+          @if (cvcMax() === 4) {
+            <ng-container i18n="@@subscriptions.start.cvc-error-4"
+              >Escribe el código de 4 dígitos.</ng-container
+            >
+          } @else {
+            <ng-container i18n="@@subscriptions.start.cvc-error-3"
+              >Escribe el código de 3 dígitos.</ng-container
+            >
+          }
+        </small>
       }
     </div>
 

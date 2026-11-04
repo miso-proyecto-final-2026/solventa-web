@@ -7,6 +7,10 @@ import { FakeAssistedSubscriptionsGateway } from '../testing/fake-assisted-subsc
 import { StartSubscriptionPage } from './start-subscription-page';
 
 const CARD = '4242 4242 4242 4242';
+const AMEX = '3782 822463 10005';
+
+/** Vencimiento futuro calculado (diciembre del año siguiente): no depende de la fecha de hoy. */
+const nextYearExpiry = () => `12${String((new Date().getFullYear() + 1) % 100).padStart(2, '0')}`;
 
 describe('StartSubscriptionPage', () => {
   let fixture: ComponentFixture<StartSubscriptionPage>;
@@ -20,9 +24,20 @@ describe('StartSubscriptionPage', () => {
     fixture.detectChanges();
   };
   const cardInput = () => el.querySelector<HTMLInputElement>('#sub-card')!;
-  const fill = async (card = CARD, accept = true) => {
-    cardInput().value = card;
-    cardInput().dispatchEvent(new Event('input'));
+  const type = (selector: string, value: string) => {
+    const input = el.querySelector<HTMLInputElement>(selector)!;
+    input.value = value;
+    input.dispatchEvent(new Event('input'));
+  };
+  const fill = async (
+    card = CARD,
+    accept = true,
+    { cvc = '123', expiry = nextYearExpiry() }: { cvc?: string; expiry?: string } = {},
+  ) => {
+    type('#sub-card', card);
+    await settle(); // la franquicia define cuántos dígitos admite el CVC
+    type('#sub-cvc', cvc);
+    type('#sub-expiry', expiry);
     const check = el.querySelector<HTMLInputElement>('#sub-accepted')!;
     if (check.checked !== accept) check.click();
     await settle();
@@ -74,6 +89,68 @@ describe('StartSubscriptionPage', () => {
 
     expect(cardInput().value).toBe('');
     expect(JSON.stringify({ ...sessionStorage })).not.toContain('4242');
+  });
+
+  it('should mask the CVC and the expiry while typing', () => {
+    expect(el.querySelector<HTMLInputElement>('#sub-cvc')!.type).toBe('password');
+    expect(el.querySelector<HTMLInputElement>('#sub-expiry')!.type).toBe('password');
+  });
+
+  it('should require 4 digits in the CVC for an AMEX card', async () => {
+    await fill(AMEX, true, { cvc: '123' });
+    await submit();
+
+    expect(gateway.starts.length).toBe(0);
+    expect(el.querySelector('#sub-cvc-error')?.textContent).toContain('4 dígitos');
+  });
+
+  it('should accept a 4 digit CVC for AMEX and cut it to 3 for the rest', async () => {
+    await fill(AMEX, true, { cvc: '1234' });
+    await submit();
+    expect(gateway.starts.length).toBe(1);
+
+    await fill(CARD, true, { cvc: '1234' });
+    expect(el.querySelector<HTMLInputElement>('#sub-cvc')!.getAttribute('maxlength')).toBe('3');
+    expect(el.querySelector<HTMLInputElement>('#sub-cvc')!.value).toBe('123');
+  });
+
+  it('should revalidate the CVC when the card changes to AMEX', async () => {
+    await fill(CARD, false, { cvc: '123' });
+    await submit();
+    expect(el.querySelector('#sub-cvc-error')).toBeNull();
+
+    type('#sub-card', AMEX);
+    await settle();
+
+    expect(el.querySelector('#sub-cvc-error')?.textContent).toContain('4 dígitos');
+    expect(el.querySelector<HTMLInputElement>('#sub-cvc')!.value).toBe('123');
+  });
+
+  it('should reject an expired card', async () => {
+    await fill(CARD, true, { expiry: '0120' });
+    await submit();
+
+    expect(gateway.starts.length).toBe(0);
+    expect(el.querySelector('#sub-expiry-error')?.textContent).toContain('vencida');
+    expect(el.querySelector('#sub-expiry')?.getAttribute('aria-invalid')).toBe('true');
+  });
+
+  it('should reject a malformed expiry', async () => {
+    await fill(CARD, true, { expiry: '13' });
+    await submit();
+
+    expect(gateway.starts.length).toBe(0);
+    expect(el.querySelector('#sub-expiry-error')?.textContent).toContain('mes y año');
+  });
+
+  it('should keep the CVC and the expiry out of the request, the DOM and the session storage', async () => {
+    await fill(CARD, true, { cvc: '987' });
+    await submit();
+
+    expect(JSON.stringify(gateway.starts)).not.toContain('987');
+    expect(el.querySelector<HTMLInputElement>('#sub-cvc')!.value).toBe('');
+    expect(el.querySelector<HTMLInputElement>('#sub-expiry')!.value).toBe('');
+    expect(JSON.stringify({ ...sessionStorage })).not.toContain('987');
   });
 
   it('should require the advisor declaration', async () => {

@@ -4,18 +4,18 @@
  * prefijo. El número se queda en el navegador (SAQ-A, ADR-0014). Con un proveedor real, este archivo
  * y el campo del formulario se reemplazan por su formulario alojado (ADR-0020).
  */
+import { digitsOnly, hasValidPanLength } from './card-rules';
+
 const TEST_MODES: Readonly<Record<string, string>> = {
   '4000000000000002': 'rechazar',
   '4000000000000119': 'perder',
   '4000000000000259': 'tardar',
 };
 
-export function digitsOnly(card: string): string {
-  return card.replace(/[\s-]/g, '');
-}
+export { digitsOnly };
 
 export function isValidCardNumber(card: string): boolean {
-  return /^\d{13,19}$/.test(digitsOnly(card));
+  return /^\d{13,19}$/.test(digitsOnly(card)) && hasValidPanLength(card);
 }
 
 export function tokenizeSimulated(
