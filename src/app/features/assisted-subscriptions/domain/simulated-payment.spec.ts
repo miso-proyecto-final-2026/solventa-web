@@ -25,4 +25,9 @@ describe('simulated payment', () => {
     expect(isValidCardNumber('12345678901234567890')).toBeFalse();
     expect(isValidCardNumber('4242a24242424242')).toBeFalse();
   });
+
+  it('should also check the length expected for the brand', () => {
+    expect(isValidCardNumber('3782 822463 10005')).toBeTrue();
+    expect(isValidCardNumber('3782 8224 6310 0051')).toBeFalse();
+  });
 });
