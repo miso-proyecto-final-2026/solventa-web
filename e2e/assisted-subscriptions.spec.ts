@@ -4,6 +4,15 @@ import { expectNoSeriousA11yViolations } from './support/journey';
 import { expect, signIn, test } from './support/test';
 
 const CARD = '4242 4242 4242 4242';
+const CVC = '123';
+/** Diciembre del año siguiente: válido sin depender de la fecha de hoy. */
+const EXPIRY = `12${String((new Date().getFullYear() + 1) % 100).padStart(2, '0')}`;
+
+async function fillCard(page: Page) {
+  await page.getByLabel('Número de tarjeta').fill(CARD);
+  await page.getByLabel('Vencimiento (MMAA)').fill(EXPIRY);
+  await page.getByLabel('Código de seguridad (CVC)').fill(CVC);
+}
 
 async function signOnScreen(page: Page): Promise<void> {
   await page.goto('/subscriptions/sus-e2e-1');
@@ -28,7 +37,12 @@ test.describe('Venta asistida (HU-39)', () => {
     }) => {
       await page.goto('/subscriptions/new/cot-e2e-1');
 
-      await page.getByLabel('Número de tarjeta').fill(CARD);
+      await fillCard(page);
+      await expect(page.getByLabel('Vencimiento (MMAA)')).toHaveAttribute('type', 'password');
+      await expect(page.getByLabel('Código de seguridad (CVC)')).toHaveAttribute(
+        'type',
+        'password',
+      );
       await page.getByLabel('El cliente está al tanto de esta transacción').check();
       await page.getByRole('button', { name: 'Iniciar suscripción' }).click();
 
@@ -43,12 +57,13 @@ test.describe('Venta asistida (HU-39)', () => {
       });
       expect(body.metodo_pago).toMatch(/^tok_sim_/);
       expect(JSON.stringify(body)).not.toContain('4242');
+      expect(JSON.stringify(body)).not.toContain(CVC);
     });
 
     test('no deja iniciar sin la declaración del asesor', async ({ page, backend }) => {
       await page.goto('/subscriptions/new/cot-e2e-1');
 
-      await page.getByLabel('Número de tarjeta').fill(CARD);
+      await fillCard(page);
       await page.getByRole('button', { name: 'Iniciar suscripción' }).click();
 
       await expect(page.getByText('Confirma que el cliente aceptó')).toBeVisible();
@@ -211,13 +226,14 @@ test.describe('Venta asistida (HU-39)', () => {
       backend.nextStartFailure = SERVER_ERROR;
       await page.goto('/subscriptions/new/cot-e2e-1');
 
-      await page.getByLabel('Número de tarjeta').fill(CARD);
+      await fillCard(page);
       await page.getByLabel('El cliente está al tanto de esta transacción').check();
       await page.getByRole('button', { name: 'Iniciar suscripción' }).click();
       await expect(page.getByRole('alert')).toContainText('problema del servidor');
       await expect(page.getByLabel('Número de tarjeta')).toHaveValue('');
+      await expect(page.getByLabel('Código de seguridad (CVC)')).toHaveValue('');
 
-      await page.getByLabel('Número de tarjeta').fill(CARD);
+      await fillCard(page);
       await page.getByRole('button', { name: 'Iniciar suscripción' }).click();
 
       await expect(page).toHaveURL(/\/subscriptions\/sus-e2e-1$/);
