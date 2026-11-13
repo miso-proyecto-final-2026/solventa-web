@@ -60,6 +60,14 @@
     }
   }
 
+  // Decorativo: en escritorio el menú del asesor tiene diez opciones y los íconos (con fuentes de emoji más anchas en Linux)
+  // hacían que no cupiera en una línea a 1280 px. Las etiquetas de texto se mantienen.
+  &__icon {
+    @media (width >= 64rem) {
+      display: none;
+    }
+  }
+
   &__session {
     display: flex;
     gap: var(--sol-space-2);
