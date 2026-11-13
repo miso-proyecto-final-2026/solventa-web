@@ -1575,6 +1575,597 @@
         <source>No pudimos completar la operación. Inténtalo de nuevo en unos minutos.</source>
         <target>We could not complete the operation. Try again in a few minutes.</target>
       </trans-unit>
+      <trans-unit id="assistedReview.inbox.document-title" datatype="html">
+        <source>Solventa — Revisión asistida</source>
+        <target>Solventa — Assisted review</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.detail.document-title" datatype="html">
+        <source>Solventa — Detalle de la revisión asistida</source>
+        <target>Solventa — Assisted review case</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.priority.high" datatype="html">
+        <source>Alta</source>
+        <target>High</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.priority.medium" datatype="html">
+        <source>Media</source>
+        <target>Medium</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.priority.low" datatype="html">
+        <source>Baja</source>
+        <target>Low</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.category.risk-profile" datatype="html">
+        <source>Variables del perfil fuera de rango</source>
+        <target>Profile variables out of range</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.category.amount" datatype="html">
+        <source>Monto asegurado sobre el límite automático</source>
+        <target>Insured amount over the automatic limit</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.category.data" datatype="html">
+        <source>Datos incompletos o inconsistentes</source>
+        <target>Incomplete or inconsistent data</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.state.pending" datatype="html">
+        <source>Pendiente</source>
+        <target>Pending</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.state.decided" datatype="html">
+        <source>Decidido</source>
+        <target>Decided</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.decision.approved" datatype="html">
+        <source>Aprobar</source>
+        <target>Approve</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.decision.rejected" datatype="html">
+        <source>Rechazar</source>
+        <target>Reject</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.decision.adjusted" datatype="html">
+        <source>Ajustar la cobertura</source>
+        <target>Adjust the coverage</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.result.approved" datatype="html">
+        <source>Aprobado</source>
+        <target>Approved</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.result.rejected" datatype="html">
+        <source>Rechazado</source>
+        <target>Rejected</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.result.adjusted" datatype="html">
+        <source>Ajustado</source>
+        <target>Adjusted</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.consequence.approved" datatype="html">
+        <source>Se cobrará la prima de la cotización y la compra continuará como si la decisión hubiera sido automática.</source>
+        <target>The premium of the quote will be charged and the purchase will continue as if the decision had been automatic.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.consequence.adjusted" datatype="html">
+        <source>Se cobrará la prima ajustada y la compra continuará, sin pedir otra aceptación al cliente.</source>
+        <target>The adjusted premium will be charged and the purchase will continue, without asking the customer for another acceptance.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.consequence.rejected" datatype="html">
+        <source>La compra se cerrará sin cobro y el cliente podrá volver a cotizar.</source>
+        <target>The purchase will be closed without a charge and the customer will be able to quote again.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.level.low" datatype="html">
+        <source>Bajo</source>
+        <target>Low</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.level.medium" datatype="html">
+        <source>Medio</source>
+        <target>Medium</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.level.high" datatype="html">
+        <source>Alto</source>
+        <target>High</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.source.real" datatype="html">
+        <source>Perfil real del cliente</source>
+        <target>Customer's real profile</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.source.default" datatype="html">
+        <source>Perfil por defecto</source>
+        <target>Default profile</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.source.degraded" datatype="html">
+        <source>Perfil degradado</source>
+        <target>Degraded profile</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.signal.ratio_endeudamiento" datatype="html">
+        <source>Nivel de endeudamiento</source>
+        <target>Debt level</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.signal.reportes_negativos" datatype="html">
+        <source>Reportes negativos</source>
+        <target>Negative reports</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.signal.ingresos_mensuales_cop" datatype="html">
+        <source>Ingresos mensuales</source>
+        <target>Monthly income</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.coverage.muerte" datatype="html">
+        <source>Muerte</source>
+        <target>Death</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.coverage.incapacidad_total" datatype="html">
+        <source>Incapacidad total</source>
+        <target>Total disability</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.coverage.dano_accidental" datatype="html">
+        <source>Daño accidental</source>
+        <target>Accidental damage</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.coverage.robo" datatype="html">
+        <source>Robo</source>
+        <target>Theft</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.error.unauthenticated" datatype="html">
+        <source>Tu sesión venció. Inicia sesión de nuevo para continuar.</source>
+        <target>Your session expired. Sign in again to continue.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.error.forbidden" datatype="html">
+        <source>Tu usuario no tiene permiso para la revisión asistida. Solo los asesores pueden verla.</source>
+        <target>Your user does not have permission for assisted review. Only advisors can see it.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.error.not-found" datatype="html">
+        <source>Este caso no existe o ya no está en revisión. Vuelve a la bandeja y elige otro.</source>
+        <target>This case does not exist or is no longer under review. Go back to the inbox and pick another one.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.error.network" datatype="html">
+        <source>No hay conexión con el servidor. Revisa tu red e inténtalo de nuevo.</source>
+        <target>There is no connection to the server. Check your network and try again.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.error.server" datatype="html">
+        <source>No pudimos cargar los casos por un problema del servidor. Inténtalo de nuevo en unos minutos.</source>
+        <target>We could not load the cases because of a server problem. Try again in a few minutes.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.decide.error.already" datatype="html">
+        <source>Otro asesor ya decidió este caso.</source>
+        <target>Another advisor has already decided this case.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.decide.error.expired" datatype="html">
+        <source>La cotización venció mientras decidías. Solo se puede cerrar el caso; el cliente debe volver a cotizar.</source>
+        <target>The quote expired while you were deciding. The case can only be closed; the customer must quote again.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.decide.error.quote-unavailable" datatype="html">
+        <source>No pudimos confirmar la vigencia de la cotización. Inténtalo de nuevo en un momento.</source>
+        <target>We could not confirm the validity of the quote. Try again in a moment.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.decide.error.adjustment" datatype="html">
+        <source>El nuevo monto asegurado debe ser mayor que cero y menor que el actual.</source>
+        <target>The new insured amount must be greater than zero and lower than the current one.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.decide.error.no-payment" datatype="html">
+        <source>La compra no tiene un método de pago para cobrar. No se puede aprobar ni ajustar; consulta con el equipo de soporte.</source>
+        <target>The purchase has no payment method to charge. It cannot be approved or adjusted; contact the support team.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.decide.error.validation" datatype="html">
+        <source>Revisa los datos de la decisión: la justificación debe tener entre 20 y 2000 caracteres.</source>
+        <target>Check the decision data: the justification must be between 20 and 2000 characters long.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.detail.back" datatype="html">
+        <source>← Volver a la bandeja</source>
+        <target>← Back to the inbox</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.detail.title" datatype="html">
+        <source>Caso en revisión asistida</source>
+        <target>Assisted review case</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.detail.loading" datatype="html">
+        <source>Cargando el caso…</source>
+        <target>Loading the case…</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.retry-load" datatype="html">
+        <source> Volver a cargar </source>
+        <target>Reload</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.detail.loading-visible" datatype="html">
+        <source> Cargando el caso… </source>
+        <target>Loading the case…</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.detail.lost-race" datatype="html">
+        <source>Otro asesor ya decidió este caso.</source>
+        <target>Another advisor has already decided this case.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.detail.lost-race-by" datatype="html">
+        <source> Decidió <x id="INTERPOLATION" equiv-text="{{ lost.advisor }}"/></source>
+        <target> Decided by <x id="INTERPOLATION" equiv-text="{{ lost.advisor }}"/></target>
+      </trans-unit>
+      <trans-unit id="assistedReview.detail.lost-race-at" datatype="html">
+        <source> el <x id="INTERPOLATION" equiv-text="{{ lost.decidedAt | date: &apos;medium&apos; }}"/></source>
+        <target> on <x id="INTERPOLATION" equiv-text="{{ lost.decidedAt | date: &apos;medium&apos; }}"/></target>
+      </trans-unit>
+      <trans-unit id="assistedReview.done.rejected" datatype="html">
+        <source>Caso rechazado. La compra se cerró sin cobro.</source>
+        <target>Case rejected. The purchase was closed without a charge.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.done.adjusted" datatype="html">
+        <source>Cobertura ajustada. Se cobrará la prima ajustada y la compra continúa.</source>
+        <target>Coverage adjusted. The adjusted premium will be charged and the purchase continues.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.done.approved" datatype="html">
+        <source>Caso aprobado. Se cobrará la prima y la compra continúa.</source>
+        <target>Case approved. The premium will be charged and the purchase continues.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.card.summary" datatype="html">
+        <source>Resumen del caso</source>
+        <target>Case summary</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.col.priority" datatype="html">
+        <source>Prioridad</source>
+        <target>Priority</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.col.date" datatype="html">
+        <source>Fecha</source>
+        <target>Date</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.card.client" datatype="html">
+        <source>Cliente</source>
+        <target>Customer</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.client.name" datatype="html">
+        <source>Nombre</source>
+        <target>Name</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.client.document" datatype="html">
+        <source>Documento</source>
+        <target>Document</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.client.unavailable" datatype="html">
+        <source>No pudimos cargar los datos del cliente. Puedes decidir con el resto de la información.</source>
+        <target>We could not load the customer's data. You can decide with the rest of the information.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.card.quote" datatype="html">
+        <source>Cotización</source>
+        <target>Quote</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.quote.expired-notice" datatype="html">
+        <source>La cotización venció el <x id="INTERPOLATION" equiv-text="{{ d.quote.validUntil | date: &apos;medium&apos; }}"/>. Solo se puede cerrar el caso; el cliente debe volver a cotizar.</source>
+        <target>The quote expired on <x id="INTERPOLATION" equiv-text="{{ d.quote.validUntil | date: &apos;medium&apos; }}"/>. The case can only be closed; the customer must quote again.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.close.action" datatype="html">
+        <source> Cerrar por cotización vencida </source>
+        <target>Close because the quote expired</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.col.product" datatype="html">
+        <source>Producto</source>
+        <target>Product</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.col.amount" datatype="html">
+        <source>Monto asegurado</source>
+        <target>Insured amount</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.quote.annual" datatype="html">
+        <source>Prima anual</source>
+        <target>Annual premium</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.quote.monthly" datatype="html">
+        <source>Prima mensual</source>
+        <target>Monthly premium</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.quote.valid-until" datatype="html">
+        <source>Vigente hasta</source>
+        <target>Valid until</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.quote.coverages-caption" datatype="html">
+        <source> Coberturas de la cotización </source>
+        <target>Coverages of the quote</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.coverage.type" datatype="html">
+        <source>Cobertura</source>
+        <target>Coverage</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.coverage.amount" datatype="html">
+        <source>Monto</source>
+        <target>Amount</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.coverage.deductible" datatype="html">
+        <source>Deducible</source>
+        <target>Deductible</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.card.profile" datatype="html">
+        <source>Perfilamiento</source>
+        <target>Profiling</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.profile.source" datatype="html">
+        <source>Fuente</source>
+        <target>Source</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.profile.completeness" datatype="html">
+        <source>Completitud</source>
+        <target>Completeness</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.profile.consent" datatype="html">
+        <source>Consentimiento</source>
+        <target>Consent</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.profile.consent-yes" datatype="html">
+        <source>Vigente</source>
+        <target>Valid</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.profile.consent-no" datatype="html">
+        <source>Sin consentimiento</source>
+        <target>No consent</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.profile.unavailable" datatype="html">
+        <source>No pudimos cargar el perfil del cliente. El motivo de la derivación sigue abajo.</source>
+        <target>We could not load the customer's profile. The reason for the referral is below.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.profile.loading" datatype="html">
+        <source>Cargando el perfil…</source>
+        <target>Loading the profile…</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.card.reason" datatype="html">
+        <source>Motivo de la derivación</source>
+        <target>Reason for the referral</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.reason.rules" datatype="html">
+        <source>Reglas <x id="INTERPOLATION" equiv-text="{{ d.automatic.rulesVersion }}"/></source>
+        <target>Rules <x id="INTERPOLATION" equiv-text="{{ d.automatic.rulesVersion }}"/></target>
+      </trans-unit>
+      <trans-unit id="assistedReview.card.decision" datatype="html">
+        <source>Decisión del asesor</source>
+        <target>Advisor's decision</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.human.result" datatype="html">
+        <source>Resultado</source>
+        <target>Result</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.human.advisor" datatype="html">
+        <source>Asesor</source>
+        <target>Advisor</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.human.date" datatype="html">
+        <source>Fecha</source>
+        <target>Date</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.human.justification" datatype="html">
+        <source>Justificación:</source>
+        <target>Justification:</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.human.adjustment" datatype="html">
+        <source>Monto asegurado ajustado de <x id="INTERPOLATION" equiv-text="{{
+              a.originalAmount | currency: d.quote.insuredAmount.currency : &apos;symbol-narrow&apos; : digits
+            }}"/> a <x id="INTERPOLATION_1" equiv-text="{{
+              a.adjustedAmount
+                | currency: d.quote.insuredAmount.currency : &apos;symbol-narrow&apos; : digits
+            }}"/>; prima anual <x id="INTERPOLATION_2" equiv-text="{{
+              a.annualPremium | currency: d.quote.insuredAmount.currency : &apos;symbol-narrow&apos; : digits
+            }}"/>.</source>
+        <target>Insured amount adjusted from <x id="INTERPOLATION" equiv-text="{{
+              a.originalAmount | currency: d.quote.insuredAmount.currency : &apos;symbol-narrow&apos; : digits
+            }}"/> to <x id="INTERPOLATION_1" equiv-text="{{
+              a.adjustedAmount
+                | currency: d.quote.insuredAmount.currency : &apos;symbol-narrow&apos; : digits
+            }}"/>; annual premium <x id="INTERPOLATION_2" equiv-text="{{
+              a.annualPremium | currency: d.quote.insuredAmount.currency : &apos;symbol-narrow&apos; : digits
+            }}"/>.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.card.decide" datatype="html">
+        <source>Decisión</source>
+        <target>Decision</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.form.summary" datatype="html">
+        <source>Revisa estos datos</source>
+        <target>Check these fields</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.form.decision" datatype="html">
+        <source>Decisión</source>
+        <target>Decision</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.form.expired-reason" datatype="html">
+        <source>Aprobar y ajustar están deshabilitados porque la cotización venció.</source>
+        <target>Approving and adjusting are disabled because the quote expired.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.form.amount" datatype="html">
+        <source>Nuevo monto asegurado</source>
+        <target>New insured amount</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.form.amount-hint" datatype="html">
+        <source>Debe ser menor que el actual. Las coberturas y las primas se ajustan en proporción.</source>
+        <target>It must be lower than the current one. Coverages and premiums are adjusted in proportion.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.form.justification" datatype="html">
+        <source>Justificación</source>
+        <target>Justification</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.form.justification-hint" datatype="html">
+        <source>Es interna: el cliente no la ve. No incluyas números de tarjeta ni datos de contacto.</source>
+        <target>It is internal: the customer does not see it. Do not include card numbers or contact details.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.confirm.final" datatype="html">
+        <source> No se puede deshacer.</source>
+        <target> This cannot be undone.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.confirm.action" datatype="html">
+        <source> Confirmar decisión </source>
+        <target>Confirm decision</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.confirm.cancel" datatype="html">
+        <source> Volver a editar </source>
+        <target>Back to editing</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.form.review" datatype="html">
+        <source> Revisar decisión </source>
+        <target>Review decision</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.saving" datatype="html">
+        <source>Guardando la decisión…</source>
+        <target>Saving the decision…</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.cannot-decide" datatype="html">
+        <source>Este caso ya no se puede decidir.</source>
+        <target>This case can no longer be decided.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.form.error.decision" datatype="html">
+        <source>Elige aprobar, rechazar o ajustar la cobertura.</source>
+        <target>Choose approve, reject or adjust the coverage.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.close.suggested" datatype="html">
+        <source>La cotización venció el <x id="until" equiv-text="until"/> antes de decidir; el cliente debe volver a cotizar.</source>
+        <target>The quote expired on <x id="until" equiv-text="until"/> before a decision was made; the customer must quote again.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.form.error.amount-required" datatype="html">
+        <source>Escribe el nuevo monto asegurado, un número entero mayor que cero.</source>
+        <target>Enter the new insured amount, a whole number greater than zero.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.form.error.amount-lower" datatype="html">
+        <source>El nuevo monto debe ser menor que el actual.</source>
+        <target>The new amount must be lower than the current one.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.form.error.justification-short" datatype="html">
+        <source>La justificación debe tener al menos <x id="min" equiv-text="JUSTIFICATION_MIN"/> caracteres.</source>
+        <target>The justification must be at least <x id="min" equiv-text="JUSTIFICATION_MIN"/> characters long.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.form.error.justification-long" datatype="html">
+        <source>La justificación no puede pasar de <x id="max" equiv-text="JUSTIFICATION_MAX"/> caracteres.</source>
+        <target>The justification cannot exceed <x id="max" equiv-text="JUSTIFICATION_MAX"/> characters.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.inbox.title" datatype="html">
+        <source>Revisión asistida</source>
+        <target>Assisted review</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.inbox.lead" datatype="html">
+        <source> Casos que las reglas automáticas derivaron a una persona. Los más antiguos aparecen primero.
+</source>
+        <target>Cases that the automatic rules referred to a person. The oldest ones appear first.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.filter.state" datatype="html">
+        <source>Estado</source>
+        <target>Status</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.filter.category" datatype="html">
+        <source>Categoría del motivo</source>
+        <target>Reason category</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.filter.mine" datatype="html">
+        <source>Mis cotizaciones</source>
+        <target>My quotes</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.filter.expired" datatype="html">
+        <source>Solo cotizaciones vencidas</source>
+        <target>Expired quotes only</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.loading" datatype="html">
+        <source>Cargando los casos…</source>
+        <target>Loading the cases…</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.inbox.count" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ r.total }}"/> casos</source>
+        <target><x id="INTERPOLATION" equiv-text="{{ r.total }}"/> cases</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.inbox.loading-visible" datatype="html">
+        <source> Cargando los casos… </source>
+        <target>Loading the cases…</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.expired-notice.one" datatype="html">
+        <source>1 caso tiene la cotización vencida y solo se puede cerrar.</source>
+        <target>1 case has an expired quote and can only be closed.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.expired-notice.many" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ r.expiredTotal }}"/> casos tienen la cotización vencida y solo se pueden cerrar.</source>
+        <target><x id="INTERPOLATION" equiv-text="{{ r.expiredTotal }}"/> cases have an expired quote and can only be closed.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.expired-notice.filter" datatype="html">
+        <source> Ver solo los vencidos </source>
+        <target>Show only the expired ones</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.inbox.empty" datatype="html">
+        <source>No hay casos con estos filtros.</source>
+        <target>There are no cases with these filters.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.inbox.caption" datatype="html">
+        <source> Casos derivados a revisión asistida, del más antiguo al más reciente </source>
+        <target>Cases referred to assisted review, from oldest to newest</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.col.reason" datatype="html">
+        <source>Motivo</source>
+        <target>Reason</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.col.client" datatype="html">
+        <source>Cliente</source>
+        <target>Customer</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.col.actions" datatype="html">
+        <source>Acciones</source>
+        <target>Actions</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.badge.expired" datatype="html">
+        <source>Cotización vencida</source>
+        <target>Quote expired</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.inbox.open" datatype="html">
+        <source>Ver detalle</source>
+        <target>View details</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.close.label" datatype="html">
+        <source>Justificación del cierre</source>
+        <target>Justification for closing</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.close.hint" datatype="html">
+        <source>Se rechazará el caso sin cobro. Puedes editar el texto sugerido (mínimo <x id="INTERPOLATION" equiv-text="{{ justificationMin }}"/> caracteres).</source>
+        <target>The case will be rejected without a charge. You can edit the suggested text (at least <x id="INTERPOLATION" equiv-text="{{ justificationMin }}"/> characters).</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.close.confirm" datatype="html">
+        <source> Confirmar cierre sin cobro </source>
+        <target>Confirm closing without a charge</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.close.cancel" datatype="html">
+        <source> Cancelar </source>
+        <target>Cancel</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.pager.label" datatype="html">
+        <source>Paginación</source>
+        <target>Pagination</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.pager.previous" datatype="html">
+        <source> Anterior </source>
+        <target>Previous</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.pager.position" datatype="html">
+        <source>Página <x id="INTERPOLATION" equiv-text="{{ query().page }}"/> de <x id="INTERPOLATION_1" equiv-text="{{ pages() }}"/></source>
+        <target>Page <x id="INTERPOLATION" equiv-text="{{ query().page }}"/> of <x id="INTERPOLATION_1" equiv-text="{{ pages() }}"/></target>
+      </trans-unit>
+      <trans-unit id="assistedReview.pager.next" datatype="html">
+        <source> Siguiente </source>
+        <target>Next</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.filter.pending" datatype="html">
+        <source>Pendientes</source>
+        <target>Pending</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.filter.decided" datatype="html">
+        <source>Decididos</source>
+        <target>Decided</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.filter.all-categories" datatype="html">
+        <source>Todas</source>
+        <target>All</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.badge.expired-aria" datatype="html">
+        <source>Cotización vencida el <x id="until" equiv-text="until"/></source>
+        <target>Quote expired on <x id="until" equiv-text="until"/></target>
+      </trans-unit>
+      <trans-unit id="assistedReview.close.error.length" datatype="html">
+        <source>La justificación debe tener entre <x id="min" equiv-text="JUSTIFICATION_MIN"/> y <x id="max" equiv-text="JUSTIFICATION_MAX"/> caracteres.</source>
+        <target>The justification must be between <x id="min" equiv-text="JUSTIFICATION_MIN"/> and <x id="max" equiv-text="JUSTIFICATION_MAX"/> characters long.</target>
+      </trans-unit>
+      <trans-unit id="assistedReview.close.done" datatype="html">
+        <source>El caso se cerró por cotización vencida, sin cobro. Salió de los pendientes.</source>
+        <target>The case was closed because the quote expired, without a charge. It left the pending list.</target>
+      </trans-unit>
+      <trans-unit id="subscriptions.detail.referred-link" datatype="html">
+        <source>Ver el caso en revisión asistida</source>
+        <target>View the case in assisted review</target>
+      </trans-unit>
+      <trans-unit id="nav.assisted-review" datatype="html">
+        <source>Revisión asistida</source>
+        <target>Assisted review</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -39,6 +39,13 @@ export const NAV_ITEMS: readonly NavItem[] = [
     exact: false,
     requiredRoles: ['ASESOR'],
   },
+  {
+    path: '/assisted-review',
+    label: $localize`:@@nav.assisted-review:Revisión asistida`,
+    icon: '🔎',
+    exact: false,
+    requiredRoles: ['ASESOR'],
+  },
   { path: '/policies', label: $localize`:@@nav.policies:Mis Pólizas`, icon: '🛡️', exact: false },
   { path: '/claims', label: $localize`:@@nav.claims:Siniestros`, icon: '⚡', exact: false },
   { path: '/profile', label: $localize`:@@nav.profile:Perfil`, icon: '👤', exact: false },
