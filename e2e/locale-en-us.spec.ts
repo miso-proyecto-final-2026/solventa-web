@@ -88,3 +88,30 @@ test('la venta asistida (HU-39) usa los textos y los formatos de en-US', async (
   await expect(page.getByLabel('The client is aware of this transaction')).not.toBeChecked();
   await expectNoSeriousA11yViolations(page);
 });
+
+test('la revisión asistida (HU-16) usa los textos y los formatos de en-US', async ({ page }) => {
+  await signIn(page);
+  await page.goto('/assisted-review');
+
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Assisted review');
+  await expect(page.getByRole('row').nth(1)).toContainText('High');
+  await expect(page.getByRole('row').nth(1)).toContainText('Incomplete or inconsistent data');
+  await expect(page.getByRole('row').nth(1)).toContainText('$40,000,000');
+  await expect(page.getByText('1 case has an expired quote and can only be closed.')).toBeVisible();
+  await expect(page.getByText('Quote expired').first()).toBeVisible();
+  await expectNoSeriousA11yViolations(page);
+
+  await page
+    .getByRole('link', { name: /View details/ })
+    .first()
+    .click();
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Assisted review case');
+  await expect(page.getByText('Debt level')).toBeVisible();
+  await expect(page.getByLabel('Approve')).toBeEnabled();
+  await page.getByLabel('Reject').check();
+  await page.getByRole('button', { name: 'Review decision' }).click();
+  await expect(
+    page.getByText('The justification must be at least 20 characters long.').first(),
+  ).toBeVisible();
+  await expectNoSeriousA11yViolations(page);
+});

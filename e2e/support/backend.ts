@@ -13,6 +13,9 @@ import {
   failedCases,
   quoteDto,
   RetryChargeDto,
+  REVIEW_PROFILE_DTO,
+  ReviewDetailDto,
+  reviews,
 } from './fixtures';
 
 /** Un fallo que se inyecta en la siguiente llamada: una respuesta HTTP o una caída de red. */
@@ -22,6 +25,7 @@ const IDENTIDAD = '/api/identidad/v1';
 const COTIZACION = '/api/cotizacion/v1';
 const COBROS_FALLIDOS = '/api/pagos/v1/pagos/cobros-fallidos';
 const ASISTIDAS = '/api/suscripcion/v1/suscripciones/asistidas';
+const REVISIONES = '/api/suscripcion/v1/suscripciones/revisiones';
 
 /** Respuesta de la pasarela al próximo reintento (HU19). */
 export type RetryMode = 'APROBADO' | 'RECHAZADO' | 'NO_DISPONIBLE';
@@ -94,6 +98,11 @@ export class Backend {
   readonly linkHeaders: Record<string, string>[] = [];
   readonly linkCodes: string[] = [];
   subscriptionForbidden = false;
+
+  /** HU16: los casos de revisión asistida, las decisiones recibidas (cuerpo tal como salió) y un fallo para la próxima. */
+  reviewCases: ReviewDetailDto[] = reviews();
+  readonly reviewDecisions: { id: string; body: Record<string, unknown> }[] = [];
+  nextReviewDecisionFailure: Failure | null = null;
 
   private nextSearchFailure: Failure | null = null;
   private nextQuoteFailure: Failure | null = null;
@@ -322,6 +331,95 @@ export class Backend {
     );
 
     await this.installFailedPayments();
+    await this.installAssistedReview();
+  }
+
+  /** HU16: el caso de revisión se decide en el servidor simulado como en el real: queda decidido y sale de los pendientes. */
+  private async installAssistedReview(): Promise<void> {
+    const suscripcionError = (status: number, code: string) => ({
+      status,
+      json: { error: { code, message: code, details: [], trace_id: 't' } },
+    });
+    // Las rutas registradas después tienen prioridad sobre la del perfil de la cotización asistida.
+    await this.page.route(
+      new RegExp(`${COTIZACION}/asesor/clientes/cli-rev-[^/]+/perfil$`),
+      (route) => route.fulfill({ json: REVIEW_PROFILE_DTO }),
+    );
+    await this.page.route(new RegExp(`${REVISIONES}(\\?.*)?$`), (route) => {
+      const params = new URL(route.request().url()).searchParams;
+      const wantedState = params.get('estado') === 'DECIDIDA' ? 'DECIDIDA' : 'PENDIENTE';
+      const pending = this.reviewCases.filter((c) => c.estado === 'PENDIENTE');
+      const items = this.reviewCases
+        .filter((c) => c.estado === wantedState)
+        .filter((c) => params.get('vencidas') !== 'true' || c.cotizacion_vencida)
+        .filter(
+          (c) =>
+            !params.get('categoria') ||
+            c.decision_automatica.motivos.some((m) => m.categoria === params.get('categoria')),
+        )
+        .sort((a, b) => a.creada_en.localeCompare(b.creada_en))
+        .map((c) => ({
+          id: c.id,
+          cliente: c.cliente,
+          producto: c.cotizacion.producto,
+          moneda: c.cotizacion.moneda,
+          monto_asegurado: c.cotizacion.monto_asegurado,
+          categorias: c.decision_automatica.motivos.map((m) => m.categoria),
+          motivo: c.decision_automatica.motivos.map((m) => m.texto).join('; '),
+          creada_en: c.creada_en,
+          prioridad: c.prioridad,
+          estado: c.estado,
+          decision: c.decision_humana?.decision ?? null,
+          cotizacion_vencida: c.cotizacion_vencida && c.estado === 'PENDIENTE',
+          vigente_hasta: c.cotizacion.vigente_hasta,
+        }));
+      return route.fulfill({
+        json: {
+          items,
+          total: items.length,
+          total_vencidas: pending.filter((c) => c.cotizacion_vencida).length,
+          pagina: 1,
+          tamano: 20,
+        },
+      });
+    });
+    await this.page.route(new RegExp(`${REVISIONES}/([^/?]+)$`), (route) => {
+      const id = decodeURIComponent(/revisiones\/([^/?]+)/.exec(route.request().url())![1]);
+      const found = this.reviewCases.find((c) => c.id === id);
+      return found
+        ? route.fulfill({ json: found })
+        : route.fulfill(suscripcionError(404, 'REVISION_NO_ENCONTRADA'));
+    });
+    await this.page.route(new RegExp(`${REVISIONES}/([^/]+)/decision$`), (route) => {
+      const id = /revisiones\/([^/]+)\/decision/.exec(route.request().url())![1];
+      const body = route.request().postDataJSON() as Record<string, unknown>;
+      this.reviewDecisions.push({ id, body });
+      const failure = this.nextReviewDecisionFailure;
+      this.nextReviewDecisionFailure = null;
+      if (failure) return fulfillFailure(route, failure);
+      const found = this.reviewCases.find((c) => c.id === id);
+      if (!found) return route.fulfill(suscripcionError(404, 'REVISION_NO_ENCONTRADA'));
+      if (found.estado === 'DECIDIDA') {
+        return route.fulfill(suscripcionError(409, 'REVISION_YA_DECIDIDA'));
+      }
+      if (body['decision'] !== 'RECHAZADA' && found.cotizacion_vencida) {
+        return route.fulfill(suscripcionError(409, 'COTIZACION_VENCIDA'));
+      }
+      Object.assign(found, {
+        estado: 'DECIDIDA',
+        puede_decidir: false,
+        decisiones_permitidas: [],
+        decision_humana: {
+          decision: body['decision'],
+          justificacion: body['justificacion'],
+          asesor_id: 'a-1',
+          asesor_nombre: 'Asesora Demo',
+          decidido_en: new Date().toISOString(),
+          ajuste: null,
+        },
+      });
+      return route.fulfill({ json: found });
+    });
   }
 
   private async installFailedPayments(): Promise<void> {

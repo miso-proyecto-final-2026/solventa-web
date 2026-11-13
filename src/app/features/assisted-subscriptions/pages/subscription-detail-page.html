@@ -124,6 +124,12 @@
         <ng-container i18n="@@subscriptions.detail.referred"
           >Este caso se derivó a revisión asistida.</ng-container
         >
+        <a
+          [routerLink]="['/assisted-review', s.id]"
+          class="ar-link"
+          i18n="@@subscriptions.detail.referred-link"
+          >Ver el caso en revisión asistida</a
+        >
       </sol-alert>
     }
 
