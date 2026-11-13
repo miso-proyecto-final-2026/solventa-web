@@ -69,6 +69,26 @@ test('los cobros fallidos (HU-19) se ven en inglés, con montos de en-US', async
   await expectNoSeriousA11yViolations(page);
 });
 
+test('la conciliación de desembolsos (HU-31) se ve en inglés, con montos de en-US', async ({
+  page,
+}) => {
+  await signIn(page, 'OPERADOR');
+  await page.goto('/reconciliation');
+
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Disbursement reconciliation');
+  await expect(page.getByRole('row').nth(1)).toContainText('Earthquake');
+  await expect(page.getByRole('row').nth(1)).toContainText('$5,000,000');
+  await expect(page.getByText('No duplicate payments')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Export CSV' })).toBeVisible();
+
+  await page
+    .getByRole('link', { name: /View details/ })
+    .first()
+    .click();
+  await expect(page.getByRole('button', { name: 'Reconcile with the gateway' })).toBeEnabled();
+  await expectNoSeriousA11yViolations(page);
+});
+
 test('la venta asistida (HU-39) usa los textos y los formatos de en-US', async ({ page }) => {
   await signIn(page);
   await page.goto('/subscriptions');

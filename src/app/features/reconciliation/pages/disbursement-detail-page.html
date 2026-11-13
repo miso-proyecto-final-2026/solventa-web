@@ -1,0 +1,349 @@
+<a routerLink="/reconciliation" class="rc__back" i18n="@@reconciliation.detail.back"
+  >← Volver a la lista</a
+>
+<h1 i18n="@@reconciliation.detail.title">Desembolso</h1>
+
+<p class="sol-visually-hidden" role="status">
+  @if (loading()) {
+    <ng-container i18n="@@reconciliation.detail.loading">Cargando el desembolso…</ng-container>
+  }
+</p>
+
+@if (loadError(); as e) {
+  <sol-alert kind="error">
+    {{ loadErrorText(e) }}
+    @if (e.kind !== 'not-found') {
+      <button
+        type="button"
+        class="sol-btn sol-btn--outline rc__inline-action"
+        (click)="load()"
+        i18n="@@reconciliation.retry-load"
+      >
+        Volver a cargar
+      </button>
+    }
+  </sol-alert>
+}
+
+@if (!detail() && loading()) {
+  <p class="rc__loading" aria-hidden="true" i18n="@@reconciliation.detail.loading-visible">
+    Cargando el desembolso…
+  </p>
+}
+
+@if (detail(); as d) {
+  <sol-card class="page__card">
+    <h2 i18n="@@reconciliation.detail.event">Evento</h2>
+    <dl class="rc__facts">
+      <div>
+        <dt i18n="@@reconciliation.detail.event-type">Tipo de evento</dt>
+        <dd>{{ typeLabel(d.eventType) }}</dd>
+      </div>
+      <div>
+        <dt i18n="@@reconciliation.detail.magnitude">Magnitud</dt>
+        <dd>{{ magnitudeOf(d.magnitude) }}</dd>
+      </div>
+      <div>
+        <dt i18n="@@reconciliation.detail.location">Ubicación</dt>
+        <dd>{{ d.location ?? '—' }}</dd>
+      </div>
+      <div>
+        <dt i18n="@@reconciliation.detail.event-date">Fecha del evento</dt>
+        <dd>{{ d.eventAt ? (d.eventAt | date: 'medium') : '—' }}</dd>
+      </div>
+      <div>
+        <dt i18n="@@reconciliation.detail.event-id">Evento</dt>
+        <dd class="rc__code">{{ d.eventId }}</dd>
+      </div>
+    </dl>
+
+    <h2 i18n="@@reconciliation.detail.policy">Póliza</h2>
+    <dl class="rc__facts">
+      <div>
+        <dt i18n="@@reconciliation.detail.policy-number">Número</dt>
+        <dd>{{ d.policyNumber ?? d.policyId }}</dd>
+      </div>
+      <div>
+        <dt i18n="@@reconciliation.detail.product">Producto</dt>
+        <dd>{{ d.product ?? '—' }}</dd>
+      </div>
+      <div>
+        <dt i18n="@@reconciliation.detail.client">Cliente</dt>
+        <dd>{{ d.client ?? '—' }}</dd>
+      </div>
+      <div>
+        <dt i18n="@@reconciliation.detail.insured">Monto asegurado</dt>
+        <dd>
+          @if (d.insuredAmount; as m) {
+            {{ m.amount | currency: m.currency : 'symbol-narrow' : digits }}
+          } @else {
+            —
+          }
+        </dd>
+      </div>
+    </dl>
+
+    <h2 i18n="@@reconciliation.detail.validation">Validación de la condición</h2>
+    <dl class="rc__facts">
+      <div>
+        <dt i18n="@@reconciliation.detail.validation-result">Resultado</dt>
+        <dd>{{ d.validation?.result ?? '—' }}</dd>
+      </div>
+      <div>
+        <dt i18n="@@reconciliation.detail.validation-reason">Motivo</dt>
+        <dd>{{ d.validation?.reason ?? '—' }}</dd>
+      </div>
+      <div>
+        <dt i18n="@@reconciliation.detail.rule">Regla</dt>
+        <dd>
+          {{ d.validation?.rule ?? '—' }}
+          @if (d.validation?.rulesVersion) {
+            <span class="rc__muted">({{ d.validation?.rulesVersion }})</span>
+          }
+        </dd>
+      </div>
+    </dl>
+
+    <h2 i18n="@@reconciliation.detail.payment">Pago</h2>
+    <dl class="rc__facts">
+      <div>
+        <dt i18n="@@reconciliation.detail.amount">Monto</dt>
+        <dd>{{ d.amount.amount | currency: d.amount.currency : 'symbol-narrow' : digits }}</dd>
+      </div>
+      <div>
+        <dt i18n="@@reconciliation.detail.payment-state">Estado del pago</dt>
+        <dd>{{ paymentLabel(d.paymentState) }}</dd>
+      </div>
+      <div>
+        <dt i18n="@@reconciliation.detail.reference">Referencia de la pasarela</dt>
+        <dd class="rc__code">{{ d.gatewayReference ?? '—' }}</dd>
+      </div>
+      <div>
+        <dt i18n="@@reconciliation.detail.paid-at">Fecha del pago</dt>
+        <dd>{{ d.paidAt ? (d.paidAt | date: 'medium') : '—' }}</dd>
+      </div>
+      <div>
+        <dt i18n="@@reconciliation.detail.key">Clave de idempotencia</dt>
+        <dd class="rc__code">{{ d.idempotencyKey }}</dd>
+      </div>
+      <div>
+        <dt i18n="@@reconciliation.detail.redeliveries">Reentregas del comando</dt>
+        <dd>
+          {{ d.redeliveries }}
+          <span class="rc__muted" i18n="@@reconciliation.detail.redeliveries-hint"
+            >(ninguna volvió a pagar)</span
+          >
+        </dd>
+      </div>
+      @if (d.failureCode) {
+        <div>
+          <dt i18n="@@reconciliation.detail.failure">Motivo del fallo</dt>
+          <dd>
+            {{ d.failureReason ?? '—' }}
+            <span class="rc__muted">({{ d.failureCode }})</span>
+          </dd>
+        </div>
+      }
+    </dl>
+
+    <h3 i18n="@@reconciliation.detail.attempts">Intentos de pago</h3>
+    <div class="rc__table-wrap">
+      <table class="rc__table">
+        <caption class="sol-visually-hidden" i18n="@@reconciliation.detail.attempts-caption">
+          Intentos de pago contra la pasarela
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col" i18n="@@reconciliation.attempt.number">N.º</th>
+            <th scope="col" i18n="@@reconciliation.attempt.result">Resultado</th>
+            <th scope="col" i18n="@@reconciliation.attempt.reference">Referencia</th>
+            <th scope="col" i18n="@@reconciliation.attempt.at">Fecha</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (a of d.paymentAttempts; track a.number) {
+            <tr>
+              <td>{{ a.number }}</td>
+              <td>
+                {{ a.result }}
+                @if (a.code) {
+                  <span class="rc__muted">({{ a.code }})</span>
+                }
+              </td>
+              <td class="rc__code">{{ a.reference ?? '—' }}</td>
+              <td>{{ a.at | date: 'medium' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </sol-card>
+
+  <sol-card class="page__card">
+    <h2 i18n="@@reconciliation.detail.reconciliation">Conciliación</h2>
+    <dl class="rc__facts">
+      <div>
+        <dt i18n="@@reconciliation.detail.status">Estado</dt>
+        <dd>
+          <span
+            class="rc__badge"
+            [class.rc__badge--success]="d.reconciliation === 'RECONCILED'"
+            [class.rc__badge--danger]="d.reconciliation === 'WITH_DIFFERENCE'"
+            [class.rc__badge--warning]="d.reconciliation === 'PENDING'"
+          >
+            @if (d.reconciliation === 'WITH_DIFFERENCE') {
+              <span aria-hidden="true">⚠</span>
+            } @else if (d.reconciliation === 'RECONCILED') {
+              <span aria-hidden="true">✓</span>
+            }
+            {{ statusLabel(d.reconciliation) }}
+          </span>
+        </dd>
+      </div>
+      <div>
+        <dt i18n="@@reconciliation.detail.reconciled-by">Verificado por</dt>
+        <dd>{{ d.reconciledBy ?? '—' }}</dd>
+      </div>
+      <div>
+        <dt i18n="@@reconciliation.detail.reconciled-at">Fecha de la verificación</dt>
+        <dd>{{ d.reconciledAt ? (d.reconciledAt | date: 'medium') : '—' }}</dd>
+      </div>
+    </dl>
+
+    @if (d.difference; as diff) {
+      <sol-alert kind="warning">
+        <ng-container i18n="@@reconciliation.detail.difference"
+          >El extracto de la pasarela no coincide con el desembolso registrado.</ng-container
+        >
+        <dl class="rc__facts">
+          <div>
+            <dt i18n="@@reconciliation.detail.recorded">Monto registrado</dt>
+            <dd>
+              {{
+                diff.recordedAmount.amount
+                  | currency: diff.recordedAmount.currency : 'symbol-narrow' : digits
+              }}
+            </dd>
+          </div>
+          <div>
+            <dt i18n="@@reconciliation.detail.gateway-amount">Monto en la pasarela</dt>
+            <dd>
+              {{
+                diff.gatewayAmount.amount
+                  | currency: diff.gatewayAmount.currency : 'symbol-narrow' : digits
+              }}
+            </dd>
+          </div>
+        </dl>
+      </sol-alert>
+    }
+
+    <p class="sol-visually-hidden" role="status">
+      @if (reconciling()) {
+        <ng-container i18n="@@reconciliation.reconcile.running"
+          >Conciliando con la pasarela…</ng-container
+        >
+      }
+    </p>
+
+    <div #resultBox class="page__result" tabindex="-1">
+      @if (reconcileOutcome() === 'RECONCILED') {
+        <sol-alert kind="success">
+          <ng-container i18n="@@reconciliation.reconcile.ok"
+            >Conciliado: el pago coincide con el extracto de la pasarela.</ng-container
+          >
+        </sol-alert>
+      } @else if (reconcileOutcome() === 'WITH_DIFFERENCE') {
+        <sol-alert kind="warning">
+          <ng-container i18n="@@reconciliation.reconcile.difference"
+            >El monto del extracto no coincide. Puedes escalarlo al equipo de pagos con una
+            nota.</ng-container
+          >
+        </sol-alert>
+      }
+      @if (reconcileError(); as e) {
+        <sol-alert kind="error">{{ reconcileErrorText(e) }}</sol-alert>
+      }
+    </div>
+
+    @if (d.paymentState === 'PAID') {
+      <div>
+        <button
+          type="button"
+          class="sol-btn"
+          [disabled]="!canReconcile()"
+          (click)="reconcile()"
+          i18n="@@reconciliation.reconcile.action"
+        >
+          Conciliar con la pasarela
+        </button>
+      </div>
+    } @else {
+      <sol-alert kind="info">
+        <ng-container i18n="@@reconciliation.reconcile.not-paid"
+          >Solo se concilian los desembolsos pagados.</ng-container
+        >
+      </sol-alert>
+    }
+
+    @if (d.escalationNote) {
+      <h3 i18n="@@reconciliation.detail.escalation">Escalado al equipo de pagos</h3>
+      <dl class="rc__facts">
+        <div>
+          <dt i18n="@@reconciliation.detail.escalated-by">Escalado por</dt>
+          <dd>{{ d.escalatedBy ?? '—' }}</dd>
+        </div>
+        <div>
+          <dt i18n="@@reconciliation.detail.escalated-at">Fecha</dt>
+          <dd>{{ d.escalatedAt ? (d.escalatedAt | date: 'medium') : '—' }}</dd>
+        </div>
+        <div>
+          <dt i18n="@@reconciliation.detail.escalation-note">Nota</dt>
+          <dd>{{ d.escalationNote }}</dd>
+        </div>
+      </dl>
+    }
+
+    @if (canEscalate()) {
+      <form class="rc__section" (submit)="$event.preventDefault(); escalate()">
+        <h3 i18n="@@reconciliation.escalate.title">Escalar al equipo de pagos</h3>
+        <label for="rc-note" i18n="@@reconciliation.escalate.note"
+          >Nota para el equipo de pagos</label
+        >
+        <textarea
+          id="rc-note"
+          class="sol-input"
+          name="note"
+          rows="3"
+          [maxLength]="maxLength"
+          [(ngModel)]="noteText"
+          [attr.aria-invalid]="noteError() ? 'true' : null"
+          [attr.aria-describedby]="describedBy('rc-note', true, !!noteError())"
+        ></textarea>
+        <small id="rc-note-hint" class="rc__muted" i18n="@@reconciliation.escalate.hint"
+          >Obligatoria, hasta 500 caracteres.</small
+        >
+        @if (noteError(); as msg) {
+          <p id="rc-note-error" class="rc__error" role="alert">{{ msg }}</p>
+        }
+        @if (escalated()) {
+          <sol-alert kind="success">
+            <ng-container i18n="@@reconciliation.escalate.done"
+              >Escalado. El equipo de pagos verá tu nota.</ng-container
+            >
+          </sol-alert>
+        }
+        <div>
+          <button
+            type="submit"
+            class="sol-btn"
+            [disabled]="escalating()"
+            i18n="@@reconciliation.escalate.action"
+          >
+            Escalar
+          </button>
+        </div>
+      </form>
+    }
+  </sol-card>
+}

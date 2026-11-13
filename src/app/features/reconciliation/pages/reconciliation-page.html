@@ -1,0 +1,308 @@
+<h1 i18n="@@reconciliation.title">Conciliación de desembolsos</h1>
+<p class="page__lead" i18n="@@reconciliation.lead">
+  Indemnizaciones pagadas de forma automática. Verifica cada desembolso contra la pasarela y escala
+  las diferencias al equipo de pagos.
+</p>
+
+@if (summary(); as s) {
+  <sol-card class="page__card">
+    <h2 class="sol-visually-hidden" i18n="@@reconciliation.summary.title">Resumen</h2>
+    <dl class="rc__summary">
+      <div class="rc__stat">
+        <dt i18n="@@reconciliation.summary.disbursements">Desembolsos</dt>
+        <dd>{{ s.disbursements }}</dd>
+      </div>
+      <div class="rc__stat">
+        <dt i18n="@@reconciliation.summary.paid">Pagados</dt>
+        <dd>
+          {{ s.paid }} ·
+          {{ s.paidAmount.amount | currency: s.paidAmount.currency : 'symbol-narrow' : digits }}
+        </dd>
+      </div>
+      <div class="rc__stat">
+        <dt i18n="@@reconciliation.summary.pending">Pendientes de conciliar</dt>
+        <dd>{{ s.byReconciliation.PENDING }}</dd>
+      </div>
+      <div class="rc__stat">
+        <dt i18n="@@reconciliation.summary.reconciled">Conciliados</dt>
+        <dd>{{ s.byReconciliation.RECONCILED }}</dd>
+      </div>
+      <div class="rc__stat">
+        <dt i18n="@@reconciliation.summary.with-difference">Con diferencia</dt>
+        <dd>{{ s.byReconciliation.WITH_DIFFERENCE }}</dd>
+      </div>
+      <div class="rc__stat">
+        <dt i18n="@@reconciliation.summary.duplicates">Claves con más de un pago</dt>
+        <dd>
+          {{ s.keysWithMultiplePayments }}
+          @if (s.keysWithMultiplePayments === 0) {
+            <span class="rc__badge rc__badge--success">
+              <span aria-hidden="true">✓</span>
+              <ng-container i18n="@@reconciliation.summary.no-duplicates"
+                >Sin pagos duplicados</ng-container
+              >
+            </span>
+          } @else {
+            <span class="rc__badge rc__badge--danger">
+              <span aria-hidden="true">⚠</span>
+              <ng-container i18n="@@reconciliation.summary.has-duplicates"
+                >Hay pagos duplicados</ng-container
+              >
+            </span>
+          }
+        </dd>
+      </div>
+    </dl>
+  </sol-card>
+}
+
+<sol-card class="page__card">
+  <form class="rc__filters" (submit)="$event.preventDefault()">
+    <div class="rc__filter">
+      <label for="rc-from" i18n="@@reconciliation.filter.from">Desde</label>
+      <input
+        id="rc-from"
+        type="date"
+        class="sol-input"
+        name="from"
+        [ngModel]="query().from"
+        [max]="query().to || null"
+        (ngModelChange)="setFilter('from', $event)"
+      />
+    </div>
+    <div class="rc__filter">
+      <label for="rc-to" i18n="@@reconciliation.filter.to">Hasta</label>
+      <input
+        id="rc-to"
+        type="date"
+        class="sol-input"
+        name="to"
+        [ngModel]="query().to"
+        [min]="query().from || null"
+        (ngModelChange)="setFilter('to', $event)"
+      />
+    </div>
+    <div class="rc__filter">
+      <label for="rc-type" i18n="@@reconciliation.filter.event-type">Tipo de evento</label>
+      <select
+        id="rc-type"
+        class="sol-input"
+        name="eventType"
+        [ngModel]="query().eventType"
+        (ngModelChange)="setFilter('eventType', $event)"
+      >
+        <option value="" i18n="@@reconciliation.filter.all-types">Todos los tipos</option>
+        @for (o of eventTypeOptions; track o.value) {
+          <option [value]="o.value">{{ o.label }}</option>
+        }
+      </select>
+    </div>
+    <div class="rc__filter">
+      <label for="rc-status" i18n="@@reconciliation.filter.status">Conciliación</label>
+      <select
+        id="rc-status"
+        class="sol-input"
+        name="reconciliation"
+        [ngModel]="query().reconciliation"
+        (ngModelChange)="setFilter('reconciliation', $event)"
+      >
+        @for (o of statusOptions; track o.value) {
+          <option [value]="o.value">{{ o.label }}</option>
+        }
+      </select>
+    </div>
+    @if (hasFilters()) {
+      <button
+        type="button"
+        class="sol-btn sol-btn--outline"
+        (click)="clearFilters()"
+        i18n="@@reconciliation.filter.clear"
+      >
+        Quitar filtros
+      </button>
+    }
+  </form>
+
+  <div class="rc__actions">
+    <button
+      type="button"
+      class="sol-btn sol-btn--outline"
+      [disabled]="exporting() !== null"
+      (click)="export('csv')"
+      i18n="@@reconciliation.export.csv"
+    >
+      Exportar CSV
+    </button>
+    <button
+      type="button"
+      class="sol-btn sol-btn--outline"
+      [disabled]="exporting() !== null"
+      (click)="export('pdf')"
+      i18n="@@reconciliation.export.pdf"
+    >
+      Exportar PDF
+    </button>
+  </div>
+
+  <p class="sol-visually-hidden" role="status">
+    @if (exporting()) {
+      <ng-container i18n="@@reconciliation.export.generating">Generando el reporte…</ng-container>
+    } @else if (exported()) {
+      <ng-container i18n="@@reconciliation.export.done">El reporte se descargó.</ng-container>
+    } @else if (loading()) {
+      <ng-container i18n="@@reconciliation.loading">Cargando desembolsos…</ng-container>
+    } @else if (result(); as r) {
+      <ng-container i18n="@@reconciliation.count">{{ r.total }} desembolsos</ng-container>
+    }
+  </p>
+
+  @if (exportError(); as e) {
+    <sol-alert kind="error">{{ exportErrorText(e) }}</sol-alert>
+  }
+
+  @if (error(); as e) {
+    <sol-alert kind="error">
+      {{ errorText(e) }}
+      <button
+        type="button"
+        class="sol-btn sol-btn--outline rc__inline-action"
+        (click)="load()"
+        i18n="@@reconciliation.retry-load"
+      >
+        Volver a cargar
+      </button>
+    </sol-alert>
+  }
+
+  @if (loading() && !result()) {
+    <p class="rc__loading" aria-hidden="true" i18n="@@reconciliation.loading-visible">
+      Cargando desembolsos…
+    </p>
+  }
+
+  @if (result(); as r) {
+    @if (r.items.length === 0) {
+      <sol-alert kind="info">
+        <ng-container i18n="@@reconciliation.empty"
+          >No hay desembolsos con estos filtros.</ng-container
+        >
+      </sol-alert>
+    } @else {
+      <div class="rc__table-wrap">
+        <table class="rc__table" [attr.aria-busy]="loading()">
+          <caption class="sol-visually-hidden" i18n="@@reconciliation.caption">
+            Desembolsos de indemnizaciones, del más reciente al más antiguo
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col" i18n="@@reconciliation.col.event">Evento</th>
+              <th scope="col" i18n="@@reconciliation.col.policy">Póliza</th>
+              <th scope="col" i18n="@@reconciliation.col.client">Cliente</th>
+              <th scope="col" i18n="@@reconciliation.col.validation">Validación</th>
+              <th scope="col" i18n="@@reconciliation.col.payment">Pago</th>
+              <th scope="col" i18n="@@reconciliation.col.reconciliation">Conciliación</th>
+              <th scope="col">
+                <span class="sol-visually-hidden" i18n="@@reconciliation.col.actions"
+                  >Acciones</span
+                >
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (d of r.items; track d.id) {
+              <tr>
+                <td>
+                  <strong>{{ typeLabel(d.eventType) }}</strong>
+                  <br />
+                  {{ magnitudeOf(d.magnitude) }}
+                  @if (d.location) {
+                    <br />
+                    <span class="rc__muted">{{ d.location }}</span>
+                  }
+                  @if (d.eventAt) {
+                    <br />
+                    <span class="rc__muted">{{ d.eventAt | date: 'short' }}</span>
+                  }
+                </td>
+                <td>
+                  {{ d.policyNumber ?? d.policyId }}
+                  @if (d.product) {
+                    <br />
+                    <span class="rc__muted">{{ d.product }}</span>
+                  }
+                </td>
+                <td>{{ d.client ?? '—' }}</td>
+                <td>{{ d.validation?.result ?? '—' }}</td>
+                <td>
+                  {{ d.amount.amount | currency: d.amount.currency : 'symbol-narrow' : digits }}
+                  <br />
+                  {{ paymentLabel(d.paymentState) }}
+                  @if (d.gatewayReference) {
+                    <br />
+                    <span class="rc__muted rc__code">{{ d.gatewayReference }}</span>
+                  }
+                  @if (d.paidAt) {
+                    <br />
+                    <span class="rc__muted">{{ d.paidAt | date: 'short' }}</span>
+                  }
+                </td>
+                <td>
+                  <span
+                    class="rc__badge"
+                    [class]="'rc__badge rc__badge--' + badge(d.reconciliation)"
+                  >
+                    @if (d.reconciliation === 'WITH_DIFFERENCE') {
+                      <span aria-hidden="true">⚠</span>
+                    } @else if (d.reconciliation === 'RECONCILED') {
+                      <span aria-hidden="true">✓</span>
+                    }
+                    {{ statusLabel(d.reconciliation) }}
+                  </span>
+                  @if (d.reconciledBy) {
+                    <br />
+                    <span class="rc__muted">{{ d.reconciledBy }}</span>
+                  }
+                </td>
+                <td>
+                  <a [routerLink]="['/reconciliation', d.id]">
+                    <ng-container i18n="@@reconciliation.open">Ver detalle</ng-container>
+                    <span class="sol-visually-hidden">
+                      ({{ typeLabel(d.eventType) }},
+                      {{
+                        d.amount.amount | currency: d.amount.currency : 'symbol-narrow' : digits
+                      }})
+                    </span>
+                  </a>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <nav class="rc__pager" i18n-aria-label="@@reconciliation.pager.label" aria-label="Paginación">
+        <button
+          type="button"
+          class="sol-btn sol-btn--outline"
+          [disabled]="query().page <= 1 || loading()"
+          (click)="goToPage(query().page - 1)"
+          i18n="@@reconciliation.pager.previous"
+        >
+          Anterior
+        </button>
+        <span i18n="@@reconciliation.pager.position"
+          >Página {{ query().page }} de {{ pages() }}</span
+        >
+        <button
+          type="button"
+          class="sol-btn sol-btn--outline"
+          [disabled]="query().page >= pages() || loading()"
+          (click)="goToPage(query().page + 1)"
+          i18n="@@reconciliation.pager.next"
+        >
+          Siguiente
+        </button>
+      </nav>
+    }
+  }
+</sol-card>

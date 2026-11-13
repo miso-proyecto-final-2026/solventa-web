@@ -10,6 +10,8 @@ import {
   SESSION_DTO,
   FailedCaseDto,
   failedCaseDetail,
+  disbursements,
+  DisbursementDto,
   failedCases,
   quoteDto,
   RetryChargeDto,
@@ -21,7 +23,11 @@ export type Failure = { status: number; body?: unknown } | 'network';
 const IDENTIDAD = '/api/identidad/v1';
 const COTIZACION = '/api/cotizacion/v1';
 const COBROS_FALLIDOS = '/api/pagos/v1/pagos/cobros-fallidos';
+const CONCILIACION = '/api/pagos/v1/pagos/conciliacion/desembolsos';
 const ASISTIDAS = '/api/suscripcion/v1/suscripciones/asistidas';
+
+/** Qué dice el extracto de la pasarela al conciliar un desembolso (HU31). */
+export type ExtractMode = 'COINCIDE' | 'DIFERENCIA' | 'SIN_PAGO';
 
 /** Respuesta de la pasarela al próximo reintento (HU19). */
 export type RetryMode = 'APROBADO' | 'RECHAZADO' | 'NO_DISPONIBLE';
@@ -80,6 +86,12 @@ export class Backend {
   readonly retryCharges: Record<string, RetryChargeDto[]> = {};
   retryMode: RetryMode = 'APROBADO';
   private nextCasesFailure: Failure | null = null;
+  /** HU31: desembolsos, qué dice el extracto, las consultas de la lista, las escaladas y los reportes pedidos. */
+  conciliation: DisbursementDto[] = disbursements();
+  extractMode: ExtractMode = 'COINCIDE';
+  readonly listQueries: URLSearchParams[] = [];
+  readonly escalations: { id: string; nota: string }[] = [];
+  readonly exportRequests: string[] = [];
   /** HU39: la saga simulada, los inicios recibidos (el cuerpo tal como salió) y los códigos de firma. */
   subscription: AssistedSubscriptionDto = assistedSubscription();
   readonly startRequests: { body: Record<string, unknown>; key: string | null }[] = [];
@@ -322,6 +334,7 @@ export class Backend {
     );
 
     await this.installFailedPayments();
+    await this.installReconciliation();
   }
 
   private async installFailedPayments(): Promise<void> {
@@ -404,6 +417,124 @@ export class Backend {
           repeticion: false,
         },
       });
+    });
+  }
+
+  private async installReconciliation(): Promise<void> {
+    const operator = 'Operador Demo';
+    const find = (url: string, tail: string) => {
+      const id = decodeURIComponent(new RegExp(`desembolsos/([^/?]+)${tail}`).exec(url)![1]);
+      return this.conciliation.find((d) => d.id === id);
+    };
+
+    await this.page.route(new RegExp(`${CONCILIACION}(\\?.*)?$`), (route) => {
+      const params = new URL(route.request().url()).searchParams;
+      this.listQueries.push(params);
+      const items = this.conciliation.filter(
+        (d) =>
+          (!params.get('tipo_evento') || d.tipo_evento === params.get('tipo_evento')) &&
+          (!params.get('estado_conciliacion') ||
+            d.estado_conciliacion === params.get('estado_conciliacion')),
+      );
+      return route.fulfill({
+        json: { items, total: items.length, pagina: Number(params.get('pagina') ?? 1), tamano: 25 },
+      });
+    });
+
+    // Primero el detalle: Playwright prioriza la última ruta registrada, así que `/resumen` y `/exportar` (sin query) le ganan.
+    await this.page.route(new RegExp(`${CONCILIACION}/([^/?]+)$`), (route) => {
+      const found = find(route.request().url(), '$');
+      return found
+        ? route.fulfill({
+            json: {
+              ...found,
+              intentos_de_pago: [
+                {
+                  numero: 1,
+                  resultado: 'APROBADO',
+                  codigo: null,
+                  motivo: null,
+                  referencia_pasarela: found.referencia_pasarela,
+                  fecha: found.fecha_pago,
+                },
+              ],
+            },
+          })
+        : route.fulfill({ status: 404, json: pagosError('DESEMBOLSO_NO_ENCONTRADO') });
+    });
+
+    await this.page.route(new RegExp(`${CONCILIACION}/resumen(\\?.*)?$`), (route) => {
+      const count = (s: string) =>
+        this.conciliation.filter((d) => d.estado_conciliacion === s).length;
+      return route.fulfill({
+        json: {
+          desembolsos: this.conciliation.length,
+          claves_distintas: this.conciliation.length,
+          claves_con_mas_de_un_pago: 0,
+          pagados: this.conciliation.length,
+          monto_pagado: String(this.conciliation.length * 5_000_000),
+          por_estado_conciliacion: {
+            PENDIENTE: count('PENDIENTE'),
+            CONCILIADO: count('CONCILIADO'),
+            CON_DIFERENCIA: count('CON_DIFERENCIA'),
+          },
+        },
+      });
+    });
+
+    await this.page.route(new RegExp(`${CONCILIACION}/exportar(\\?.*)?$`), (route) => {
+      const format = new URL(route.request().url()).searchParams.get('formato') ?? '';
+      this.exportRequests.push(format);
+      return route.fulfill({
+        status: 200,
+        contentType: format === 'pdf' ? 'application/pdf' : 'text/csv; charset=utf-8',
+        headers: {
+          'content-disposition': `attachment; filename="conciliacion-desembolsos.${format}"`,
+        },
+        body: format === 'pdf' ? '%PDF-1.4' : 'Evento,Tipo\nevt-1,sismo\n',
+      });
+    });
+
+    await this.page.route(new RegExp(`${CONCILIACION}/([^/]+)/conciliar$`), (route) => {
+      const found = find(route.request().url(), '/conciliar');
+      if (!found)
+        return route.fulfill({ status: 404, json: pagosError('DESEMBOLSO_NO_ENCONTRADO') });
+      if (this.extractMode === 'SIN_PAGO') {
+        return route.fulfill({ status: 409, json: pagosError('EXTRACTO_SIN_PAGO') });
+      }
+      const matches = this.extractMode === 'COINCIDE';
+      Object.assign(found, {
+        estado_conciliacion: matches ? 'CONCILIADO' : 'CON_DIFERENCIA',
+        conciliado_por: operator,
+        conciliado_en: new Date().toISOString(),
+        diferencia: matches
+          ? null
+          : {
+              monto_registrado: found.monto,
+              monto_pasarela: '4900000.00',
+              moneda_pasarela: 'COP',
+              referencia_registrada: found.referencia_pasarela,
+              referencia_pasarela: found.referencia_pasarela,
+            },
+      });
+      return route.fulfill({ json: found });
+    });
+
+    await this.page.route(new RegExp(`${CONCILIACION}/([^/]+)/escalar$`), (route) => {
+      const found = find(route.request().url(), '/escalar');
+      const nota = (route.request().postDataJSON() as { nota: string }).nota;
+      if (!found)
+        return route.fulfill({ status: 404, json: pagosError('DESEMBOLSO_NO_ENCONTRADO') });
+      if (found.estado_conciliacion !== 'CON_DIFERENCIA') {
+        return route.fulfill({ status: 409, json: pagosError('DESEMBOLSO_SIN_DIFERENCIA') });
+      }
+      this.escalations.push({ id: found.id, nota });
+      Object.assign(found, {
+        escalada_en: new Date().toISOString(),
+        escalada_por: operator,
+        nota_escalamiento: nota,
+      });
+      return route.fulfill({ json: found });
     });
   }
 

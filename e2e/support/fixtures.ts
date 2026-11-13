@@ -348,3 +348,88 @@ export function assistedSubscription(): AssistedSubscriptionDto {
     creada_en: '2026-10-30T12:00:00Z',
   };
 }
+
+/** HU31: un desembolso tal como lo devuelve `/v1/pagos/conciliacion/desembolsos`. */
+export interface DisbursementDto {
+  id: string;
+  idempotency_key: string;
+  evento_id: string;
+  tipo_evento: string | null;
+  magnitud: Record<string, number> | null;
+  ubicacion: string | null;
+  evento_ocurrido_en: string | null;
+  poliza_id: string;
+  producto: string | null;
+  cliente: string | null;
+  numero_poliza: string | null;
+  monto_asegurado: number | null;
+  validacion: { resultado: string; motivo: string; regla: string; version_reglas: string } | null;
+  estado: 'PENDIENTE' | 'PAGADA' | 'FALLIDA';
+  monto: string;
+  moneda: string;
+  referencia_pasarela: string | null;
+  fecha_pago: string | null;
+  intentos: number;
+  reentregas: number;
+  estado_conciliacion: 'PENDIENTE' | 'CONCILIADO' | 'CON_DIFERENCIA';
+  conciliado_por: string | null;
+  conciliado_en: string | null;
+  diferencia: Record<string, string | null> | null;
+  escalada_en: string | null;
+  escalada_por: string | null;
+  nota_escalamiento: string | null;
+  codigo_fallo: string | null;
+  motivo_fallo: string | null;
+}
+
+export function disbursements(now = Date.now()): DisbursementDto[] {
+  const base = (n: number, over: Partial<DisbursementDto>): DisbursementDto => ({
+    id: `ds-${n}`,
+    idempotency_key: `evt-${n}:pol-${n}`,
+    evento_id: `evt-${n}`,
+    tipo_evento: 'sismo',
+    magnitud: { magnitud: 6.4 },
+    ubicacion: 'bogota',
+    evento_ocurrido_en: new Date(now - n * 86_400_000).toISOString(),
+    poliza_id: `pol-${n}`,
+    producto: 'parametrico_clima',
+    cliente: `cli***0${n}`,
+    numero_poliza: null,
+    monto_asegurado: null,
+    validacion: {
+      resultado: 'CORRESPONDE_PAGO',
+      motivo: 'condicion_cumplida',
+      regla: 'sismo',
+      version_reglas: 'v1',
+    },
+    estado: 'PAGADA',
+    monto: '5000000.00',
+    moneda: 'COP',
+    referencia_pasarela: `simpg_${n}`,
+    fecha_pago: new Date(now - n * 86_400_000 + 60_000).toISOString(),
+    intentos: 1,
+    reentregas: 2,
+    estado_conciliacion: 'PENDIENTE',
+    conciliado_por: null,
+    conciliado_en: null,
+    diferencia: null,
+    escalada_en: null,
+    escalada_por: null,
+    nota_escalamiento: null,
+    codigo_fallo: null,
+    motivo_fallo: null,
+    ...over,
+  });
+  return [
+    base(1, {}),
+    base(2, {
+      tipo_evento: 'inundacion',
+      magnitud: { nivel_rio_cm: 172 },
+      ubicacion: 'cali',
+      estado_conciliacion: 'CONCILIADO',
+      conciliado_por: 'Operador Demo',
+      conciliado_en: new Date(now).toISOString(),
+    }),
+    base(3, { tipo_evento: 'tormenta', magnitud: { viento_kmh: 104 }, ubicacion: 'barranquilla' }),
+  ];
+}
