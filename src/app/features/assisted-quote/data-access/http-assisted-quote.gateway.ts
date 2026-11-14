@@ -7,15 +7,23 @@ import {
   ClientIdentity,
   DocumentId,
   Product,
+  ProfileLineage,
   ProfileSummary,
   Quote,
   QuoteRequest,
 } from '../domain/models';
 import { AssistedQuoteGateway } from './assisted-quote.gateway';
-import { CatalogDto, ClientSearchDto, ProfileDto, QuoteDto } from './dto/assisted-quote.dto';
+import {
+  CatalogDto,
+  ClientSearchDto,
+  LineageDto,
+  ProfileDto,
+  QuoteDto,
+} from './dto/assisted-quote.dto';
 import {
   toCatalog,
   toClient,
+  toLineage,
   toProfile,
   toQuote,
   toQuoteRequestDto,
@@ -64,5 +72,19 @@ export class HttpAssistedQuoteGateway extends AssistedQuoteGateway {
     return this.http
       .post<QuoteDto>(`${COTIZACION}/v1/asesor/cotizaciones`, toQuoteRequestDto(request))
       .pipe(map(toQuote));
+  }
+
+  getLineage(clientId: string): Observable<ProfileLineage | null> {
+    return this.http
+      .get<LineageDto>(`${COTIZACION}/v1/asesor/clientes/${encodeURIComponent(clientId)}/linaje`)
+      .pipe(
+        map(toLineage),
+        // Sin perfil enriquecido no es un fallo: la pestaña lo explica. Un 503 sí lo es.
+        catchError((error: unknown) =>
+          error instanceof ApiError && error.kind === 'not-found'
+            ? of(null)
+            : throwError(() => error),
+        ),
+      );
   }
 }

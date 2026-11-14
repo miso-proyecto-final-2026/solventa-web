@@ -1,73 +1,137 @@
 @let q = quote();
+@let lineageClient = clientId();
 
-<div class="result__premium">
-  <p class="result__product">{{ productLabel(q.productCode) }}</p>
-  <p class="result__amount">
-    {{ q.monthlyPremium.amount | currency: q.monthlyPremium.currency : 'symbol-narrow' : digits }}
+<!-- HU24: con un cliente con cuenta, el detalle se divide en la cotización y el linaje de fuentes. -->
+@if (lineageClient) {
+  <div
+    class="tabs"
+    role="tablist"
+    i18n-aria-label="@@assistedQuote.result.tabs"
+    aria-label="Detalle de la cotización"
+  >
+    <button
+      #tabButton
+      type="button"
+      role="tab"
+      id="tab-quote"
+      class="tabs__tab"
+      aria-controls="panel-quote"
+      [attr.aria-selected]="tab() === 'quote'"
+      [tabIndex]="tab() === 'quote' ? 0 : -1"
+      (click)="select('quote')"
+      (keydown)="onTabKeydown($event)"
+      i18n="@@assistedQuote.result.tab.quote"
+    >
+      Cotización
+    </button>
+    <button
+      #tabButton
+      type="button"
+      role="tab"
+      id="tab-lineage"
+      class="tabs__tab"
+      aria-controls="panel-lineage"
+      [attr.aria-selected]="tab() === 'lineage'"
+      [tabIndex]="tab() === 'lineage' ? 0 : -1"
+      (click)="select('lineage')"
+      (keydown)="onTabKeydown($event)"
+      i18n="@@assistedQuote.result.tab.lineage"
+    >
+      Linaje de fuentes
+    </button>
+  </div>
+}
+
+<div
+  id="panel-quote"
+  class="result__panel"
+  [attr.role]="lineageClient ? 'tabpanel' : null"
+  [attr.aria-labelledby]="lineageClient ? 'tab-quote' : null"
+  [hidden]="tab() !== 'quote'"
+>
+  <div class="result__premium">
+    <p class="result__product">{{ productLabel(q.productCode) }}</p>
+    <p class="result__amount">
+      {{ q.monthlyPremium.amount | currency: q.monthlyPremium.currency : 'symbol-narrow' : digits }}
+    </p>
+    <p class="result__caption" i18n="@@assistedQuote.result.monthly">Prima mensual</p>
+    <p class="result__annual">
+      <ng-container i18n="@@assistedQuote.result.annual">Prima anual</ng-container>:
+      <strong>{{
+        q.annualPremium.amount | currency: q.annualPremium.currency : 'symbol-narrow' : digits
+      }}</strong>
+    </p>
+  </div>
+
+  @if (q.estimated) {
+    <sol-alert kind="warning">
+      <ng-container i18n="@@assistedQuote.result.estimated"
+        >Precio estimado: se calculó sin el perfil real del cliente y puede cambiar al
+        comprar.</ng-container
+      >
+    </sol-alert>
+  }
+
+  @if (q.withoutAccount) {
+    <sol-alert kind="info">
+      <ng-container i18n="@@assistedQuote.result.without-account"
+        >Cotización sin cuenta: para comprar, el cliente debe registrarse.</ng-container
+      >
+    </sol-alert>
+  }
+
+  <section aria-labelledby="coverages-title">
+    <h3 id="coverages-title" i18n="@@assistedQuote.result.coverages">Coberturas y deducibles</h3>
+    <table class="result__table">
+      <caption class="sol-visually-hidden" i18n="@@assistedQuote.result.coverages-caption">
+        Coberturas con su valor asegurado y su deducible
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col" i18n="@@assistedQuote.result.coverage">Cobertura</th>
+          <th scope="col" class="result__num" i18n="@@assistedQuote.result.insured">
+            Valor asegurado
+          </th>
+          <th scope="col" class="result__num" i18n="@@assistedQuote.result.deductible">
+            Deducible
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (c of q.coverages; track c.type) {
+          <tr>
+            <th scope="row">{{ coverageLabel(c.type) }}</th>
+            <td class="result__num">
+              {{ c.amount.amount | currency: c.amount.currency : 'symbol-narrow' : digits }}
+            </td>
+            <td class="result__num">
+              {{ c.deductible.amount | currency: c.deductible.currency : 'symbol-narrow' : digits }}
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </section>
+
+  <p class="result__validity">
+    <ng-container i18n="@@assistedQuote.result.valid-until">Válida hasta</ng-container>:
+    <strong>{{ q.validUntil | date: 'longDate' }}</strong>
   </p>
-  <p class="result__caption" i18n="@@assistedQuote.result.monthly">Prima mensual</p>
-  <p class="result__annual">
-    <ng-container i18n="@@assistedQuote.result.annual">Prima anual</ng-container>:
-    <strong>{{
-      q.annualPremium.amount | currency: q.annualPremium.currency : 'symbol-narrow' : digits
-    }}</strong>
-  </p>
+
+  <sol-price-breakdown [components]="q.components" [source]="q.profileSource" />
 </div>
 
-@if (q.estimated) {
-  <sol-alert kind="warning">
-    <ng-container i18n="@@assistedQuote.result.estimated"
-      >Precio estimado: se calculó sin el perfil real del cliente y puede cambiar al
-      comprar.</ng-container
-    >
-  </sol-alert>
+@if (lineageClient && lineageOpened()) {
+  <div
+    id="panel-lineage"
+    class="result__panel"
+    role="tabpanel"
+    aria-labelledby="tab-lineage"
+    [hidden]="tab() !== 'lineage'"
+  >
+    <sol-source-lineage [clientId]="lineageClient" />
+  </div>
 }
-
-@if (q.withoutAccount) {
-  <sol-alert kind="info">
-    <ng-container i18n="@@assistedQuote.result.without-account"
-      >Cotización sin cuenta: para comprar, el cliente debe registrarse.</ng-container
-    >
-  </sol-alert>
-}
-
-<section aria-labelledby="coverages-title">
-  <h3 id="coverages-title" i18n="@@assistedQuote.result.coverages">Coberturas y deducibles</h3>
-  <table class="result__table">
-    <caption class="sol-visually-hidden" i18n="@@assistedQuote.result.coverages-caption">
-      Coberturas con su valor asegurado y su deducible
-    </caption>
-    <thead>
-      <tr>
-        <th scope="col" i18n="@@assistedQuote.result.coverage">Cobertura</th>
-        <th scope="col" class="result__num" i18n="@@assistedQuote.result.insured">
-          Valor asegurado
-        </th>
-        <th scope="col" class="result__num" i18n="@@assistedQuote.result.deductible">Deducible</th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (c of q.coverages; track c.type) {
-        <tr>
-          <th scope="row">{{ coverageLabel(c.type) }}</th>
-          <td class="result__num">
-            {{ c.amount.amount | currency: c.amount.currency : 'symbol-narrow' : digits }}
-          </td>
-          <td class="result__num">
-            {{ c.deductible.amount | currency: c.deductible.currency : 'symbol-narrow' : digits }}
-          </td>
-        </tr>
-      }
-    </tbody>
-  </table>
-</section>
-
-<p class="result__validity">
-  <ng-container i18n="@@assistedQuote.result.valid-until">Válida hasta</ng-container>:
-  <strong>{{ q.validUntil | date: 'longDate' }}</strong>
-</p>
-
-<sol-price-breakdown [components]="q.components" [source]="q.profileSource" />
 
 <div class="sol-actions">
   @if (!q.withoutAccount) {

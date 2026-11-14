@@ -128,4 +128,18 @@ describe('MockAssistedQuoteGateway', () => {
     expect(noConsent.signals).toEqual([]);
     expect(catalog.map((p) => p.code)).toEqual(['microseguro_vida', 'proteccion_dispositivos']);
   });
+
+  it('should give a lineage to clients with consent and none to the others (HU24)', async () => {
+    const ana = await find('1000000001');
+    const bruno = await find('1000000002');
+    const diego = await find('1000000004');
+
+    const anaLineage = await firstValueFrom(gateway.getLineage(ana!.id));
+    const brunoLineage = await firstValueFrom(gateway.getLineage(bruno!.id));
+
+    expect(anaLineage!.entries.map((e) => e.origin)).toEqual(['LIVE', 'CACHE']);
+    expect(brunoLineage!.entries[1].origin).toBe('DEFAULT');
+    expect(brunoLineage!.missing.length).toBe(3);
+    expect(await firstValueFrom(gateway.getLineage(diego!.id))).toBeNull();
+  });
 });

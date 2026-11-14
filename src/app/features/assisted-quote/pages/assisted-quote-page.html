@@ -66,7 +66,11 @@
     }
     @case ('result') {
       @if (store.quote(); as quote) {
-        <sol-quote-result [quote]="quote" (newQuote)="facade.newQuote()" />
+        <sol-quote-result
+          [quote]="quote"
+          [clientId]="quote.withoutAccount ? null : (store.client()?.id ?? null)"
+          (newQuote)="facade.newQuote()"
+        />
       }
     }
   }

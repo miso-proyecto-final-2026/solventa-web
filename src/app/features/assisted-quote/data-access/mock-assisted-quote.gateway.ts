@@ -7,6 +7,7 @@ import {
   ConsentState,
   DocumentId,
   Product,
+  ProfileLineage,
   ProfileSource,
   ProfileSummary,
   Quote,
@@ -157,6 +158,45 @@ export class MockAssistedQuoteGateway extends AssistedQuoteGateway {
 
   getCatalog(): Observable<readonly Product[]> {
     return of(CATALOG).pipe(delay(LATENCY_MS));
+  }
+
+  /** HU24: con consentimiento hay perfil enriquecido; Bruno muestra Open Data caído (valor por defecto). */
+  getLineage(clientId: string): Observable<ProfileLineage | null> {
+    const demo = this.byId(clientId);
+    if (demo?.consent !== 'GRANTED') return of(null).pipe(delay(LATENCY_MS));
+    const now = new Date();
+    const openDataDown = demo.firstName === 'Bruno';
+    return of({
+      profileId: `perfil-${clientId.slice(-2)}`,
+      createdAt: now,
+      entries: [
+        {
+          source: 'open_finance',
+          dataType: 'FINANCIAL' as const,
+          fields: ['ingresos_mensuales_cop', 'ratio_endeudamiento', 'score_crediticio'],
+          fetchedAt: now,
+          ttlSeconds: 3600,
+          origin: 'LIVE' as const,
+          consentGranted: true,
+        },
+        {
+          source: 'open_data',
+          dataType: 'SOCIOECONOMIC' as const,
+          fields: openDataDown ? [] : ['estrato', 'reportes_negativos', 'zona_riesgo'],
+          fetchedAt: openDataDown ? null : now,
+          ttlSeconds: 86400,
+          origin: openDataDown ? ('DEFAULT' as const) : ('CACHE' as const),
+          consentGranted: true,
+        },
+      ],
+      missing: openDataDown
+        ? ['estrato', 'reportes_negativos', 'zona_riesgo'].map((field) => ({
+            field,
+            reason: 'sin_datos',
+          }))
+        : [],
+      conflicts: [],
+    }).pipe(delay(LATENCY_MS));
   }
 
   requestQuote(request: QuoteRequest): Observable<Quote> {

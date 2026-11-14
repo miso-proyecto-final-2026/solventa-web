@@ -1,0 +1,55 @@
+.lineage {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sol-space-3);
+
+  &__note {
+    color: var(--sol-text-muted);
+  }
+
+  // La tabla tiene siete columnas: en pantallas angostas se desplaza sola, no la página.
+  &__scroll {
+    overflow-x: auto;
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+      padding: var(--sol-space-2) var(--sol-space-3);
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--sol-border);
+    }
+  }
+
+  // El origen se lee en el texto; el color solo lo refuerza.
+  &__origin {
+    display: inline-block;
+    padding: 0 var(--sol-space-2);
+    border: 1px solid;
+    border-radius: var(--sol-radius-pill);
+
+    &--LIVE {
+      color: var(--sol-success-text);
+      background: var(--sol-success-bg);
+    }
+
+    &--CACHE {
+      color: var(--sol-info-text);
+      background: var(--sol-info-bg);
+    }
+
+    &--DEGRADED,
+    &--DEFAULT {
+      color: var(--sol-warning-text);
+      background: var(--sol-warning-bg);
+    }
+  }
+
+  &__list {
+    padding-left: var(--sol-space-5);
+  }
+}

@@ -5,6 +5,12 @@
 }
 
 .result {
+  &__panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sol-space-4);
+  }
+
   &__premium {
     text-align: center;
   }
@@ -40,5 +46,34 @@
 
   &__num {
     text-align: right !important;
+  }
+}
+
+// HU24: pestañas «Cotización» y «Linaje de fuentes».
+.tabs {
+  display: flex;
+  gap: var(--sol-space-2);
+  border-bottom: 1px solid var(--sol-border);
+
+  &__tab {
+    min-height: 2.75rem; // objetivo táctil de al menos 44 px
+    padding: var(--sol-space-2) var(--sol-space-4);
+    font: inherit;
+    font-weight: 600;
+    color: var(--sol-text-muted);
+    cursor: pointer;
+    background: none;
+    border: 0;
+    border-bottom: 3px solid transparent;
+
+    &[aria-selected='true'] {
+      color: var(--sol-teal-700);
+      border-bottom-color: var(--sol-teal-600);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--sol-teal-600);
+      outline-offset: 2px;
+    }
   }
 }
