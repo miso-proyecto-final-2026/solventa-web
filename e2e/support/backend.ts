@@ -5,6 +5,7 @@ import {
   assistedSubscription,
   CATALOG_DTO,
   CLIENTS,
+  LINEAGE_DTO,
   PROFILE_DTO,
   SEARCH_DTO,
   SESSION_DTO,
@@ -97,6 +98,9 @@ export class Backend {
 
   private nextSearchFailure: Failure | null = null;
   private nextQuoteFailure: Failure | null = null;
+  /** HU24: clientes cuyo linaje se pidió y el próximo fallo del linaje. */
+  readonly lineageRequests: string[] = [];
+  private nextLineageFailure: Failure | null = null;
 
   constructor(private readonly page: Page) {}
 
@@ -108,6 +112,11 @@ export class Backend {
   /** La siguiente cotización falla así. */
   failNextQuote(failure: Failure): void {
     this.nextQuoteFailure = failure;
+  }
+
+  /** HU24: la siguiente consulta del linaje falla así. */
+  failNextLineage(failure: Failure): void {
+    this.nextLineageFailure = failure;
   }
 
   /** La siguiente consulta de la bandeja o del detalle falla así. */
@@ -306,6 +315,30 @@ export class Backend {
       return client
         ? route.fulfill({ json: PROFILE_DTO(client) })
         : route.fulfill({ status: 404, json: { error: { code: 'NO_ENCONTRADO' } } });
+    });
+
+    // HU24: con consentimiento hay perfil enriquecido; sin él, 404 como responde Cotización.
+    await this.page.route(new RegExp(`${COTIZACION}/asesor/clientes/([^/]+)/linaje$`), (route) => {
+      const failure = this.nextLineageFailure;
+      this.nextLineageFailure = null;
+      const id = /clientes\/([^/]+)\/linaje/.exec(route.request().url())?.[1] ?? '';
+      this.lineageRequests.push(id);
+      return this.respond(route, failure, () => {
+        const client = Object.values(CLIENTS).find((c) => c.id === id);
+        return client?.consentimiento === 'OTORGADO'
+          ? route.fulfill({ json: LINEAGE_DTO(client) })
+          : route.fulfill({
+              status: 404,
+              json: {
+                error: {
+                  code: 'PERFIL_NO_ENCONTRADO',
+                  message: 'El cliente no tiene un perfil enriquecido.',
+                  details: [],
+                  trace_id: 't',
+                },
+              },
+            });
+      });
     });
 
     await this.page.route(new RegExp(`${COTIZACION}/productos$`), (route) =>

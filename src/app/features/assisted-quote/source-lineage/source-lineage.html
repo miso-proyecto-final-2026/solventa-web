@@ -1,0 +1,131 @@
+<section class="lineage" aria-labelledby="lineage-title" [attr.aria-busy]="state() === 'loading'">
+  <h3 id="lineage-title" i18n="@@lineage.title">Linaje de fuentes</h3>
+  <p class="lineage__note" i18n="@@lineage.note">
+    Fuentes del último perfil enriquecido del cliente. Puede no ser el perfil con el que se calculó
+    este precio.
+  </p>
+
+  @switch (state()) {
+    @case ('loading') {
+      <p role="status" i18n="@@lineage.loading">Cargando el linaje…</p>
+    }
+    @case ('empty') {
+      <sol-alert kind="info">
+        <ng-container i18n="@@lineage.empty"
+          >El cliente todavía no tiene un perfil enriquecido, así que no hay linaje para
+          mostrar.</ng-container
+        >
+      </sol-alert>
+    }
+    @case ('error') {
+      <sol-alert kind="error">{{ errorText() }}</sol-alert>
+      <div class="sol-actions">
+        <button type="button" class="sol-btn sol-btn--outline" (click)="retry()">
+          <ng-container i18n="@@lineage.retry">Reintentar</ng-container>
+        </button>
+      </div>
+    }
+    @case ('loaded') {
+      @if (lineage(); as l) {
+        <p class="lineage__profile">
+          <ng-container i18n="@@lineage.profile-date">Perfil enriquecido el</ng-container>
+          <strong>{{ l.createdAt | date: 'medium' }}</strong>
+        </p>
+
+        <!-- Enfocable para que la tabla también se desplace con el teclado (WCAG 2.1.1). -->
+        <div
+          class="lineage__scroll"
+          tabindex="0"
+          role="region"
+          aria-label="Tabla de fuentes del perfil"
+          i18n-aria-label="@@lineage.scroll-region"
+        >
+          <table class="lineage__table">
+            <caption class="sol-visually-hidden" i18n="@@lineage.caption">
+              Fuentes del perfil con el tipo de dato, los campos que aportaron, la fecha de
+              consulta, la vigencia en caché, el origen y el consentimiento
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col" i18n="@@lineage.col.source">Fuente</th>
+                <th scope="col" i18n="@@lineage.col.data-type">Tipo de dato</th>
+                <th scope="col" i18n="@@lineage.col.fields">Campos que aportó</th>
+                <th scope="col" i18n="@@lineage.col.fetched">Consultado</th>
+                <th scope="col" i18n="@@lineage.col.ttl">Vigencia en caché</th>
+                <th scope="col" i18n="@@lineage.col.origin">Origen</th>
+                <th scope="col" i18n="@@lineage.col.consent">Consentimiento</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (e of l.entries; track e.source) {
+                <tr>
+                  <th scope="row">{{ sourceLabel(e.source) }}</th>
+                  <td>{{ dataTypeLabel(e.dataType) }}</td>
+                  <td>
+                    @if (e.fields.length) {
+                      {{ fieldList(e.fields) }}
+                    } @else {
+                      <span i18n="@@lineage.no-fields">Ninguno</span>
+                    }
+                  </td>
+                  <td>
+                    @if (e.fetchedAt) {
+                      {{ e.fetchedAt | date: 'medium' }}
+                    } @else {
+                      <span i18n="@@lineage.not-fetched">Sin consulta</span>
+                    }
+                  </td>
+                  <td>{{ ttlLabel(e.ttlSeconds) }}</td>
+                  <td>
+                    <span [class]="'lineage__origin lineage__origin--' + e.origin">
+                      {{ originLabel(e.origin) }}
+                    </span>
+                  </td>
+                  <td>
+                    @if (e.consentGranted) {
+                      <ng-container i18n="@@lineage.consent.granted">Otorgado</ng-container>
+                    } @else {
+                      <ng-container i18n="@@lineage.consent.other">No vigente</ng-container>
+                    }
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+        @if (l.missing.length) {
+          <section aria-labelledby="lineage-missing-title">
+            <h4 id="lineage-missing-title" i18n="@@lineage.missing.title">Datos que faltaron</h4>
+            <ul class="lineage__list">
+              @for (m of l.missing; track m.field) {
+                <li>
+                  <strong>{{ fieldLabel(m.field) }}</strong
+                  >: {{ reasonLabel(m.reason) }}
+                </li>
+              }
+            </ul>
+          </section>
+        }
+
+        @if (l.conflicts.length) {
+          <section aria-labelledby="lineage-conflicts-title">
+            <h4 id="lineage-conflicts-title" i18n="@@lineage.conflicts.title">
+              Datos que reportaron dos fuentes
+            </h4>
+            <ul class="lineage__list">
+              @for (c of l.conflicts; track c.field) {
+                <li>
+                  <strong>{{ fieldLabel(c.field) }}</strong
+                  >:
+                  <ng-container i18n="@@lineage.conflicts.used">se usó</ng-container>
+                  {{ sourceLabel(c.winner) }}
+                </li>
+              }
+            </ul>
+          </section>
+        }
+      }
+    }
+  }
+</section>

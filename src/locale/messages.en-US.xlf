@@ -1575,6 +1575,214 @@
         <source>No pudimos completar la operación. Inténtalo de nuevo en unos minutos.</source>
         <target>We could not complete the operation. Try again in a few minutes.</target>
       </trans-unit>
+      <trans-unit id="lineage.source.open_finance" datatype="html">
+        <source>Open Finance</source>
+        <target>Open Finance</target>
+      </trans-unit>
+      <trans-unit id="lineage.source.open_data" datatype="html">
+        <source>Open Data</source>
+        <target>Open Data</target>
+      </trans-unit>
+      <trans-unit id="lineage.field.ingresos_mensuales_cop" datatype="html">
+        <source>Ingresos mensuales</source>
+        <target>Monthly income</target>
+      </trans-unit>
+      <trans-unit id="lineage.field.ratio_endeudamiento" datatype="html">
+        <source>Nivel de endeudamiento</source>
+        <target>Debt level</target>
+      </trans-unit>
+      <trans-unit id="lineage.field.antiguedad_cuentas_anios" datatype="html">
+        <source>Antigüedad de las cuentas</source>
+        <target>Account age</target>
+      </trans-unit>
+      <trans-unit id="lineage.field.obligaciones_mensuales_cop" datatype="html">
+        <source>Obligaciones mensuales</source>
+        <target>Monthly obligations</target>
+      </trans-unit>
+      <trans-unit id="lineage.field.score_crediticio" datatype="html">
+        <source>Puntaje crediticio</source>
+        <target>Credit score</target>
+      </trans-unit>
+      <trans-unit id="lineage.field.productos_financieros" datatype="html">
+        <source>Productos financieros</source>
+        <target>Financial products</target>
+      </trans-unit>
+      <trans-unit id="lineage.field.estrato" datatype="html">
+        <source>Estrato</source>
+        <target>Socioeconomic stratum</target>
+      </trans-unit>
+      <trans-unit id="lineage.field.reportes_negativos" datatype="html">
+        <source>Reportes negativos</source>
+        <target>Negative reports</target>
+      </trans-unit>
+      <trans-unit id="lineage.field.zona_riesgo" datatype="html">
+        <source>Zona de riesgo</source>
+        <target>Risk zone</target>
+      </trans-unit>
+      <trans-unit id="lineage.missing.sin_datos" datatype="html">
+        <source>La fuente no estaba disponible</source>
+        <target>The source was not available</target>
+      </trans-unit>
+      <trans-unit id="lineage.missing.degradado" datatype="html">
+        <source>Solo había un dato viejo de respaldo</source>
+        <target>Only an old backup value was available</target>
+      </trans-unit>
+      <trans-unit id="lineage.missing.no_reportado" datatype="html">
+        <source>Ninguna fuente lo reportó</source>
+        <target>No source reported it</target>
+      </trans-unit>
+      <trans-unit id="lineage.missing.fuera_de_rango" datatype="html">
+        <source>El valor recibido estaba fuera de rango</source>
+        <target>The value received was out of range</target>
+      </trans-unit>
+      <trans-unit id="lineage.missing.invalido" datatype="html">
+        <source>El valor recibido no era válido</source>
+        <target>The value received was not valid</target>
+      </trans-unit>
+      <trans-unit id="lineage.missing.sin_consentimiento" datatype="html">
+        <source>Sin consentimiento del cliente</source>
+        <target>No consent from the client</target>
+      </trans-unit>
+      <trans-unit id="lineage.data-type.financial" datatype="html">
+        <source>Financiero</source>
+        <target>Financial</target>
+      </trans-unit>
+      <trans-unit id="lineage.data-type.socioeconomic" datatype="html">
+        <source>Socioeconómico</source>
+        <target>Socioeconomic</target>
+      </trans-unit>
+      <trans-unit id="lineage.data-type.unknown" datatype="html">
+        <source>Sin clasificar</source>
+        <target>Unclassified</target>
+      </trans-unit>
+      <trans-unit id="lineage.origin.live" datatype="html">
+        <source>Consulta en vivo</source>
+        <target>Live query</target>
+      </trans-unit>
+      <trans-unit id="lineage.origin.cache" datatype="html">
+        <source>Desde caché</source>
+        <target>From cache</target>
+      </trans-unit>
+      <trans-unit id="lineage.origin.degraded" datatype="html">
+        <source>Degradado: respaldo viejo</source>
+        <target>Degraded: old backup</target>
+      </trans-unit>
+      <trans-unit id="lineage.origin.default" datatype="html">
+        <source>Por defecto: fuente no disponible</source>
+        <target>Default: source unavailable</target>
+      </trans-unit>
+      <trans-unit id="lineage.ttl.hours" datatype="html">
+        <source><x id="hours" equiv-text="hours"/> h</source>
+        <target><x id="hours" equiv-text="hours"/> h</target>
+      </trans-unit>
+      <trans-unit id="lineage.ttl.minutes" datatype="html">
+        <source><x id="minutes" equiv-text="minutes"/> min</source>
+        <target><x id="minutes" equiv-text="minutes"/> min</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.result.tabs" datatype="html">
+        <source>Detalle de la cotización</source>
+        <target>Quote details</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.result.tab.quote" datatype="html">
+        <source> Cotización </source>
+        <target>Quote</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.result.tab.lineage" datatype="html">
+        <source> Linaje de fuentes </source>
+        <target>Source lineage</target>
+      </trans-unit>
+      <trans-unit id="lineage.title" datatype="html">
+        <source>Linaje de fuentes</source>
+        <target>Source lineage</target>
+      </trans-unit>
+      <trans-unit id="lineage.note" datatype="html">
+        <source> Fuentes del último perfil enriquecido del cliente. Puede no ser el perfil con el que se calculó este precio. </source>
+        <target>Sources of the client's latest enriched profile. It may not be the profile used to calculate this price.</target>
+      </trans-unit>
+      <trans-unit id="lineage.loading" datatype="html">
+        <source>Cargando el linaje…</source>
+        <target>Loading the lineage…</target>
+      </trans-unit>
+      <trans-unit id="lineage.empty" datatype="html">
+        <source>El cliente todavía no tiene un perfil enriquecido, así que no hay linaje para mostrar.</source>
+        <target>The client does not have an enriched profile yet, so there is no lineage to show.</target>
+      </trans-unit>
+      <trans-unit id="lineage.retry" datatype="html">
+        <source>Reintentar</source>
+        <target>Retry</target>
+      </trans-unit>
+      <trans-unit id="lineage.profile-date" datatype="html">
+        <source>Perfil enriquecido el</source>
+        <target>Profile enriched on</target>
+      </trans-unit>
+      <trans-unit id="lineage.scroll-region" datatype="html">
+        <source>Tabla de fuentes del perfil</source>
+        <target>Profile sources table</target>
+      </trans-unit>
+      <trans-unit id="lineage.caption" datatype="html">
+        <source> Fuentes del perfil con el tipo de dato, los campos que aportaron, la fecha de consulta, la vigencia en caché, el origen y el consentimiento </source>
+        <target>Profile sources with the data type, the fields they provided, the query date, the cache validity, the origin and the consent</target>
+      </trans-unit>
+      <trans-unit id="lineage.col.source" datatype="html">
+        <source>Fuente</source>
+        <target>Source</target>
+      </trans-unit>
+      <trans-unit id="lineage.col.data-type" datatype="html">
+        <source>Tipo de dato</source>
+        <target>Data type</target>
+      </trans-unit>
+      <trans-unit id="lineage.col.fields" datatype="html">
+        <source>Campos que aportó</source>
+        <target>Fields provided</target>
+      </trans-unit>
+      <trans-unit id="lineage.col.fetched" datatype="html">
+        <source>Consultado</source>
+        <target>Queried</target>
+      </trans-unit>
+      <trans-unit id="lineage.col.ttl" datatype="html">
+        <source>Vigencia en caché</source>
+        <target>Cache validity</target>
+      </trans-unit>
+      <trans-unit id="lineage.col.origin" datatype="html">
+        <source>Origen</source>
+        <target>Origin</target>
+      </trans-unit>
+      <trans-unit id="lineage.col.consent" datatype="html">
+        <source>Consentimiento</source>
+        <target>Consent</target>
+      </trans-unit>
+      <trans-unit id="lineage.no-fields" datatype="html">
+        <source>Ninguno</source>
+        <target>None</target>
+      </trans-unit>
+      <trans-unit id="lineage.not-fetched" datatype="html">
+        <source>Sin consulta</source>
+        <target>Not queried</target>
+      </trans-unit>
+      <trans-unit id="lineage.consent.granted" datatype="html">
+        <source>Otorgado</source>
+        <target>Granted</target>
+      </trans-unit>
+      <trans-unit id="lineage.consent.other" datatype="html">
+        <source>No vigente</source>
+        <target>Not in force</target>
+      </trans-unit>
+      <trans-unit id="lineage.missing.title" datatype="html">
+        <source>Datos que faltaron</source>
+        <target>Missing data</target>
+      </trans-unit>
+      <trans-unit id="lineage.conflicts.title" datatype="html">
+        <source> Datos que reportaron dos fuentes </source>
+        <target>Data reported by two sources</target>
+      </trans-unit>
+      <trans-unit id="lineage.conflicts.used" datatype="html">
+        <source>se usó</source>
+        <target>used</target>
+      </trans-unit>
+      <trans-unit id="lineage.error.unavailable" datatype="html">
+        <source>El linaje no está disponible en este momento. Inténtalo de nuevo en unos minutos.</source>
+        <target>The lineage is not available right now. Please try again in a few minutes.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

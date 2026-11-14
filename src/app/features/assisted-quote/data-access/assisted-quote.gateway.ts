@@ -3,6 +3,7 @@ import {
   ClientIdentity,
   DocumentId,
   Product,
+  ProfileLineage,
   ProfileSummary,
   Quote,
   QuoteRequest,
@@ -17,4 +18,6 @@ export abstract class AssistedQuoteGateway {
   abstract getProfile(clientId: string): Observable<ProfileSummary>;
   abstract getCatalog(): Observable<readonly Product[]>;
   abstract requestQuote(request: QuoteRequest): Observable<Quote>;
+  /** HU24: linaje del último perfil enriquecido; `null` si el cliente no tiene perfil enriquecido. */
+  abstract getLineage(clientId: string): Observable<ProfileLineage | null>;
 }

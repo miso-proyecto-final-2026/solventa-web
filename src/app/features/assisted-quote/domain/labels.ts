@@ -1,5 +1,5 @@
 import { ApiError } from '@core/http/api-error';
-import { ConsentState, ProfileSource, RiskLevel } from './models';
+import { ConsentState, LineageDataType, LineageOrigin, ProfileSource, RiskLevel } from './models';
 import { productLabel } from '@shared/models/product-labels';
 
 /**
@@ -112,4 +112,72 @@ export function errorMessage(error: ApiError): string {
     case 'server':
       return $localize`:@@assistedQuote.error.server:No pudimos completar la operación por un problema del servidor. Inténtalo de nuevo; lo que ingresaste se conserva.`;
   }
+}
+
+// --- HU24: linaje de fuentes ---------------------------------------------------------------
+
+const LINEAGE_SOURCES: Record<string, string> = {
+  open_finance: $localize`:@@lineage.source.open_finance:Open Finance`,
+  open_data: $localize`:@@lineage.source.open_data:Open Data`,
+};
+
+/** Campos del perfil enriquecido (esquema canónico de Perfilamiento). Solo nombres, nunca valores. */
+const PROFILE_FIELDS: Record<string, string> = {
+  ingresos_mensuales_cop: $localize`:@@lineage.field.ingresos_mensuales_cop:Ingresos mensuales`,
+  ratio_endeudamiento: $localize`:@@lineage.field.ratio_endeudamiento:Nivel de endeudamiento`,
+  antiguedad_cuentas_anios: $localize`:@@lineage.field.antiguedad_cuentas_anios:Antigüedad de las cuentas`,
+  obligaciones_mensuales_cop: $localize`:@@lineage.field.obligaciones_mensuales_cop:Obligaciones mensuales`,
+  score_crediticio: $localize`:@@lineage.field.score_crediticio:Puntaje crediticio`,
+  productos_financieros: $localize`:@@lineage.field.productos_financieros:Productos financieros`,
+  estrato: $localize`:@@lineage.field.estrato:Estrato`,
+  reportes_negativos: $localize`:@@lineage.field.reportes_negativos:Reportes negativos`,
+  zona_riesgo: $localize`:@@lineage.field.zona_riesgo:Zona de riesgo`,
+};
+
+const MISSING_REASONS: Record<string, string> = {
+  sin_datos: $localize`:@@lineage.missing.sin_datos:La fuente no estaba disponible`,
+  degradado: $localize`:@@lineage.missing.degradado:Solo había un dato viejo de respaldo`,
+  no_reportado: $localize`:@@lineage.missing.no_reportado:Ninguna fuente lo reportó`,
+  fuera_de_rango: $localize`:@@lineage.missing.fuera_de_rango:El valor recibido estaba fuera de rango`,
+  invalido: $localize`:@@lineage.missing.invalido:El valor recibido no era válido`,
+  sin_consentimiento: $localize`:@@lineage.missing.sin_consentimiento:Sin consentimiento del cliente`,
+};
+
+export const lineageSourceLabel = (source: string): string => lookup(LINEAGE_SOURCES, source);
+export const profileFieldLabel = (name: string): string => lookup(PROFILE_FIELDS, name);
+export const missingReasonLabel = (reason: string): string => lookup(MISSING_REASONS, reason);
+
+export function dataTypeLabel(type: LineageDataType): string {
+  switch (type) {
+    case 'FINANCIAL':
+      return $localize`:@@lineage.data-type.financial:Financiero`;
+    case 'SOCIOECONOMIC':
+      return $localize`:@@lineage.data-type.socioeconomic:Socioeconómico`;
+    case 'UNKNOWN':
+      return $localize`:@@lineage.data-type.unknown:Sin clasificar`;
+  }
+}
+
+export function originLabel(origin: LineageOrigin): string {
+  switch (origin) {
+    case 'LIVE':
+      return $localize`:@@lineage.origin.live:Consulta en vivo`;
+    case 'CACHE':
+      return $localize`:@@lineage.origin.cache:Desde caché`;
+    case 'DEGRADED':
+      return $localize`:@@lineage.origin.degraded:Degradado: respaldo viejo`;
+    case 'DEFAULT':
+      return $localize`:@@lineage.origin.default:Por defecto: fuente no disponible`;
+  }
+}
+
+/** Vigencia en caché: en horas si es exacta, si no en minutos. */
+export function ttlLabel(seconds: number | null): string {
+  if (seconds === null) return '—';
+  if (seconds % 3600 === 0) {
+    const hours = seconds / 3600;
+    return $localize`:@@lineage.ttl.hours:${hours}:hours: h`;
+  }
+  const minutes = Math.round(seconds / 60);
+  return $localize`:@@lineage.ttl.minutes:${minutes}:minutes: min`;
 }
