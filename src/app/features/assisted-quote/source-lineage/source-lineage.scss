@@ -27,13 +27,15 @@
   }
 
   // El origen se lee en el texto; el color solo lo refuerza.
-  // Sin cortes de línea: partida en dos renglones, la etiqueta se salía de su columna.
+  // Como bloque en línea, la etiqueta puede partirse en dos renglones sin salirse de su celda. Sin salto de línea, la
+  // más larga («Por defecto: fuente no disponible») fijaba el ancho mínimo de la tabla: con fuentes más anchas (Linux)
+  // la tabla ya no cabía a 1366 px y se cortaba la columna del consentimiento.
   &__origin {
     display: inline-block;
+    max-width: 100%;
     padding: 0 var(--sol-space-2);
-    white-space: nowrap;
     border: 1px solid;
-    border-radius: var(--sol-radius-pill);
+    border-radius: var(--sol-radius-sm);
 
     &--LIVE {
       color: var(--sol-success-text);

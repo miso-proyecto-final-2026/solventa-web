@@ -86,25 +86,36 @@ test.describe('Cotización asistida: linaje de fuentes (HU24)', () => {
     const panel = page.getByRole('tabpanel', { name: 'Linaje de fuentes' });
     await expect(panel.getByRole('row', { name: /Open Finance/ })).toBeVisible();
 
-    // La tabla no necesita desplazarse: la columna del consentimiento se ve sin cortarse.
-    const region = panel.getByRole('region', { name: 'Tabla de fuentes del perfil' });
-    const { scrollWidth, clientWidth } = await region.evaluate((el) => ({
-      scrollWidth: el.scrollWidth,
-      clientWidth: el.clientWidth,
-    }));
-    expect(scrollWidth).toBeLessThanOrEqual(clientWidth);
-    const regionBox = (await region.boundingBox())!;
-    const consentBox = (await panel
-      .getByRole('columnheader', { name: 'Consentimiento' })
-      .boundingBox())!;
-    expect(consentBox.x + consentBox.width).toBeLessThanOrEqual(regionBox.x + regionBox.width + 1);
+    // Sin anchos fijos: el ancho del texto depende de las fuentes del sistema (Windows y Linux difieren). Se compara
+    // cada caja con la de su contenedor, con 1 px de tolerancia por el redondeo.
+    type Box = { x: number; y: number; width: number; height: number };
+    const inside = (inner: Box, outer: Box) =>
+      inner.x >= outer.x - 1 &&
+      inner.y >= outer.y - 1 &&
+      inner.x + inner.width <= outer.x + outer.width + 1 &&
+      inner.y + inner.height <= outer.y + outer.height + 1;
 
-    // Cada etiqueta de origen queda dentro de su celda.
-    const cells = panel.locator('td:has(.lineage__origin)');
-    for (let i = 0; i < (await cells.count()); i++) {
-      const cell = (await cells.nth(i).boundingBox())!;
-      const label = (await cells.nth(i).locator('.lineage__origin').boundingBox())!;
-      expect(label.x + label.width).toBeLessThanOrEqual(cell.x + cell.width + 1);
+    // La columna del consentimiento (la última) se ve completa dentro de la región, sin desplazarla.
+    const region = panel.getByRole('region', { name: 'Tabla de fuentes del perfil' });
+    const regionBox = (await region.boundingBox())!;
+    const consentCells = [
+      panel.getByRole('columnheader', { name: 'Consentimiento' }),
+      ...(await panel.locator('tbody tr > :last-child').all()),
+    ];
+    expect(consentCells.length).toBeGreaterThan(1);
+    for (const cell of consentCells) {
+      expect(inside((await cell.boundingBox())!, regionBox), await cell.innerText()).toBe(true);
+    }
+
+    // Cada etiqueta de origen queda dentro de su celda, aunque se parta en dos renglones.
+    const cells = await panel.locator('td:has(.lineage__origin)').all();
+    expect(cells.length).toBeGreaterThan(0);
+    for (const cell of cells) {
+      const label = cell.locator('.lineage__origin');
+      expect(
+        inside((await label.boundingBox())!, (await cell.boundingBox())!),
+        await label.innerText(),
+      ).toBe(true);
     }
   });
 
