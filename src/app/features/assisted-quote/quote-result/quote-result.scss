@@ -9,6 +9,11 @@
     display: flex;
     flex-direction: column;
     gap: var(--sol-space-4);
+
+    // `display: flex` le gana al estilo del navegador para [hidden]: sin esto, el panel de la otra pestaña se seguía viendo.
+    &[hidden] {
+      display: none;
+    }
   }
 
   &__premium {

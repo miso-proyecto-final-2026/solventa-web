@@ -19,7 +19,7 @@
   }
 </p>
 
-<sol-card class="page__card">
+<sol-card class="page__card" [class.page__card--wide]="store.step() === 'result'">
   <h2 #stepHeading class="page__step" tabindex="-1">{{ stepTitle() }}</h2>
 
   @if (errorText(); as text) {

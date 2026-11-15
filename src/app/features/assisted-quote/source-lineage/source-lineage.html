@@ -28,8 +28,8 @@
     @case ('loaded') {
       @if (lineage(); as l) {
         <p class="lineage__profile">
-          <ng-container i18n="@@lineage.profile-date">Perfil enriquecido el</ng-container>
-          <strong>{{ l.createdAt | date: 'medium' }}</strong>
+          <ng-container i18n="@@lineage.profile-date">Perfil enriquecido el</ng-container
+          >&ngsp;<strong>{{ l.createdAt | date: 'medium' }}</strong>
         </p>
 
         <!-- Enfocable para que la tabla también se desplace con el teclado (WCAG 2.1.1). -->

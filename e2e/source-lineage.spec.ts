@@ -50,6 +50,11 @@ test.describe('Cotización asistida: linaje de fuentes (HU24)', () => {
     await expect(lineageTab).toHaveAttribute('aria-selected', 'true');
     const panel = page.getByRole('tabpanel', { name: 'Linaje de fuentes' });
     await expect(panel.getByRole('heading', { name: 'Linaje de fuentes' })).toBeVisible();
+    // El panel de la cotización se oculta: antes seguía visible encima del linaje.
+    await expect(page.locator('#panel-quote')).toBeHidden();
+    await expect(page.getByText(/Prima anual/)).toBeHidden();
+    // Entre el texto y la fecha hay un espacio («el 15/11/2026», no «el15/11/2026»).
+    await expect(panel.getByText(/^Perfil enriquecido el \S/)).toBeVisible();
     await expect(
       panel.getByRole('row', {
         name: /Open Finance\s+Financiero\s+Ingresos mensuales.*Consulta en vivo\s+Otorgado/,
@@ -72,6 +77,35 @@ test.describe('Cotización asistida: linaje de fuentes (HU24)', () => {
     await page.getByRole('tab', { name: 'Cotización' }).click();
     await expect(page.getByText(/Prima anual:\s*\$\s?157\.938/)).toBeVisible();
     await expectNoSeriousA11yViolations(page);
+  });
+
+  test('en una pantalla de escritorio (1366 px) la tabla cabe completa', async ({ page }) => {
+    await page.setViewportSize({ width: 1366, height: 900 });
+    await quoteFor(page, '1000000001');
+    await page.getByRole('tab', { name: 'Linaje de fuentes' }).click();
+    const panel = page.getByRole('tabpanel', { name: 'Linaje de fuentes' });
+    await expect(panel.getByRole('row', { name: /Open Finance/ })).toBeVisible();
+
+    // La tabla no necesita desplazarse: la columna del consentimiento se ve sin cortarse.
+    const region = panel.getByRole('region', { name: 'Tabla de fuentes del perfil' });
+    const { scrollWidth, clientWidth } = await region.evaluate((el) => ({
+      scrollWidth: el.scrollWidth,
+      clientWidth: el.clientWidth,
+    }));
+    expect(scrollWidth).toBeLessThanOrEqual(clientWidth);
+    const regionBox = (await region.boundingBox())!;
+    const consentBox = (await panel
+      .getByRole('columnheader', { name: 'Consentimiento' })
+      .boundingBox())!;
+    expect(consentBox.x + consentBox.width).toBeLessThanOrEqual(regionBox.x + regionBox.width + 1);
+
+    // Cada etiqueta de origen queda dentro de su celda.
+    const cells = panel.locator('td:has(.lineage__origin)');
+    for (let i = 0; i < (await cells.count()); i++) {
+      const cell = (await cells.nth(i).boundingBox())!;
+      const label = (await cells.nth(i).locator('.lineage__origin').boundingBox())!;
+      expect(label.x + label.width).toBeLessThanOrEqual(cell.x + cell.width + 1);
+    }
   });
 
   test('con el teclado se cambia de pestaña con las flechas', async ({ page }) => {

@@ -16,6 +16,12 @@
     max-width: 44rem;
     width: 100%;
     margin: 0 auto;
+
+    // HU24: el resultado trae la tabla del linaje (siete columnas). Con 44rem se cortaba la columna del consentimiento
+    // en una pantalla de escritorio; en pantallas angostas la tabla se sigue desplazando sola.
+    &--wide {
+      max-width: 64rem;
+    }
   }
 
   &__step {
