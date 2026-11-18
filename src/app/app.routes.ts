@@ -35,6 +35,13 @@ export const routes: Routes = [
       ),
   },
   {
+    // HU31: solo operadores concilian los desembolsos de indemnizaciones. La API valida el rol de nuevo (403 sin él).
+    path: 'reconciliation',
+    canMatch: [roleGuard('OPERADOR')],
+    loadChildren: () =>
+      import('@features/reconciliation/reconciliation.routes').then((m) => m.RECONCILIATION_ROUTES),
+  },
+  {
     // HU39: el asesor inicia y sigue las suscripciones de sus cotizaciones. La API valida rol y relación con el cliente.
     path: 'subscriptions',
     canMatch: [roleGuard('ASESOR')],
