@@ -35,6 +35,15 @@ export const routes: Routes = [
       ),
   },
   {
+    // HU16: el asesor decide los casos que la decisión automática derivó. La API valida el rol de nuevo.
+    path: 'assisted-review',
+    canMatch: [roleGuard('ASESOR')],
+    loadChildren: () =>
+      import('@features/assisted-review/assisted-review.routes').then(
+        (m) => m.ASSISTED_REVIEW_ROUTES,
+      ),
+  },
+  {
     // HU31: solo operadores concilian los desembolsos de indemnizaciones. La API valida el rol de nuevo (403 sin él).
     path: 'reconciliation',
     canMatch: [roleGuard('OPERADOR')],
