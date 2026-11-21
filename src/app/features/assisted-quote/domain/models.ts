@@ -104,3 +104,41 @@ export interface QuoteDraft {
 
 /** `datos.edad` → `edad`: el backend antepone `datos.` a los campos del seguro en sus errores. */
 export const toFieldName = (backendField: string): string => backendField.replace(/^datos\./, '');
+
+/** HU24: tipo de dato de una fuente del linaje (es lo que decide cuánto dura en caché). */
+export type LineageDataType = 'FINANCIAL' | 'SOCIOECONOMIC' | 'UNKNOWN';
+
+/** De dónde salió el dato de una fuente: consulta en vivo, caché, respaldo viejo o valor por defecto. */
+export type LineageOrigin = 'LIVE' | 'CACHE' | 'DEGRADED' | 'DEFAULT';
+
+export interface LineageEntry {
+  readonly source: string;
+  readonly dataType: LineageDataType;
+  /** Nombres de los campos que aportó la fuente, nunca sus valores. */
+  readonly fields: readonly string[];
+  /** Cuándo se consultó al proveedor (si salió de caché, la consulta original). */
+  readonly fetchedAt: Date | null;
+  readonly ttlSeconds: number | null;
+  readonly origin: LineageOrigin;
+  readonly consentGranted: boolean;
+}
+
+export interface LineageMissingField {
+  readonly field: string;
+  readonly reason: string;
+}
+
+export interface LineageConflict {
+  readonly field: string;
+  readonly winner: string;
+  readonly discarded: readonly string[];
+}
+
+/** Linaje del último perfil enriquecido del cliente en MS Perfilamiento (HU24). */
+export interface ProfileLineage {
+  readonly profileId: string;
+  readonly createdAt: Date;
+  readonly entries: readonly LineageEntry[];
+  readonly missing: readonly LineageMissingField[];
+  readonly conflicts: readonly LineageConflict[];
+}

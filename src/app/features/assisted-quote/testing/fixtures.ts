@@ -1,5 +1,5 @@
 import { money } from '@core/money/money';
-import { ClientIdentity, Product, ProfileSummary, Quote } from '../domain/models';
+import { ClientIdentity, Product, ProfileLineage, ProfileSummary, Quote } from '../domain/models';
 
 export const CLIENT: ClientIdentity = {
   id: '00000000-0000-4000-8000-0000000000a1',
@@ -81,4 +81,35 @@ export const QUOTE: Quote = {
     { concept: 'ajuste_riesgo', amount: money(-17_062) },
     { concept: 'recargo_degradado', amount: money(0) },
   ],
+};
+
+/** HU24: Open Finance en vivo y Open Data caído (valor por defecto), con sus campos ausentes. */
+export const LINEAGE: ProfileLineage = {
+  profileId: '6a1f0c4e-2b7d-4e9a-8c3f-1d2e3f4a5b6c',
+  createdAt: new Date('2026-11-14T15:00:00Z'),
+  entries: [
+    {
+      source: 'open_finance',
+      dataType: 'FINANCIAL',
+      fields: ['ingresos_mensuales_cop', 'ratio_endeudamiento', 'score_crediticio'],
+      fetchedAt: new Date('2026-11-14T15:00:00Z'),
+      ttlSeconds: 3600,
+      origin: 'LIVE',
+      consentGranted: true,
+    },
+    {
+      source: 'open_data',
+      dataType: 'SOCIOECONOMIC',
+      fields: [],
+      fetchedAt: null,
+      ttlSeconds: 86400,
+      origin: 'DEFAULT',
+      consentGranted: true,
+    },
+  ],
+  missing: [
+    { field: 'estrato', reason: 'sin_datos' },
+    { field: 'zona_riesgo', reason: 'sin_datos' },
+  ],
+  conflicts: [],
 };

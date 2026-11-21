@@ -63,3 +63,24 @@ export interface QuoteDto {
   perfil_fuente: string;
   sin_cuenta: boolean;
 }
+
+/** HU24: `GET /v1/asesor/clientes/{id}/linaje` (MS Cotización, fachada de MS Perfilamiento). */
+export interface LineageDto {
+  perfil_id: string;
+  cliente_id: string;
+  creado_en: string;
+  consentimiento_id: string | null;
+  fuentes: {
+    fuente: string;
+    tipo_dato: string;
+    campos: string[];
+    obtenido_en: string | null;
+    ttl_s: number | null;
+    hit_cache: boolean;
+    degradado: boolean;
+    por_defecto: boolean;
+    estado_consentimiento: string;
+  }[];
+  ausentes: Record<string, string>;
+  conflictos: { campo: string; ganadora: string; descartadas: string[] }[];
+}

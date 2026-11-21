@@ -20,7 +20,7 @@
         <source>Número de documento</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/client-lookup/client-lookup.html</context>
-          <context context-type="linenumber">17,20</context>
+          <context context-type="linenumber">17,21</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.lookup.searching" datatype="html">
@@ -387,6 +387,188 @@
           <context context-type="linenumber">113</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="lineage.source.open_finance" datatype="html">
+        <source>Open Finance</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
+          <context context-type="linenumber">120</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.source.open_data" datatype="html">
+        <source>Open Data</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
+          <context context-type="linenumber">121</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.field.ingresos_mensuales_cop" datatype="html">
+        <source>Ingresos mensuales</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
+          <context context-type="linenumber">126</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.field.ratio_endeudamiento" datatype="html">
+        <source>Nivel de endeudamiento</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
+          <context context-type="linenumber">127</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.field.antiguedad_cuentas_anios" datatype="html">
+        <source>Antigüedad de las cuentas</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
+          <context context-type="linenumber">128</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.field.obligaciones_mensuales_cop" datatype="html">
+        <source>Obligaciones mensuales</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
+          <context context-type="linenumber">129</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.field.score_crediticio" datatype="html">
+        <source>Puntaje crediticio</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
+          <context context-type="linenumber">130</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.field.productos_financieros" datatype="html">
+        <source>Productos financieros</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
+          <context context-type="linenumber">131</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.field.estrato" datatype="html">
+        <source>Estrato</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
+          <context context-type="linenumber">132</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.field.reportes_negativos" datatype="html">
+        <source>Reportes negativos</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
+          <context context-type="linenumber">133</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.field.zona_riesgo" datatype="html">
+        <source>Zona de riesgo</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
+          <context context-type="linenumber">134</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.missing.sin_datos" datatype="html">
+        <source>La fuente no estaba disponible</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
+          <context context-type="linenumber">138</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.missing.degradado" datatype="html">
+        <source>Solo había un dato viejo de respaldo</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
+          <context context-type="linenumber">139</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.missing.no_reportado" datatype="html">
+        <source>Ninguna fuente lo reportó</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
+          <context context-type="linenumber">140</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.missing.fuera_de_rango" datatype="html">
+        <source>El valor recibido estaba fuera de rango</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
+          <context context-type="linenumber">141</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.missing.invalido" datatype="html">
+        <source>El valor recibido no era válido</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
+          <context context-type="linenumber">142</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.missing.sin_consentimiento" datatype="html">
+        <source>Sin consentimiento del cliente</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
+          <context context-type="linenumber">143</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.data-type.financial" datatype="html">
+        <source>Financiero</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
+          <context context-type="linenumber">153</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.data-type.socioeconomic" datatype="html">
+        <source>Socioeconómico</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
+          <context context-type="linenumber">155</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.data-type.unknown" datatype="html">
+        <source>Sin clasificar</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
+          <context context-type="linenumber">157</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.origin.live" datatype="html">
+        <source>Consulta en vivo</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
+          <context context-type="linenumber">164</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.origin.cache" datatype="html">
+        <source>Desde caché</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
+          <context context-type="linenumber">166</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.origin.degraded" datatype="html">
+        <source>Degradado: respaldo viejo</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
+          <context context-type="linenumber">168</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.origin.default" datatype="html">
+        <source>Por defecto: fuente no disponible</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
+          <context context-type="linenumber">170</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.ttl.hours" datatype="html">
+        <source><x id="hours" equiv-text="hours"/> h</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
+          <context context-type="linenumber">179</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.ttl.minutes" datatype="html">
+        <source><x id="minutes" equiv-text="minutes"/> min</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
+          <context context-type="linenumber">182</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="assistedQuote.title" datatype="html">
         <source>Cotización asistida</source>
         <context-group purpose="location">
@@ -483,7 +665,7 @@
         <source> Valor anual </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/price-breakdown/price-breakdown.html</context>
-          <context context-type="linenumber">13,15</context>
+          <context context-type="linenumber">13,16</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.breakdown.empty" datatype="html">
@@ -525,7 +707,7 @@
         <source>Solicitar cotización</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/product-form/product-form.html</context>
-          <context context-type="linenumber">67,69</context>
+          <context context-type="linenumber">67,70</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.form.back" datatype="html">
@@ -584,88 +766,270 @@
           <context context-type="linenumber">114</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="assistedQuote.result.tabs" datatype="html">
+        <source>Detalle de la cotización</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/quote-result/quote-result.html</context>
+          <context context-type="linenumber">10,14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedQuote.result.tab.quote" datatype="html">
+        <source> Cotización </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/quote-result/quote-result.html</context>
+          <context context-type="linenumber">25,28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedQuote.result.tab.lineage" datatype="html">
+        <source> Linaje de fuentes </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/quote-result/quote-result.html</context>
+          <context context-type="linenumber">40,46</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="assistedQuote.result.monthly" datatype="html">
         <source>Prima mensual</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/quote-result/quote-result.html</context>
-          <context context-type="linenumber">8,10</context>
+          <context context-type="linenumber">57,59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.result.annual" datatype="html">
         <source>Prima anual</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/quote-result/quote-result.html</context>
-          <context context-type="linenumber">10,12</context>
+          <context context-type="linenumber">59,61</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.result.estimated" datatype="html">
         <source>Precio estimado: se calculó sin el perfil real del cliente y puede cambiar al comprar.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/quote-result/quote-result.html</context>
-          <context context-type="linenumber">20,23</context>
+          <context context-type="linenumber">69,72</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.result.without-account" datatype="html">
         <source>Cotización sin cuenta: para comprar, el cliente debe registrarse.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/quote-result/quote-result.html</context>
-          <context context-type="linenumber">29,34</context>
+          <context context-type="linenumber">78,83</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.result.coverages" datatype="html">
         <source>Coberturas y deducibles</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/quote-result/quote-result.html</context>
-          <context context-type="linenumber">35,37</context>
+          <context context-type="linenumber">84,86</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.result.coverages-caption" datatype="html">
         <source> Coberturas con su valor asegurado y su deducible </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/quote-result/quote-result.html</context>
-          <context context-type="linenumber">38,42</context>
+          <context context-type="linenumber">87,91</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.result.coverage" datatype="html">
         <source>Cobertura</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/quote-result/quote-result.html</context>
-          <context context-type="linenumber">42,43</context>
+          <context context-type="linenumber">91,92</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.result.insured" datatype="html">
         <source> Valor asegurado </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/quote-result/quote-result.html</context>
-          <context context-type="linenumber">44,46</context>
+          <context context-type="linenumber">93,95</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.result.deductible" datatype="html">
-        <source>Deducible</source>
+        <source> Deducible </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/quote-result/quote-result.html</context>
-          <context context-type="linenumber">46,49</context>
+          <context context-type="linenumber">96,99</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.result.valid-until" datatype="html">
         <source>Válida hasta</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/quote-result/quote-result.html</context>
-          <context context-type="linenumber">66,67</context>
+          <context context-type="linenumber">117,118</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.result.start-subscription" datatype="html">
         <source> Iniciar suscripción </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/quote-result/quote-result.html</context>
-          <context context-type="linenumber">79,82</context>
+          <context context-type="linenumber">143,146</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.result.new" datatype="html">
         <source>Nueva cotización</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/quote-result/quote-result.html</context>
-          <context context-type="linenumber">83,86</context>
+          <context context-type="linenumber">147,150</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.title" datatype="html">
+        <source>Linaje de fuentes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/source-lineage/source-lineage.html</context>
+          <context context-type="linenumber">2,3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.note" datatype="html">
+        <source> Fuentes del último perfil enriquecido del cliente. Puede no ser el perfil con el que se calculó este precio. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/source-lineage/source-lineage.html</context>
+          <context context-type="linenumber">4,8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.loading" datatype="html">
+        <source>Cargando el linaje…</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/source-lineage/source-lineage.html</context>
+          <context context-type="linenumber">10,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.empty" datatype="html">
+        <source>El cliente todavía no tiene un perfil enriquecido, así que no hay linaje para mostrar.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/source-lineage/source-lineage.html</context>
+          <context context-type="linenumber">15,17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.retry" datatype="html">
+        <source>Reintentar</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/source-lineage/source-lineage.html</context>
+          <context context-type="linenumber">24,25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.profile-date" datatype="html">
+        <source>Perfil enriquecido el</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/source-lineage/source-lineage.html</context>
+          <context context-type="linenumber">31,32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.scroll-region" datatype="html">
+        <source>Tabla de fuentes del perfil</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/source-lineage/source-lineage.html</context>
+          <context context-type="linenumber">40,41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.caption" datatype="html">
+        <source> Fuentes del perfil con el tipo de dato, los campos que aportaron, la fecha de consulta, la vigencia en caché, el origen y el consentimiento </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/source-lineage/source-lineage.html</context>
+          <context context-type="linenumber">45,47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.col.source" datatype="html">
+        <source>Fuente</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/source-lineage/source-lineage.html</context>
+          <context context-type="linenumber">50,51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.col.data-type" datatype="html">
+        <source>Tipo de dato</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/source-lineage/source-lineage.html</context>
+          <context context-type="linenumber">51,52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.col.fields" datatype="html">
+        <source>Campos que aportó</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/source-lineage/source-lineage.html</context>
+          <context context-type="linenumber">52,53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.col.fetched" datatype="html">
+        <source>Consultado</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/source-lineage/source-lineage.html</context>
+          <context context-type="linenumber">53,54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.col.ttl" datatype="html">
+        <source>Vigencia en caché</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/source-lineage/source-lineage.html</context>
+          <context context-type="linenumber">54,55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.col.origin" datatype="html">
+        <source>Origen</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/source-lineage/source-lineage.html</context>
+          <context context-type="linenumber">55,56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.col.consent" datatype="html">
+        <source>Consentimiento</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/source-lineage/source-lineage.html</context>
+          <context context-type="linenumber">56,58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.no-fields" datatype="html">
+        <source>Ninguno</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/source-lineage/source-lineage.html</context>
+          <context context-type="linenumber">68,70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.not-fetched" datatype="html">
+        <source>Sin consulta</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/source-lineage/source-lineage.html</context>
+          <context context-type="linenumber">75,77</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.consent.granted" datatype="html">
+        <source>Otorgado</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/source-lineage/source-lineage.html</context>
+          <context context-type="linenumber">86,87</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.consent.other" datatype="html">
+        <source>No vigente</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/source-lineage/source-lineage.html</context>
+          <context context-type="linenumber">88,89</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.missing.title" datatype="html">
+        <source>Datos que faltaron</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/source-lineage/source-lineage.html</context>
+          <context context-type="linenumber">99,100</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.conflicts.title" datatype="html">
+        <source> Datos que reportaron dos fuentes </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/source-lineage/source-lineage.html</context>
+          <context context-type="linenumber">114,116</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.conflicts.used" datatype="html">
+        <source>se usó</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/source-lineage/source-lineage.html</context>
+          <context context-type="linenumber">121,122</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineage.error.unavailable" datatype="html">
+        <source>El linaje no está disponible en este momento. Inténtalo de nuevo en unos minutos.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-quote/source-lineage/source-lineage.ts</context>
+          <context context-type="linenumber">78</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedReview.inbox.document-title" datatype="html">
@@ -1016,7 +1380,7 @@
         <source>Otro asesor ya decidió este caso.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
-          <context context-type="linenumber">37,40</context>
+          <context context-type="linenumber">37,39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedReview.detail.lost-race-by" datatype="html">
@@ -1037,21 +1401,21 @@
         <source>Caso rechazado. La compra se cerró sin cobro.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
-          <context context-type="linenumber">60,63</context>
+          <context context-type="linenumber">60,62</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedReview.done.adjusted" datatype="html">
         <source>Cobertura ajustada. Se cobrará la prima ajustada y la compra continúa.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
-          <context context-type="linenumber">65,68</context>
+          <context context-type="linenumber">65,67</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedReview.done.approved" datatype="html">
         <source>Caso aprobado. Se cobrará la prima y la compra continúa.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
-          <context context-type="linenumber">70,73</context>
+          <context context-type="linenumber">70,72</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedReview.card.summary" datatype="html">
@@ -1129,7 +1493,7 @@
         <source> Cerrar por cotización vencida </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
-          <context context-type="linenumber">139,142</context>
+          <context context-type="linenumber">139,141</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.html</context>
@@ -1274,7 +1638,7 @@
         <source>Reglas <x id="INTERPOLATION" equiv-text="{{ d.automatic.rulesVersion }}"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
-          <context context-type="linenumber">281,283</context>
+          <context context-type="linenumber">281,282</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedReview.card.decision" datatype="html">
@@ -1482,7 +1846,7 @@
 </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.html</context>
-          <context context-type="linenumber">3,7</context>
+          <context context-type="linenumber">3,6</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedReview.filter.state" datatype="html">
@@ -2271,7 +2635,7 @@
         <source>La decisión automática rechazó esta solicitud. No se hizo ningún cobro.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">108,111</context>
+          <context context-type="linenumber">108,110</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.detail.charge-rejected" datatype="html">
@@ -2327,7 +2691,7 @@
         <source> Ver certificado </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">188,191</context>
+          <context context-type="linenumber">188,190</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.certificate.download" datatype="html">
@@ -2348,7 +2712,7 @@
         <source>Reenviar correo al cliente</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">213,216</context>
+          <context context-type="linenumber">213,215</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.resend.done" datatype="html">
@@ -2362,7 +2726,7 @@
         <source>Certificado de cobertura</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">238,244</context>
+          <context context-type="linenumber">238,242</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.sign.title" datatype="html">
@@ -2411,14 +2775,14 @@
         <source>Si envías otro enlace, el anterior dejará de servir.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">285,288</context>
+          <context context-type="linenumber">285,287</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.sign.email-confirm-action" datatype="html">
         <source> Enviar otro enlace </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">293,296</context>
+          <context context-type="linenumber">293,295</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.sign.screen-title" datatype="html">
@@ -2601,7 +2965,7 @@
         <source>Tu sesión venció. Inicia sesión de nuevo para continuar: lo que ingresaste se conserva.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/auth/pages/login-page.html</context>
-          <context context-type="linenumber">8,10</context>
+          <context context-type="linenumber">8,11</context>
         </context-group>
       </trans-unit>
       <trans-unit id="auth.login.email.label" datatype="html">
