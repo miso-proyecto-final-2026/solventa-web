@@ -73,6 +73,40 @@ export const SEARCH_DTO = (documento: string, client: DemoClient) => ({
   },
 });
 
+/** HU24: linaje del último perfil enriquecido (forma exacta de `GET /v1/asesor/clientes/{id}/linaje`). */
+export const LINEAGE_DTO = (client: DemoClient) => ({
+  perfil_id: '6a1f0c4e-2b7d-4e9a-8c3f-1d2e3f4a5b6c',
+  cliente_id: client.id,
+  creado_en: '2026-11-14T15:00:00Z',
+  consentimiento_id: '9b2e7c1a-4d3f-4a8b-9c6d-0e1f2a3b4c5d',
+  fuentes: [
+    {
+      fuente: 'open_finance',
+      tipo_dato: 'FINANCIERO',
+      campos: ['ingresos_mensuales_cop', 'ratio_endeudamiento', 'score_crediticio'],
+      obtenido_en: '2026-11-14T15:00:00Z',
+      ttl_s: 3600,
+      hit_cache: false,
+      degradado: false,
+      por_defecto: false,
+      estado_consentimiento: 'OTORGADO',
+    },
+    {
+      fuente: 'open_data',
+      tipo_dato: 'SOCIOECONOMICO',
+      campos: [],
+      obtenido_en: null,
+      ttl_s: 86400,
+      hit_cache: false,
+      degradado: true,
+      por_defecto: true,
+      estado_consentimiento: 'OTORGADO',
+    },
+  ],
+  ausentes: { estrato: 'sin_datos', reportes_negativos: 'sin_datos', zona_riesgo: 'sin_datos' },
+  conflictos: [],
+});
+
 export const PROFILE_DTO = (client: DemoClient) => ({
   cliente_id: client.id,
   con_consentimiento: client.consentimiento === 'OTORGADO',

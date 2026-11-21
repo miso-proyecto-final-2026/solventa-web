@@ -5,11 +5,12 @@ import {
   ClientIdentity,
   DocumentId,
   Product,
+  ProfileLineage,
   ProfileSummary,
   Quote,
   QuoteRequest,
 } from '../domain/models';
-import { CATALOG, CLIENT, PROFILE, QUOTE } from './fixtures';
+import { CATALOG, CLIENT, LINEAGE, PROFILE, QUOTE } from './fixtures';
 
 /** Gateway de pruebas: responde al instante, registra las llamadas y puede fallar o quedarse esperando. */
 export class FakeAssistedQuoteGateway extends AssistedQuoteGateway {
@@ -17,9 +18,11 @@ export class FakeAssistedQuoteGateway extends AssistedQuoteGateway {
   profile: ProfileSummary = PROFILE;
   catalog: readonly Product[] = CATALOG;
   quote: Quote = QUOTE;
+  lineage: ProfileLineage | null = LINEAGE;
   /** Si se define, la llamada correspondiente falla con este error. */
   failFind: ApiError | null = null;
   failQuote: ApiError | null = null;
+  failLineage: ApiError | null = null;
   /** Si se define, `requestQuote` queda esperando hasta que se emita aquí (para probar el doble envío). */
   holdQuote: Subject<Quote> | null = null;
 
@@ -27,6 +30,7 @@ export class FakeAssistedQuoteGateway extends AssistedQuoteGateway {
   readonly quoted: QuoteRequest[] = [];
   profileCalls = 0;
   catalogCalls = 0;
+  readonly lineageRequests: string[] = [];
 
   findClient(document: DocumentId): Observable<ClientIdentity | null> {
     this.searched.push(document);
@@ -47,5 +51,10 @@ export class FakeAssistedQuoteGateway extends AssistedQuoteGateway {
     this.quoted.push(request);
     if (this.holdQuote) return this.holdQuote;
     return this.failQuote ? throwError(() => this.failQuote) : of(this.quote);
+  }
+
+  getLineage(clientId: string): Observable<ProfileLineage | null> {
+    this.lineageRequests.push(clientId);
+    return this.failLineage ? throwError(() => this.failLineage) : of(this.lineage);
   }
 }

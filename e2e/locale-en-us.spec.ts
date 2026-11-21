@@ -109,6 +109,36 @@ test('la venta asistida (HU-39) usa los textos y los formatos de en-US', async (
   await expectNoSeriousA11yViolations(page);
 });
 
+test('el linaje de fuentes (HU24) se ve en inglés', async ({ page, backend }) => {
+  await signIn(page);
+  await page.goto('/assisted-quote');
+  const controls = ui(page);
+
+  await controls.documentNumber.fill('1000000001');
+  await controls.search.click();
+  await controls.approve.click();
+  await fillLifeInsurance(page);
+  await controls.requestQuote.click();
+  await expect(controls.stepHeading).toHaveText('Result');
+
+  await page.getByRole('tab', { name: 'Source lineage' }).click();
+
+  const panel = page.getByRole('tabpanel', { name: 'Source lineage' });
+  await expect(
+    panel.getByRole('row', {
+      name: /Open Finance\s+Financial\s+Monthly income.*Live query\s+Granted/,
+    }),
+  ).toBeVisible();
+  await expect(
+    panel.getByRole('row', {
+      name: /Open Data\s+Socioeconomic\s+None\s+Not queried\s+24 h\s+Default/,
+    }),
+  ).toBeVisible();
+  await expect(panel.getByRole('heading', { name: 'Missing data' })).toBeVisible();
+  await expectNoSeriousA11yViolations(page);
+  expect(backend.lineageRequests).toHaveLength(1);
+});
+
 test('la revisión asistida (HU-16) usa los textos y los formatos de en-US', async ({ page }) => {
   await signIn(page);
   await page.goto('/assisted-review');

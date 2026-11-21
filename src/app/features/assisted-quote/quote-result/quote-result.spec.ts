@@ -3,8 +3,10 @@ import localeEsCo from '@angular/common/locales/es-CO';
 import { LOCALE_ID } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { AssistedQuoteGateway } from '../data-access/assisted-quote.gateway';
 import { Quote } from '../domain/models';
-import { QUOTE } from '../testing/fixtures';
+import { CLIENT, QUOTE } from '../testing/fixtures';
+import { FakeAssistedQuoteGateway } from '../testing/fake-assisted-quote.gateway';
 import { QuoteResult } from './quote-result';
 
 registerLocaleData(localeEsCo);
@@ -13,6 +15,7 @@ describe('QuoteResult', () => {
   let fixture: ComponentFixture<QuoteResult>;
   let el: HTMLElement;
   let newQuotes = 0;
+  let gateway: FakeAssistedQuoteGateway;
 
   const render = async (quote: Quote = QUOTE) => {
     fixture.componentRef.setInput('quote', quote);
@@ -24,7 +27,11 @@ describe('QuoteResult', () => {
   const create = async (locale: string) => {
     await TestBed.configureTestingModule({
       imports: [QuoteResult],
-      providers: [provideRouter([]), { provide: LOCALE_ID, useValue: locale }],
+      providers: [
+        provideRouter([]),
+        { provide: LOCALE_ID, useValue: locale },
+        { provide: AssistedQuoteGateway, useValue: gateway },
+      ],
     }).compileComponents();
     fixture = TestBed.createComponent(QuoteResult);
     fixture.componentInstance.newQuote.subscribe(() => newQuotes++);
@@ -33,6 +40,7 @@ describe('QuoteResult', () => {
 
   beforeEach(async () => {
     newQuotes = 0;
+    gateway = new FakeAssistedQuoteGateway();
     await create('es-CO');
   });
 
@@ -127,5 +135,92 @@ describe('QuoteResult', () => {
 
     expect(el.querySelector('a.sol-btn')).toBeNull();
     expect(text()).toContain('el cliente debe registrarse');
+  });
+
+  describe('lineage tab (HU24)', () => {
+    const tabs = () => Array.from(el.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+    const panel = (id: string) => el.querySelector<HTMLElement>(`#${id}`);
+    const renderFor = async (clientId: string | null, quote: Quote = QUOTE) => {
+      fixture.componentRef.setInput('clientId', clientId);
+      await render(quote);
+    };
+
+    it('should not show tabs for a person without an account', async () => {
+      await renderFor(null, { ...QUOTE, withoutAccount: true });
+
+      expect(tabs().length).toBe(0);
+      expect(panel('panel-quote')?.getAttribute('role')).toBeNull();
+      expect(gateway.lineageRequests).toEqual([]);
+    });
+
+    it('should open on the quote tab and not ask for the lineage until its tab is opened', async () => {
+      await renderFor(CLIENT.id);
+
+      expect(tabs().map((t) => t.textContent?.trim())).toEqual(['Cotización', 'Linaje de fuentes']);
+      expect(tabs()[0].getAttribute('aria-selected')).toBe('true');
+      expect(panel('panel-quote')?.getAttribute('role')).toBe('tabpanel');
+      expect(panel('panel-quote')?.hidden).toBeFalse();
+      expect(panel('panel-lineage')).toBeNull();
+      expect(gateway.lineageRequests).toEqual([]);
+    });
+
+    it('should show the lineage of the client when its tab is selected', async () => {
+      await renderFor(CLIENT.id);
+
+      tabs()[1].click();
+      await fixture.whenStable();
+
+      expect(tabs()[1].getAttribute('aria-selected')).toBe('true');
+      expect(panel('panel-quote')?.hidden).toBeTrue();
+      expect(panel('panel-lineage')?.hidden).toBeFalse();
+      expect(panel('panel-lineage')?.getAttribute('aria-labelledby')).toBe('tab-lineage');
+      expect(gateway.lineageRequests).toEqual([CLIENT.id]);
+      expect(text()).toContain('Open Finance');
+    });
+
+    it('should keep the lineage loaded when going back and forth between tabs', async () => {
+      await renderFor(CLIENT.id);
+
+      tabs()[1].click();
+      await fixture.whenStable();
+      tabs()[0].click();
+      await fixture.whenStable();
+      tabs()[1].click();
+      await fixture.whenStable();
+
+      expect(gateway.lineageRequests.length).toBe(1);
+    });
+
+    it('should move between tabs with the arrow, Home and End keys and keep one tab focusable', async () => {
+      await renderFor(CLIENT.id);
+      const key = async (k: string) => {
+        // La tecla llega a la pestaña activa, como en el navegador.
+        el.querySelector('[role="tab"][aria-selected="true"]')!.dispatchEvent(
+          new KeyboardEvent('keydown', { key: k }),
+        );
+        await fixture.whenStable();
+      };
+
+      await key('ArrowRight');
+      expect(tabs()[1].getAttribute('aria-selected')).toBe('true');
+      expect(document.activeElement).toBe(tabs()[1]);
+      expect(tabs().map((t) => t.tabIndex)).toEqual([-1, 0]);
+
+      await key('ArrowRight');
+      expect(tabs()[0].getAttribute('aria-selected')).toBe('true');
+      await key('End');
+      expect(tabs()[1].getAttribute('aria-selected')).toBe('true');
+      await key('Home');
+      expect(tabs()[0].getAttribute('aria-selected')).toBe('true');
+    });
+
+    it('should keep the actions visible on both tabs', async () => {
+      await renderFor(CLIENT.id);
+
+      tabs()[1].click();
+      await fixture.whenStable();
+
+      expect(el.querySelector('a.sol-btn')?.textContent).toContain('Iniciar suscripción');
+    });
   });
 });

@@ -5,7 +5,10 @@ import {
   DOCUMENT_TYPES,
   DocumentType,
   FieldKind,
+  LineageDataType,
+  LineageOrigin,
   Product,
+  ProfileLineage,
   ProfileSource,
   ProfileSummary,
   Quote,
@@ -15,6 +18,7 @@ import {
 import {
   CatalogDto,
   ClientSearchDto,
+  LineageDto,
   ProfileDto,
   QuoteDto,
   QuoteRequestDto,
@@ -107,5 +111,42 @@ export function toQuote(dto: QuoteDto): Quote {
     profileSource: SOURCE[dto.perfil_fuente] ?? 'DEFAULT',
     withoutAccount: dto.sin_cuenta,
     components: (dto.componentes ?? []).map((c) => ({ concept: c.concepto, amount: at(c.monto) })),
+  };
+}
+
+const DATA_TYPE: Record<string, LineageDataType> = {
+  FINANCIERO: 'FINANCIAL',
+  SOCIOECONOMICO: 'SOCIOECONOMIC',
+};
+
+/** El valor por defecto manda sobre la caché; un respaldo viejo (caché + degradado) es «degradado». */
+function originOf(f: LineageDto['fuentes'][number]): LineageOrigin {
+  if (f.por_defecto) return 'DEFAULT';
+  if (f.degradado) return 'DEGRADED';
+  if (f.hit_cache) return 'CACHE';
+  return 'LIVE';
+}
+
+export function toLineage(dto: LineageDto): ProfileLineage {
+  return {
+    profileId: dto.perfil_id,
+    createdAt: new Date(dto.creado_en),
+    entries: dto.fuentes.map((f) => ({
+      source: f.fuente,
+      dataType: DATA_TYPE[f.tipo_dato] ?? 'UNKNOWN',
+      fields: f.campos,
+      fetchedAt: f.obtenido_en ? new Date(f.obtenido_en) : null,
+      ttlSeconds: f.ttl_s,
+      origin: originOf(f),
+      consentGranted: f.estado_consentimiento === 'OTORGADO',
+    })),
+    missing: Object.entries(dto.ausentes)
+      .map(([field, reason]) => ({ field, reason }))
+      .sort((a, b) => a.field.localeCompare(b.field)),
+    conflicts: dto.conflictos.map((c) => ({
+      field: c.campo,
+      winner: c.ganadora,
+      discarded: c.descartadas,
+    })),
   };
 }

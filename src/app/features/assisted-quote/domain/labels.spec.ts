@@ -3,11 +3,17 @@ import {
   componentLabel,
   consentEffect,
   coverageLabel,
+  dataTypeLabel,
   errorMessage,
   fieldLabel,
+  lineageSourceLabel,
+  missingReasonLabel,
   optionLabel,
+  originLabel,
   productLabel,
+  profileFieldLabel,
   signalLabel,
+  ttlLabel,
 } from './labels';
 
 describe('assisted quote labels', () => {
@@ -41,5 +47,21 @@ describe('assisted quote labels', () => {
     expect(consentEffect('REAL')).toContain('perfil real');
     expect(consentEffect('DEFAULT')).toContain('estimado');
     expect(consentEffect('DEGRADED')).toContain('recargo');
+  });
+
+  it('should translate the lineage codes and show unknown ones as they come (HU24)', () => {
+    expect(lineageSourceLabel('open_finance')).toBe('Open Finance');
+    expect(lineageSourceLabel('fuente_nueva')).toBe('fuente_nueva');
+    expect(profileFieldLabel('score_crediticio')).toBe('Puntaje crediticio');
+    expect(missingReasonLabel('sin_datos')).toBe('La fuente no estaba disponible');
+    expect(dataTypeLabel('SOCIOECONOMIC')).toBe('Socioeconómico');
+    expect(originLabel('DEFAULT')).toBe('Por defecto: fuente no disponible');
+  });
+
+  it('should show the cache validity in hours when exact and in minutes otherwise', () => {
+    expect(ttlLabel(3600)).toBe('1 h');
+    expect(ttlLabel(86400)).toBe('24 h');
+    expect(ttlLabel(900)).toBe('15 min');
+    expect(ttlLabel(null)).toBe('—');
   });
 });
