@@ -8,21 +8,25 @@ describe('ClientProfile', () => {
   let el: HTMLElement;
   let approved = 0;
   let searchedAgain = 0;
+  let offers = 0;
 
   const render = async (inputs: Record<string, unknown>) => {
     for (const [name, value] of Object.entries(inputs)) fixture.componentRef.setInput(name, value);
     await fixture.whenStable();
   };
   const text = () => el.textContent?.replace(/\s+/g, ' ') ?? '';
-  const buttons = () => Array.from(el.querySelectorAll<HTMLButtonElement>('button'));
+  const buttons = () =>
+    Array.from(el.querySelectorAll<HTMLButtonElement>('.profile__actions button'));
 
   beforeEach(async () => {
     approved = 0;
     searchedAgain = 0;
+    offers = 0;
     await TestBed.configureTestingModule({ imports: [ClientProfile] }).compileComponents();
     fixture = TestBed.createComponent(ClientProfile);
     fixture.componentInstance.approve.subscribe(() => approved++);
     fixture.componentInstance.searchAnother.subscribe(() => searchedAgain++);
+    fixture.componentInstance.offerMortgage.subscribe(() => offers++);
     el = fixture.nativeElement;
   });
 
@@ -102,5 +106,43 @@ describe('ClientProfile', () => {
 
     expect(buttons()[0].disabled).toBeTrue();
     expect(buttons()[0].getAttribute('aria-busy')).toBe('true');
+  });
+
+  describe('mortgage life offer entry (HU26)', () => {
+    const offerButton = () =>
+      el.querySelector<HTMLButtonElement>('.profile__offer button') ?? undefined;
+
+    it('should let the advisor open the offer for a client with consent', async () => {
+      await render({ client: CLIENT, profile: PROFILE });
+
+      offerButton()!.click();
+
+      expect(offers).toBe(1);
+    });
+
+    it('should explain why there is no offer without consent, and not offer the button', async () => {
+      const revoked = { ...CLIENT, consent: { state: 'REVOKED' as const, grantedAt: null } };
+      await render({
+        client: revoked,
+        profile: { ...PROFILE, hasConsent: false, source: 'DEFAULT' },
+      });
+
+      expect(offerButton()).toBeUndefined();
+      expect(text()).toContain(
+        'No se puede generar la oferta: el cliente no ha otorgado el consentimiento',
+      );
+    });
+
+    it('should not offer it to a prospect without an account', async () => {
+      await render({ client: null, searched: { type: 'CC', number: '1000000099' } });
+
+      expect(text()).not.toContain('vida hipotecario');
+    });
+
+    it('should disable the button while another call is running', async () => {
+      await render({ client: CLIENT, profile: PROFILE, busy: true });
+
+      expect(offerButton()!.disabled).toBeTrue();
+    });
   });
 });

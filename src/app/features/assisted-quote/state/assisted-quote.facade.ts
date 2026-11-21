@@ -57,6 +57,44 @@ export class AssistedQuoteFacade {
     );
   }
 
+  /**
+   * HU26: abre la oferta de vida hipotecario. Cotización enriquece el perfil antes de calcular
+   * (criterio 1): el asesor no tiene que pedirlo.
+   */
+  openMortgageOffer(): void {
+    const client = this.store.client();
+    if (!client) return;
+    this.store.offer.set(null);
+    this.store.offerSum.set(null);
+    this.store.error.set(null);
+    this.store.step.set('offer');
+    this.requestOffer(client.id, null, true);
+  }
+
+  /** HU26: recalcula con otra suma. El perfil ya está enriquecido: no se vuelve a consultar las fuentes. */
+  recalculateOffer(insuredSum: number): void {
+    const client = this.store.client();
+    if (!client) return;
+    this.requestOffer(client.id, insuredSum, false);
+  }
+
+  /** HU26: reintenta lo último que falló. Sin oferta todavía (o sin perfil), vuelve a enriquecer. */
+  retryOffer(): void {
+    const client = this.store.client();
+    if (!client) return;
+    const noProfile = this.store.error()?.code === 'PERFIL_NO_ENCONTRADO';
+    this.requestOffer(client.id, this.store.offerSum(), this.store.offer() === null || noProfile);
+  }
+
+  private requestOffer(clientId: string, insuredSum: number | null, enrich: boolean): void {
+    this.store.offerSum.set(insuredSum);
+    this.run(() =>
+      this.gateway
+        .requestMortgageOffer({ clientId, insuredSum, enrich })
+        .pipe(tap((offer) => this.store.offer.set(offer))),
+    );
+  }
+
   goTo(step: Step): void {
     this.store.error.set(null);
     this.store.step.set(step);

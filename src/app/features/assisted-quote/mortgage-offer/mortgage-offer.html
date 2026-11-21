@@ -1,0 +1,285 @@
+@let o = offer();
+@let p = problem();
+
+@if (!o && busy()) {
+  <p class="offer__muted" i18n="@@mortgageOffer.loading">
+    Generando la oferta: estamos actualizando el perfil del cliente con sus fuentes de datos…
+  </p>
+}
+
+@if (p === 'no-consent') {
+  <sol-alert kind="warning">
+    <ng-container i18n="@@mortgageOffer.no-consent"
+      >El cliente no ha otorgado el consentimiento de datos: sin él no se puede generar la oferta de
+      vida hipotecario, porque el precio se calcula con su perfil financiero.</ng-container
+    >
+  </sol-alert>
+} @else if (p === 'unavailable') {
+  <sol-alert kind="error">
+    <ng-container i18n="@@mortgageOffer.unavailable"
+      >No pudimos generar la oferta: el servicio de perfilamiento o una fuente de datos no
+      respondió. Inténtalo de nuevo en unos segundos.</ng-container
+    >
+  </sol-alert>
+  <div class="sol-actions">
+    <button
+      type="button"
+      class="sol-btn sol-btn--primary"
+      [disabled]="busy()"
+      [attr.aria-busy]="busy() ? 'true' : null"
+      (click)="retry.emit()"
+      i18n="@@mortgageOffer.retry"
+    >
+      Reintentar
+    </button>
+  </div>
+} @else if (p === 'other') {
+  <sol-alert kind="error">{{ otherMessage() }}</sol-alert>
+}
+
+@if (o) {
+  <div
+    class="tabs"
+    role="tablist"
+    i18n-aria-label="@@mortgageOffer.tabs"
+    aria-label="Detalle de la oferta"
+  >
+    <button
+      #tabButton
+      type="button"
+      role="tab"
+      id="tab-offer"
+      class="tabs__tab"
+      aria-controls="panel-offer"
+      [attr.aria-selected]="tab() === 'offer'"
+      [tabIndex]="tab() === 'offer' ? 0 : -1"
+      (click)="select('offer')"
+      (keydown)="onTabKeydown($event)"
+      i18n="@@mortgageOffer.tab.offer"
+    >
+      Oferta
+    </button>
+    <button
+      #tabButton
+      type="button"
+      role="tab"
+      id="tab-offer-lineage"
+      class="tabs__tab"
+      aria-controls="panel-offer-lineage"
+      [attr.aria-selected]="tab() === 'lineage'"
+      [tabIndex]="tab() === 'lineage' ? 0 : -1"
+      (click)="select('lineage')"
+      (keydown)="onTabKeydown($event)"
+      i18n="@@mortgageOffer.tab.lineage"
+    >
+      Linaje de fuentes
+    </button>
+  </div>
+}
+
+<!-- Sin oferta, el formulario de la suma solo aparece si Perfilamiento rechazó la suma por defecto. -->
+@if (o || sumServerError()) {
+  <div
+    id="panel-offer"
+    class="offer__panel"
+    [attr.role]="o ? 'tabpanel' : null"
+    [attr.aria-labelledby]="o ? 'tab-offer' : null"
+    [hidden]="tab() !== 'offer'"
+  >
+    @if (o) {
+      <div class="offer__premium">
+        <p class="offer__product">{{ productLabel('vida_hipotecario') }}</p>
+        <p class="offer__amount">
+          {{
+            o.monthlyPremium.amount | currency: o.monthlyPremium.currency : 'symbol-narrow' : digits
+          }}
+        </p>
+        <p class="offer__muted" i18n="@@mortgageOffer.monthly">Prima mensual</p>
+        <p>
+          <ng-container i18n="@@mortgageOffer.annual">Prima anual</ng-container>:
+          <strong>{{
+            o.annualPremium.amount | currency: o.annualPremium.currency : 'symbol-narrow' : digits
+          }}</strong>
+        </p>
+      </div>
+
+      <dl class="offer__facts">
+        <div>
+          <dt i18n="@@mortgageOffer.insured-sum">Suma asegurada</dt>
+          <dd>
+            {{ o.insuredSum.amount | currency: o.insuredSum.currency : 'symbol-narrow' : digits }}
+          </dd>
+        </div>
+        <div>
+          <dt i18n="@@mortgageOffer.life-stage">Etapa de vida</dt>
+          <dd>{{ stageLabel(o.lifeStage) }}</dd>
+        </div>
+        <div>
+          <dt i18n="@@mortgageOffer.valid-until">Válida hasta</dt>
+          <dd>{{ o.validUntil | date: 'longDate' }}</dd>
+        </div>
+      </dl>
+
+      @if (o.degraded) {
+        <sol-alert kind="warning">
+          <ng-container i18n="@@mortgageOffer.degraded"
+            >Una fuente de datos no respondió y el perfil usó datos de respaldo: la prima lleva un
+            recargo conservador.</ng-container
+          >
+        </sol-alert>
+      }
+    }
+
+    <form class="offer__sum" novalidate (submit)="$event.preventDefault(); submitSum()">
+      <sol-form-field
+        fieldId="offer-sum"
+        [label]="sumLabel"
+        [hint]="sumError() ? null : sumHint"
+        [error]="sumError()"
+      >
+        <div class="offer__sum-row">
+          <input
+            id="offer-sum"
+            class="sol-input"
+            type="text"
+            inputmode="numeric"
+            autocomplete="off"
+            [formControl]="sum"
+            [attr.aria-invalid]="sumError() ? 'true' : null"
+            [attr.aria-describedby]="describedBy('offer-sum', !sumError(), !!sumError())"
+          />
+          <button
+            type="submit"
+            class="sol-btn sol-btn--outline"
+            [disabled]="busy()"
+            [attr.aria-busy]="busy() ? 'true' : null"
+            i18n="@@mortgageOffer.sum.recalculate"
+          >
+            Recalcular
+          </button>
+        </div>
+      </sol-form-field>
+    </form>
+
+    @if (o) {
+      <section aria-labelledby="offer-coverages-title">
+        <h3 id="offer-coverages-title" i18n="@@mortgageOffer.coverages">Coberturas y deducibles</h3>
+        <div class="offer__scroll">
+          <table class="offer__table">
+            <caption class="sol-visually-hidden" i18n="@@mortgageOffer.coverages-caption">
+              Coberturas con su valor asegurado y su deducible
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col" i18n="@@mortgageOffer.coverage">Cobertura</th>
+                <th scope="col" class="offer__num" i18n="@@mortgageOffer.insured">
+                  Valor asegurado
+                </th>
+                <th scope="col" class="offer__num" i18n="@@mortgageOffer.deductible">Deducible</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (c of o.coverages; track c.type) {
+                <tr>
+                  <th scope="row">{{ coverageLabel(c.type) }}</th>
+                  <td class="offer__num">
+                    {{ c.amount.amount | currency: c.amount.currency : 'symbol-narrow' : digits }}
+                  </td>
+                  <td class="offer__num">
+                    {{
+                      c.deductible.amount
+                        | currency: c.deductible.currency : 'symbol-narrow' : digits
+                    }}
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section aria-labelledby="offer-steps-title">
+        <h3 id="offer-steps-title" i18n="@@mortgageOffer.steps.title">Cómo se calculó la prima</h3>
+        <div class="offer__scroll">
+          <table class="offer__table">
+            <caption class="sol-visually-hidden" i18n="@@mortgageOffer.steps.caption">
+              Pasos del cálculo de la prima anual, con su factor y su efecto
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col" i18n="@@mortgageOffer.steps.concept">Concepto</th>
+                <th scope="col" class="offer__num" i18n="@@mortgageOffer.steps.factor">Factor</th>
+                <th scope="col" class="offer__num" i18n="@@mortgageOffer.steps.adjustment">
+                  Ajuste
+                </th>
+                <th scope="col" class="offer__num" i18n="@@mortgageOffer.steps.accumulated">
+                  Prima acumulada
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (s of o.steps; track $index) {
+                <tr>
+                  <th scope="row">
+                    {{ stepLabel(s) }}
+                    @if (s.missingData) {
+                      <span class="offer__muted" i18n="@@mortgageOffer.steps.missing"
+                        >(sin dato)</span
+                      >
+                    }
+                  </th>
+                  <td class="offer__num">
+                    {{ s.factor === null ? '—' : (s.factor | number: '1.2-2') }}
+                  </td>
+                  <td class="offer__num">
+                    {{
+                      s.adjustment.amount
+                        | currency: s.adjustment.currency : 'symbol-narrow' : digits
+                    }}
+                  </td>
+                  <td class="offer__num">
+                    {{
+                      s.accumulated.amount
+                        | currency: s.accumulated.currency : 'symbol-narrow' : digits
+                    }}
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+        <p class="offer__muted" i18n="@@mortgageOffer.steps.note">
+          Los factores salen del perfil del cliente; sus datos financieros no se muestran.
+        </p>
+      </section>
+    }
+  </div>
+}
+
+@if (o && lineageOpened()) {
+  <div
+    id="panel-offer-lineage"
+    class="offer__panel"
+    role="tabpanel"
+    aria-labelledby="tab-offer-lineage"
+    [hidden]="tab() !== 'lineage'"
+  >
+    <sol-source-lineage [clientId]="clientId()" />
+  </div>
+}
+
+<div class="sol-actions">
+  <!-- Mientras se recalcula, la cotización anterior ya no es la que se ve: no se ofrece aceptarla. -->
+  @if (o && !busy()) {
+    <a
+      class="sol-btn sol-btn--primary"
+      [routerLink]="['/subscriptions/new', o.quoteId]"
+      i18n="@@mortgageOffer.accept"
+    >
+      El cliente acepta: iniciar suscripción
+    </a>
+  }
+  <button type="button" class="sol-btn sol-btn--outline" (click)="back.emit()">
+    <ng-container i18n="@@mortgageOffer.back">Volver al perfil</ng-container>
+  </button>
+</div>

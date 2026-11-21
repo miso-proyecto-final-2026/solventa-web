@@ -19,7 +19,10 @@
   }
 </p>
 
-<sol-card class="page__card" [class.page__card--wide]="store.step() === 'result'">
+<sol-card
+  class="page__card"
+  [class.page__card--wide]="store.step() === 'result' || store.step() === 'offer'"
+>
   <h2 #stepHeading class="page__step" tabindex="-1">{{ stepTitle() }}</h2>
 
   @if (errorText(); as text) {
@@ -42,6 +45,7 @@
         [searched]="store.searched()"
         [busy]="store.busy()"
         (approve)="facade.approve()"
+        (offerMortgage)="facade.openMortgageOffer()"
         (searchAnother)="facade.goTo('lookup')"
       />
     }
@@ -62,6 +66,19 @@
             >No hay productos disponibles para cotizar en este momento.</ng-container
           >
         </sol-alert>
+      }
+    }
+    @case ('offer') {
+      @if (store.client(); as client) {
+        <sol-mortgage-offer
+          [clientId]="client.id"
+          [offer]="store.offer()"
+          [busy]="store.busy()"
+          [error]="store.error()"
+          (recalculate)="facade.recalculateOffer($event)"
+          (retry)="facade.retryOffer()"
+          (back)="facade.goTo('profile')"
+        />
       }
     }
     @case ('result') {

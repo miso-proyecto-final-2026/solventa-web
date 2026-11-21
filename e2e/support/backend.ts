@@ -6,6 +6,7 @@ import {
   CATALOG_DTO,
   CLIENTS,
   LINEAGE_DTO,
+  mortgageOfferDto,
   PROFILE_DTO,
   SEARCH_DTO,
   SESSION_DTO,
@@ -59,6 +60,11 @@ export const VALIDATION_ERROR: Failure = {
   },
 };
 
+/** Cuerpo de error de Cotización. */
+function errorBody(code: string, details: { campo: string; motivo: string }[] = []) {
+  return { error: { code, message: code, details, trace_id: 't' } };
+}
+
 function fulfillFailure(route: Route, failure: Failure): Promise<void> {
   return failure === 'network'
     ? route.abort()
@@ -101,6 +107,9 @@ export class Backend {
   /** HU24: clientes cuyo linaje se pidió y el próximo fallo del linaje. */
   readonly lineageRequests: string[] = [];
   private nextLineageFailure: Failure | null = null;
+  /** HU26: solicitudes de la oferta (el cuerpo tal como salió) y el próximo fallo. */
+  readonly offerRequests: { clientId: string; body: Record<string, unknown> }[] = [];
+  private nextOfferFailure: Failure | null = null;
 
   constructor(private readonly page: Page) {}
 
@@ -117,6 +126,11 @@ export class Backend {
   /** HU24: la siguiente consulta del linaje falla así. */
   failNextLineage(failure: Failure): void {
     this.nextLineageFailure = failure;
+  }
+
+  /** HU26: la siguiente solicitud de la oferta de vida hipotecario falla así. */
+  failNextOffer(failure: Failure): void {
+    this.nextOfferFailure = failure;
   }
 
   /** La siguiente consulta de la bandeja o del detalle falla así. */
@@ -340,6 +354,36 @@ export class Backend {
             });
       });
     });
+
+    // HU26: sin consentimiento, 409; la suma fuera de las reglas, 422 con el motivo de Perfilamiento.
+    await this.page.route(
+      new RegExp(`${COTIZACION}/asesor/clientes/([^/]+)/ofertas-vida-hipotecario$`),
+      (route) => {
+        const failure = this.nextOfferFailure;
+        this.nextOfferFailure = null;
+        const clientId = /clientes\/([^/]+)\/ofertas/.exec(route.request().url())?.[1] ?? '';
+        const body = route.request().postDataJSON() as Record<string, unknown>;
+        this.offerRequests.push({ clientId, body });
+        return this.respond(route, failure, () => {
+          const client = Object.values(CLIENTS).find((c) => c.id === clientId);
+          if (client?.consentimiento !== 'OTORGADO') {
+            return route.fulfill({ status: 409, json: errorBody('CONSENTIMIENTO_REQUERIDO') });
+          }
+          const sum =
+            typeof body['suma_asegurada'] === 'number' ? body['suma_asegurada'] : 100_000_000;
+          if (sum < 20_000_000 || sum > 800_000_000) {
+            return route.fulfill({
+              status: 422,
+              json: errorBody('VALIDATION_ERROR', [
+                { campo: 'suma_asegurada', motivo: 'debe estar entre 20,000,000 y 800,000,000' },
+              ]),
+            });
+          }
+          const quoteId = `cot-vh-e2e-${this.offerRequests.length}`;
+          return route.fulfill({ status: 201, json: mortgageOfferDto(client, sum, quoteId) });
+        });
+      },
+    );
 
     await this.page.route(new RegExp(`${COTIZACION}/productos$`), (route) =>
       route.fulfill({ json: CATALOG_DTO }),

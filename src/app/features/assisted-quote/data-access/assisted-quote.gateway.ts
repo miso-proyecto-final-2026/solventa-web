@@ -2,6 +2,8 @@ import { Observable } from 'rxjs';
 import {
   ClientIdentity,
   DocumentId,
+  MortgageOffer,
+  MortgageOfferRequest,
   Product,
   ProfileLineage,
   ProfileSummary,
@@ -20,4 +22,9 @@ export abstract class AssistedQuoteGateway {
   abstract requestQuote(request: QuoteRequest): Observable<Quote>;
   /** HU24: linaje del último perfil enriquecido; `null` si el cliente no tiene perfil enriquecido. */
   abstract getLineage(clientId: string): Observable<ProfileLineage | null>;
+  /**
+   * HU26: genera la oferta de vida hipotecario del cliente y la registra como cotización. Sin
+   * consentimiento falla con el código `CONSENTIMIENTO_REQUERIDO`.
+   */
+  abstract requestMortgageOffer(request: MortgageOfferRequest): Observable<MortgageOffer>;
 }
