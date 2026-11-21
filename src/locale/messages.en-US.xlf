@@ -2875,6 +2875,194 @@
         <source>Revisión asistida</source>
         <target>Assisted review</target>
       </trans-unit>
+      <trans-unit id="mortgageOffer.entry.title" datatype="html">
+        <source> Seguro de vida hipotecario </source>
+        <target> Mortgage life insurance </target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.entry.lead" datatype="html">
+        <source> Genera la oferta con el precio individualizado del cliente para presentarla en esta misma venta. </source>
+        <target> Generate the offer with the client's individual price to present it in this same sale. </target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.entry.button" datatype="html">
+        <source> Ofrecer vida hipotecario </source>
+        <target> Offer mortgage life insurance </target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.entry.no-consent" datatype="html">
+        <source> No se puede generar la oferta: el cliente no ha otorgado el consentimiento de datos, y el precio se calcula con su perfil financiero. </source>
+        <target> The offer can't be generated: the client hasn't granted data consent, and the price is based on their financial profile. </target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.coverage.incapacidad_total_permanente" datatype="html">
+        <source>Incapacidad total y permanente</source>
+        <target>Total and permanent disability</target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.stage.inicial" datatype="html">
+        <source>Inicial</source>
+        <target>Early</target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.stage.desarrollo" datatype="html">
+        <source>Desarrollo</source>
+        <target>Growth</target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.stage.consolidacion" datatype="html">
+        <source>Consolidación</source>
+        <target>Consolidation</target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.stage.madurez" datatype="html">
+        <source>Madurez</source>
+        <target>Maturity</target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.stage.sin_dato" datatype="html">
+        <source>Sin dato</source>
+        <target>No data</target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.step.base" datatype="html">
+        <source>Prima base sobre la suma asegurada</source>
+        <target>Base premium on the sum insured</target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.step.life-stage" datatype="html">
+        <source>Etapa de vida: <x id="stage" equiv-text="stage"/></source>
+        <target>Life stage: <x id="stage" equiv-text="stage"/></target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.step.degraded" datatype="html">
+        <source>Recargo por datos de respaldo</source>
+        <target>Surcharge for backup data</target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.loading" datatype="html">
+        <source> Generando la oferta: estamos actualizando el perfil del cliente con sus fuentes de datos… </source>
+        <target> Generating the offer: we're updating the client's profile from their data sources… </target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.no-consent" datatype="html">
+        <source>El cliente no ha otorgado el consentimiento de datos: sin él no se puede generar la oferta de vida hipotecario, porque el precio se calcula con su perfil financiero.</source>
+        <target>The client hasn't granted data consent: without it the mortgage life insurance offer can't be generated, because the price is based on their financial profile.</target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.unavailable" datatype="html">
+        <source>No pudimos generar la oferta: el servicio de perfilamiento o una fuente de datos no respondió. Inténtalo de nuevo en unos segundos.</source>
+        <target>We couldn't generate the offer: the profiling service or a data source didn't respond. Try again in a few seconds.</target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.retry" datatype="html">
+        <source> Reintentar </source>
+        <target> Try again </target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.tabs" datatype="html">
+        <source>Detalle de la oferta</source>
+        <target>Offer details</target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.tab.offer" datatype="html">
+        <source> Oferta </source>
+        <target> Offer </target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.tab.lineage" datatype="html">
+        <source> Linaje de fuentes </source>
+        <target> Source lineage </target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.monthly" datatype="html">
+        <source>Prima mensual</source>
+        <target>Monthly premium</target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.annual" datatype="html">
+        <source>Prima anual</source>
+        <target>Annual premium</target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.insured-sum" datatype="html">
+        <source>Suma asegurada</source>
+        <target>Sum insured</target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.life-stage" datatype="html">
+        <source>Etapa de vida</source>
+        <target>Life stage</target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.valid-until" datatype="html">
+        <source>Válida hasta</source>
+        <target>Valid until</target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.degraded" datatype="html">
+        <source>Una fuente de datos no respondió y el perfil usó datos de respaldo: la prima lleva un recargo conservador.</source>
+        <target>A data source didn't respond and the profile used backup data: the premium includes a conservative surcharge.</target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.sum.recalculate" datatype="html">
+        <source> Recalcular </source>
+        <target> Recalculate </target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.coverages" datatype="html">
+        <source>Coberturas y deducibles</source>
+        <target>Coverages and deductibles</target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.coverages-caption" datatype="html">
+        <source> Coberturas con su valor asegurado y su deducible </source>
+        <target> Coverages with their insured value and deductible </target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.coverage" datatype="html">
+        <source>Cobertura</source>
+        <target>Coverage</target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.insured" datatype="html">
+        <source>Valor asegurado</source>
+        <target>Insured value</target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.deductible" datatype="html">
+        <source>Deducible</source>
+        <target>Deductible</target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.steps.title" datatype="html">
+        <source>Cómo se calculó la prima</source>
+        <target>How the premium was calculated</target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.steps.caption" datatype="html">
+        <source> Pasos del cálculo de la prima anual, con su factor y su efecto </source>
+        <target> Steps of the annual premium calculation, with their factor and effect </target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.steps.concept" datatype="html">
+        <source>Concepto</source>
+        <target>Item</target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.steps.factor" datatype="html">
+        <source>Factor</source>
+        <target>Factor</target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.steps.adjustment" datatype="html">
+        <source> Ajuste </source>
+        <target> Adjustment </target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.steps.accumulated" datatype="html">
+        <source> Prima acumulada </source>
+        <target> Running premium </target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.steps.missing" datatype="html">
+        <source>(sin dato)</source>
+        <target>(no data)</target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.steps.note" datatype="html">
+        <source> Los factores salen del perfil del cliente; sus datos financieros no se muestran. </source>
+        <target> The factors come from the client's profile; their financial data isn't shown. </target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.accept" datatype="html">
+        <source> El cliente acepta: iniciar suscripción </source>
+        <target> Client accepts: start subscription </target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.back" datatype="html">
+        <source>Volver al perfil</source>
+        <target>Back to profile</target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.sum.invalid" datatype="html">
+        <source>Escribe la suma en pesos, sin puntos ni decimales.</source>
+        <target>Enter the amount in pesos, without separators or decimals.</target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.sum.label" datatype="html">
+        <source>Suma asegurada (saldo del crédito)</source>
+        <target>Sum insured (loan balance)</target>
+      </trans-unit>
+      <trans-unit id="mortgageOffer.sum.hint" datatype="html">
+        <source>Al cambiarla, la prima se recalcula con el mismo perfil del cliente.</source>
+        <target>When you change it, the premium is recalculated with the same client profile.</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.step.offer" datatype="html">
+        <source>Oferta de vida hipotecario</source>
+        <target>Mortgage life insurance offer</target>
+      </trans-unit>
+      <trans-unit id="assistedQuote.product.vida_hipotecario" datatype="html">
+        <source>Seguro de vida hipotecario</source>
+        <target>Mortgage life insurance</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

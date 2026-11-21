@@ -142,3 +142,45 @@ export interface ProfileLineage {
   readonly missing: readonly LineageMissingField[];
   readonly conflicts: readonly LineageConflict[];
 }
+
+/** HU26: qué regla aplicó un paso del precio de vida hipotecario. */
+export type OfferStepKind = 'BASE' | 'LIFE_STAGE' | 'SIGNAL' | 'DEGRADED' | 'OTHER';
+
+/** Un paso del precio (regla, factor y cuánto movió la prima). Nunca trae las cifras del cliente. */
+export interface OfferStep {
+  readonly kind: OfferStepKind;
+  /** Etapa de vida o nombre de la señal; en la prima base, el texto de la regla. */
+  readonly name: string;
+  readonly factor: number | null;
+  readonly adjustment: Money;
+  readonly accumulated: Money;
+  /** El perfil no traía el dato: el paso usó el factor neutro de las reglas. */
+  readonly missingData: boolean;
+}
+
+/** HU26: oferta de vida hipotecario calculada por Perfilamiento y ya registrada como cotización. */
+export interface MortgageOffer {
+  /** La cotización registrada: con ella se inicia la suscripción asistida (HU39). */
+  readonly quoteId: string;
+  readonly offerId: string;
+  readonly clientId: string;
+  readonly insuredSum: Money;
+  readonly annualPremium: Money;
+  readonly monthlyPremium: Money;
+  readonly lifeStage: string;
+  readonly rulesVersion: string;
+  readonly profileCreatedAt: Date;
+  /** El perfil usó datos de respaldo: la prima lleva el recargo. */
+  readonly degraded: boolean;
+  readonly coverages: readonly Coverage[];
+  readonly steps: readonly OfferStep[];
+  readonly validUntil: Date;
+}
+
+export interface MortgageOfferRequest {
+  readonly clientId: string;
+  /** `null`: la suma por defecto de las reglas de Perfilamiento. */
+  readonly insuredSum: number | null;
+  /** Enriquecer el perfil antes de calcular (al abrir la oferta); al solo cambiar la suma, no. */
+  readonly enrich: boolean;
+}

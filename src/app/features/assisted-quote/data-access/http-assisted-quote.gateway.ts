@@ -6,6 +6,8 @@ import { Observable, catchError, map, of, throwError } from 'rxjs';
 import {
   ClientIdentity,
   DocumentId,
+  MortgageOffer,
+  MortgageOfferRequest,
   Product,
   ProfileLineage,
   ProfileSummary,
@@ -17,6 +19,7 @@ import {
   CatalogDto,
   ClientSearchDto,
   LineageDto,
+  MortgageOfferDto,
   ProfileDto,
   QuoteDto,
 } from './dto/assisted-quote.dto';
@@ -24,6 +27,8 @@ import {
   toCatalog,
   toClient,
   toLineage,
+  toMortgageOffer,
+  toMortgageOfferRequestDto,
   toProfile,
   toQuote,
   toQuoteRequestDto,
@@ -86,5 +91,15 @@ export class HttpAssistedQuoteGateway extends AssistedQuoteGateway {
             : throwError(() => error),
         ),
       );
+  }
+
+  requestMortgageOffer(request: MortgageOfferRequest): Observable<MortgageOffer> {
+    const id = encodeURIComponent(request.clientId);
+    return this.http
+      .post<MortgageOfferDto>(
+        `${COTIZACION}/v1/asesor/clientes/${id}/ofertas-vida-hipotecario`,
+        toMortgageOfferRequestDto(request),
+      )
+      .pipe(map(toMortgageOffer));
   }
 }

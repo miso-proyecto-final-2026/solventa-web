@@ -6,6 +6,9 @@ import {
   ClientIdentity,
   ConsentState,
   DocumentId,
+  MortgageOffer,
+  MortgageOfferRequest,
+  OfferStep,
   Product,
   ProfileLineage,
   ProfileSource,
@@ -72,6 +75,16 @@ const DEMO_CLIENTS: Readonly<Record<string, DemoClient>> = {
     factor: 1,
   },
 };
+
+/** HU26: reglas de prototipo de vida hipotecario en Perfilamiento (`vida_hipotecario_v1.yaml`). */
+const MORTGAGE = {
+  rate: 0.0018,
+  minPremium: 180_000,
+  minSum: 20_000_000,
+  maxSum: 800_000_000,
+  defaultSum: 100_000_000,
+  surcharge: 0.15,
+} as const;
 
 const SIGNAL_NAMES = [
   'ratio_endeudamiento',
@@ -259,6 +272,84 @@ export class MockAssistedQuoteGateway extends AssistedQuoteGateway {
         { concept: 'recargo_degradado', amount: money(0) },
       ],
     } satisfies Quote).pipe(delay(LATENCY_MS));
+  }
+
+  /**
+   * HU26: las reglas de prototipo de Perfilamiento (tasa 0,18 %, prima mínima, suma entre 20 y 800
+   * millones). Sin consentimiento, 409; Bruno sale degradado (Open Data caído) con el recargo.
+   */
+  requestMortgageOffer(request: MortgageOfferRequest): Observable<MortgageOffer> {
+    const demo = this.byId(request.clientId);
+    if (demo?.consent !== 'GRANTED') {
+      return throwError(() => new ApiError('validation', 409, 'CONSENTIMIENTO_REQUERIDO'));
+    }
+    const sum = request.insuredSum ?? MORTGAGE.defaultSum;
+    if (sum < MORTGAGE.minSum || sum > MORTGAGE.maxSum) {
+      return throwError(
+        () =>
+          new ApiError('validation', 422, 'VALIDATION_ERROR', [
+            { field: 'suma_asegurada', reason: 'debe estar entre 20,000,000 y 800,000,000' },
+          ]),
+      );
+    }
+    const degraded = demo.firstName === 'Bruno';
+    const base = Math.max(Math.round(sum * MORTGAGE.rate), MORTGAGE.minPremium);
+    const signal = Math.round(base * demo.factor);
+    const annual = degraded ? signal + Math.round(signal * MORTGAGE.surcharge) : signal;
+    const steps: OfferStep[] = [
+      {
+        kind: 'BASE',
+        name: `${MORTGAGE.rate} sobre la suma asegurada`,
+        factor: null,
+        adjustment: money(base),
+        accumulated: money(base),
+        missingData: false,
+      },
+      {
+        kind: 'LIFE_STAGE',
+        name: 'desarrollo',
+        factor: 1,
+        adjustment: money(0),
+        accumulated: money(base),
+        missingData: false,
+      },
+      {
+        kind: 'SIGNAL',
+        name: 'ratio_endeudamiento',
+        factor: demo.factor,
+        adjustment: money(signal - base),
+        accumulated: money(signal),
+        missingData: false,
+      },
+    ];
+    if (degraded) {
+      steps.push({
+        kind: 'DEGRADED',
+        name: 'datos de respaldo',
+        factor: MORTGAGE.surcharge,
+        adjustment: money(annual - signal),
+        accumulated: money(annual),
+        missingData: false,
+      });
+    }
+    return of({
+      quoteId: crypto.randomUUID(),
+      offerId: crypto.randomUUID(),
+      clientId: request.clientId,
+      insuredSum: money(sum),
+      annualPremium: money(annual),
+      monthlyPremium: money(Math.round(annual / 12)),
+      lifeStage: 'desarrollo',
+      rulesVersion: '2026.11.1-prototipo',
+      profileCreatedAt: new Date(),
+      degraded,
+      coverages: [
+        { type: 'muerte', amount: money(sum), deductible: money(0) },
+        { type: 'incapacidad_total_permanente', amount: money(sum), deductible: money(0) },
+      ],
+      steps,
+      validUntil: new Date(Date.now() + 30 * DAY_MS),
+    } satisfies MortgageOffer).pipe(delay(LATENCY_MS * 2));
   }
 
   private byId(clientId: string): DemoClient | undefined {

@@ -165,3 +165,23 @@ test('la revisión asistida (HU-16) usa los textos y los formatos de en-US', asy
   ).toBeVisible();
   await expectNoSeriousA11yViolations(page);
 });
+
+test('la oferta de vida hipotecario en inglés (HU26)', async ({ page }) => {
+  await signIn(page);
+  await page.goto('/assisted-quote');
+  const controls = ui(page);
+
+  await controls.documentNumber.fill('1000000001');
+  await controls.search.click();
+  await page.getByRole('button', { name: 'Offer mortgage life insurance' }).click();
+
+  await expect(controls.stepHeading).toHaveText('Mortgage life insurance offer');
+  await expect(page.getByText(/Annual premium:\s*\$162,000/)).toBeVisible();
+  await expect(page.getByRole('row', { name: /Death\s+\$100,000,000\s+\$0/ })).toBeVisible();
+  await expect(page.getByRole('row', { name: /Life stage: Growth\s+1\.00/ })).toBeVisible();
+  await expect(page.getByText(/Valid until\s*December 20, 2026/)).toBeVisible();
+  await expect(
+    page.getByRole('link', { name: 'Client accepts: start subscription' }),
+  ).toBeVisible();
+  await expectNoSeriousA11yViolations(page);
+});

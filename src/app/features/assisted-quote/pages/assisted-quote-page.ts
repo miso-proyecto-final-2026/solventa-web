@@ -11,17 +11,19 @@ import { AssistedQuoteGateway } from '../data-access/assisted-quote.gateway';
 import { HttpAssistedQuoteGateway } from '../data-access/http-assisted-quote.gateway';
 import { MockAssistedQuoteGateway } from '../data-access/mock-assisted-quote.gateway';
 import { errorMessage } from '../domain/labels';
+import { MortgageOfferPanel } from '../mortgage-offer/mortgage-offer';
 import { DocumentId, QuoteDraft } from '../domain/models';
 import { ProductDraft, ProductForm, ProductSubmission } from '../product-form/product-form';
 import { QuoteResult } from '../quote-result/quote-result';
 import { AssistedQuoteFacade } from '../state/assisted-quote.facade';
-import { AssistedQuoteStore, Step } from '../state/assisted-quote.store';
+import { AssistedQuoteStore, STEPS, Step } from '../state/assisted-quote.store';
 
 const STEP_TITLES: Record<Step, string> = {
   lookup: $localize`:@@assistedQuote.step.lookup:Buscar al cliente`,
   profile: $localize`:@@assistedQuote.step.profile:Perfil del cliente`,
   insurance: $localize`:@@assistedQuote.step.insurance:Datos del seguro`,
   result: $localize`:@@assistedQuote.step.result:Resultado`,
+  offer: $localize`:@@assistedQuote.step.offer:Oferta de vida hipotecario`,
 };
 
 /**
@@ -30,7 +32,16 @@ const STEP_TITLES: Record<Step, string> = {
  */
 @Component({
   selector: 'sol-assisted-quote-page',
-  imports: [Alert, Card, Stepper, ClientLookup, ClientProfile, ProductForm, QuoteResult],
+  imports: [
+    Alert,
+    Card,
+    Stepper,
+    ClientLookup,
+    ClientProfile,
+    MortgageOfferPanel,
+    ProductForm,
+    QuoteResult,
+  ],
   providers: [
     AssistedQuoteStore,
     AssistedQuoteFacade,
@@ -47,11 +58,13 @@ export class AssistedQuotePage {
   private readonly session = inject(SessionStore);
   private readonly heading = viewChild<ElementRef<HTMLElement>>('stepHeading');
 
-  protected readonly stepLabels = Object.values(STEP_TITLES);
+  /** La oferta (HU26) ocupa el lugar del resultado en el indicador: no es un paso más. */
+  protected readonly stepLabels = STEPS.map((step) => STEP_TITLES[step]);
   protected readonly stepTitle = computed(() => STEP_TITLES[this.store.step()]);
+  /** La oferta (HU26) explica sus propios errores: sin consentimiento, reintentar o la suma. */
   protected readonly errorText = computed(() => {
     const error = this.store.error();
-    return error ? errorMessage(error) : null;
+    return error && this.store.step() !== 'offer' ? errorMessage(error) : null;
   });
 
   /** Borrador recuperado: lo que el asesor ya había escrito antes de que venciera la sesión. */
