@@ -11,9 +11,14 @@ import {
   SESSION_DTO,
   FailedCaseDto,
   failedCaseDetail,
+  disbursements,
+  DisbursementDto,
   failedCases,
   quoteDto,
   RetryChargeDto,
+  REVIEW_PROFILE_DTO,
+  ReviewDetailDto,
+  reviews,
 } from './fixtures';
 
 /** Un fallo que se inyecta en la siguiente llamada: una respuesta HTTP o una caída de red. */
@@ -22,7 +27,12 @@ export type Failure = { status: number; body?: unknown } | 'network';
 const IDENTIDAD = '/api/identidad/v1';
 const COTIZACION = '/api/cotizacion/v1';
 const COBROS_FALLIDOS = '/api/pagos/v1/pagos/cobros-fallidos';
+const CONCILIACION = '/api/pagos/v1/pagos/conciliacion/desembolsos';
 const ASISTIDAS = '/api/suscripcion/v1/suscripciones/asistidas';
+const REVISIONES = '/api/suscripcion/v1/suscripciones/revisiones';
+
+/** Qué dice el extracto de la pasarela al conciliar un desembolso (HU31). */
+export type ExtractMode = 'COINCIDE' | 'DIFERENCIA' | 'SIN_PAGO';
 
 /** Respuesta de la pasarela al próximo reintento (HU19). */
 export type RetryMode = 'APROBADO' | 'RECHAZADO' | 'NO_DISPONIBLE';
@@ -81,6 +91,12 @@ export class Backend {
   readonly retryCharges: Record<string, RetryChargeDto[]> = {};
   retryMode: RetryMode = 'APROBADO';
   private nextCasesFailure: Failure | null = null;
+  /** HU31: desembolsos, qué dice el extracto, las consultas de la lista, las escaladas y los reportes pedidos. */
+  conciliation: DisbursementDto[] = disbursements();
+  extractMode: ExtractMode = 'COINCIDE';
+  readonly listQueries: URLSearchParams[] = [];
+  readonly escalations: { id: string; nota: string }[] = [];
+  readonly exportRequests: string[] = [];
   /** HU39: la saga simulada, los inicios recibidos (el cuerpo tal como salió) y los códigos de firma. */
   subscription: AssistedSubscriptionDto = assistedSubscription();
   readonly startRequests: { body: Record<string, unknown>; key: string | null }[] = [];
@@ -95,6 +111,11 @@ export class Backend {
   readonly linkHeaders: Record<string, string>[] = [];
   readonly linkCodes: string[] = [];
   subscriptionForbidden = false;
+
+  /** HU16: los casos de revisión asistida, las decisiones recibidas (cuerpo tal como salió) y un fallo para la próxima. */
+  reviewCases: ReviewDetailDto[] = reviews();
+  readonly reviewDecisions: { id: string; body: Record<string, unknown> }[] = [];
+  nextReviewDecisionFailure: Failure | null = null;
 
   private nextSearchFailure: Failure | null = null;
   private nextQuoteFailure: Failure | null = null;
@@ -355,6 +376,96 @@ export class Backend {
     );
 
     await this.installFailedPayments();
+    await this.installAssistedReview();
+    await this.installReconciliation();
+  }
+
+  /** HU16: el caso de revisión se decide en el servidor simulado como en el real: queda decidido y sale de los pendientes. */
+  private async installAssistedReview(): Promise<void> {
+    const suscripcionError = (status: number, code: string) => ({
+      status,
+      json: { error: { code, message: code, details: [], trace_id: 't' } },
+    });
+    // Las rutas registradas después tienen prioridad sobre la del perfil de la cotización asistida.
+    await this.page.route(
+      new RegExp(`${COTIZACION}/asesor/clientes/cli-rev-[^/]+/perfil$`),
+      (route) => route.fulfill({ json: REVIEW_PROFILE_DTO }),
+    );
+    await this.page.route(new RegExp(`${REVISIONES}(\\?.*)?$`), (route) => {
+      const params = new URL(route.request().url()).searchParams;
+      const wantedState = params.get('estado') === 'DECIDIDA' ? 'DECIDIDA' : 'PENDIENTE';
+      const pending = this.reviewCases.filter((c) => c.estado === 'PENDIENTE');
+      const items = this.reviewCases
+        .filter((c) => c.estado === wantedState)
+        .filter((c) => params.get('vencidas') !== 'true' || c.cotizacion_vencida)
+        .filter(
+          (c) =>
+            !params.get('categoria') ||
+            c.decision_automatica.motivos.some((m) => m.categoria === params.get('categoria')),
+        )
+        .sort((a, b) => a.creada_en.localeCompare(b.creada_en))
+        .map((c) => ({
+          id: c.id,
+          cliente: c.cliente,
+          producto: c.cotizacion.producto,
+          moneda: c.cotizacion.moneda,
+          monto_asegurado: c.cotizacion.monto_asegurado,
+          categorias: c.decision_automatica.motivos.map((m) => m.categoria),
+          motivo: c.decision_automatica.motivos.map((m) => m.texto).join('; '),
+          creada_en: c.creada_en,
+          prioridad: c.prioridad,
+          estado: c.estado,
+          decision: c.decision_humana?.decision ?? null,
+          cotizacion_vencida: c.cotizacion_vencida && c.estado === 'PENDIENTE',
+          vigente_hasta: c.cotizacion.vigente_hasta,
+        }));
+      return route.fulfill({
+        json: {
+          items,
+          total: items.length,
+          total_vencidas: pending.filter((c) => c.cotizacion_vencida).length,
+          pagina: 1,
+          tamano: 20,
+        },
+      });
+    });
+    await this.page.route(new RegExp(`${REVISIONES}/([^/?]+)$`), (route) => {
+      const id = decodeURIComponent(/revisiones\/([^/?]+)/.exec(route.request().url())![1]);
+      const found = this.reviewCases.find((c) => c.id === id);
+      return found
+        ? route.fulfill({ json: found })
+        : route.fulfill(suscripcionError(404, 'REVISION_NO_ENCONTRADA'));
+    });
+    await this.page.route(new RegExp(`${REVISIONES}/([^/]+)/decision$`), (route) => {
+      const id = /revisiones\/([^/]+)\/decision/.exec(route.request().url())![1];
+      const body = route.request().postDataJSON() as Record<string, unknown>;
+      this.reviewDecisions.push({ id, body });
+      const failure = this.nextReviewDecisionFailure;
+      this.nextReviewDecisionFailure = null;
+      if (failure) return fulfillFailure(route, failure);
+      const found = this.reviewCases.find((c) => c.id === id);
+      if (!found) return route.fulfill(suscripcionError(404, 'REVISION_NO_ENCONTRADA'));
+      if (found.estado === 'DECIDIDA') {
+        return route.fulfill(suscripcionError(409, 'REVISION_YA_DECIDIDA'));
+      }
+      if (body['decision'] !== 'RECHAZADA' && found.cotizacion_vencida) {
+        return route.fulfill(suscripcionError(409, 'COTIZACION_VENCIDA'));
+      }
+      Object.assign(found, {
+        estado: 'DECIDIDA',
+        puede_decidir: false,
+        decisiones_permitidas: [],
+        decision_humana: {
+          decision: body['decision'],
+          justificacion: body['justificacion'],
+          asesor_id: 'a-1',
+          asesor_nombre: 'Asesora Demo',
+          decidido_en: new Date().toISOString(),
+          ajuste: null,
+        },
+      });
+      return route.fulfill({ json: found });
+    });
   }
 
   private async installFailedPayments(): Promise<void> {
@@ -437,6 +548,124 @@ export class Backend {
           repeticion: false,
         },
       });
+    });
+  }
+
+  private async installReconciliation(): Promise<void> {
+    const operator = 'Operador Demo';
+    const find = (url: string, tail: string) => {
+      const id = decodeURIComponent(new RegExp(`desembolsos/([^/?]+)${tail}`).exec(url)![1]);
+      return this.conciliation.find((d) => d.id === id);
+    };
+
+    await this.page.route(new RegExp(`${CONCILIACION}(\\?.*)?$`), (route) => {
+      const params = new URL(route.request().url()).searchParams;
+      this.listQueries.push(params);
+      const items = this.conciliation.filter(
+        (d) =>
+          (!params.get('tipo_evento') || d.tipo_evento === params.get('tipo_evento')) &&
+          (!params.get('estado_conciliacion') ||
+            d.estado_conciliacion === params.get('estado_conciliacion')),
+      );
+      return route.fulfill({
+        json: { items, total: items.length, pagina: Number(params.get('pagina') ?? 1), tamano: 25 },
+      });
+    });
+
+    // Primero el detalle: Playwright prioriza la última ruta registrada, así que `/resumen` y `/exportar` (sin query) le ganan.
+    await this.page.route(new RegExp(`${CONCILIACION}/([^/?]+)$`), (route) => {
+      const found = find(route.request().url(), '$');
+      return found
+        ? route.fulfill({
+            json: {
+              ...found,
+              intentos_de_pago: [
+                {
+                  numero: 1,
+                  resultado: 'APROBADO',
+                  codigo: null,
+                  motivo: null,
+                  referencia_pasarela: found.referencia_pasarela,
+                  fecha: found.fecha_pago,
+                },
+              ],
+            },
+          })
+        : route.fulfill({ status: 404, json: pagosError('DESEMBOLSO_NO_ENCONTRADO') });
+    });
+
+    await this.page.route(new RegExp(`${CONCILIACION}/resumen(\\?.*)?$`), (route) => {
+      const count = (s: string) =>
+        this.conciliation.filter((d) => d.estado_conciliacion === s).length;
+      return route.fulfill({
+        json: {
+          desembolsos: this.conciliation.length,
+          claves_distintas: this.conciliation.length,
+          claves_con_mas_de_un_pago: 0,
+          pagados: this.conciliation.length,
+          monto_pagado: String(this.conciliation.length * 5_000_000),
+          por_estado_conciliacion: {
+            PENDIENTE: count('PENDIENTE'),
+            CONCILIADO: count('CONCILIADO'),
+            CON_DIFERENCIA: count('CON_DIFERENCIA'),
+          },
+        },
+      });
+    });
+
+    await this.page.route(new RegExp(`${CONCILIACION}/exportar(\\?.*)?$`), (route) => {
+      const format = new URL(route.request().url()).searchParams.get('formato') ?? '';
+      this.exportRequests.push(format);
+      return route.fulfill({
+        status: 200,
+        contentType: format === 'pdf' ? 'application/pdf' : 'text/csv; charset=utf-8',
+        headers: {
+          'content-disposition': `attachment; filename="conciliacion-desembolsos.${format}"`,
+        },
+        body: format === 'pdf' ? '%PDF-1.4' : 'Evento,Tipo\nevt-1,sismo\n',
+      });
+    });
+
+    await this.page.route(new RegExp(`${CONCILIACION}/([^/]+)/conciliar$`), (route) => {
+      const found = find(route.request().url(), '/conciliar');
+      if (!found)
+        return route.fulfill({ status: 404, json: pagosError('DESEMBOLSO_NO_ENCONTRADO') });
+      if (this.extractMode === 'SIN_PAGO') {
+        return route.fulfill({ status: 409, json: pagosError('EXTRACTO_SIN_PAGO') });
+      }
+      const matches = this.extractMode === 'COINCIDE';
+      Object.assign(found, {
+        estado_conciliacion: matches ? 'CONCILIADO' : 'CON_DIFERENCIA',
+        conciliado_por: operator,
+        conciliado_en: new Date().toISOString(),
+        diferencia: matches
+          ? null
+          : {
+              monto_registrado: found.monto,
+              monto_pasarela: '4900000.00',
+              moneda_pasarela: 'COP',
+              referencia_registrada: found.referencia_pasarela,
+              referencia_pasarela: found.referencia_pasarela,
+            },
+      });
+      return route.fulfill({ json: found });
+    });
+
+    await this.page.route(new RegExp(`${CONCILIACION}/([^/]+)/escalar$`), (route) => {
+      const found = find(route.request().url(), '/escalar');
+      const nota = (route.request().postDataJSON() as { nota: string }).nota;
+      if (!found)
+        return route.fulfill({ status: 404, json: pagosError('DESEMBOLSO_NO_ENCONTRADO') });
+      if (found.estado_conciliacion !== 'CON_DIFERENCIA') {
+        return route.fulfill({ status: 409, json: pagosError('DESEMBOLSO_SIN_DIFERENCIA') });
+      }
+      this.escalations.push({ id: found.id, nota });
+      Object.assign(found, {
+        escalada_en: new Date().toISOString(),
+        escalada_por: operator,
+        nota_escalamiento: nota,
+      });
+      return route.fulfill({ json: found });
     });
   }
 

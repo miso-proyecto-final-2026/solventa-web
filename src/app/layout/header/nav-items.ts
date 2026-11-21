@@ -33,9 +33,23 @@ export const NAV_ITEMS: readonly NavItem[] = [
     requiredRoles: ['ASESOR', 'OPERADOR'],
   },
   {
+    path: '/reconciliation',
+    label: $localize`:@@nav.reconciliation:Conciliación`,
+    icon: '🧾',
+    exact: false,
+    requiredRoles: ['OPERADOR'],
+  },
+  {
     path: '/subscriptions',
     label: $localize`:@@nav.subscriptions:Suscripciones`,
     icon: '✍️',
+    exact: false,
+    requiredRoles: ['ASESOR'],
+  },
+  {
+    path: '/assisted-review',
+    label: $localize`:@@nav.assisted-review:Revisión asistida`,
+    icon: '🔎',
     exact: false,
     requiredRoles: ['ASESOR'],
   },

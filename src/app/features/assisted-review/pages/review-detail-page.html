@@ -1,0 +1,469 @@
+<a routerLink="/assisted-review" class="ar__back" i18n="@@assistedReview.detail.back"
+  >← Volver a la bandeja</a
+>
+<h1 i18n="@@assistedReview.detail.title">Caso en revisión asistida</h1>
+
+<p class="sol-visually-hidden" role="status">
+  @if (loading()) {
+    <ng-container i18n="@@assistedReview.detail.loading">Cargando el caso…</ng-container>
+  }
+</p>
+
+@if (loadError(); as e) {
+  <sol-alert kind="error">
+    {{ loadErrorText(e) }}
+    @if (e.kind !== 'not-found') {
+      <button
+        type="button"
+        class="sol-btn sol-btn--outline ar__inline-action"
+        (click)="load()"
+        i18n="@@assistedReview.retry-load"
+      >
+        Volver a cargar
+      </button>
+    }
+  </sol-alert>
+}
+
+@if (!detail() && loading()) {
+  <p class="ar__loading" aria-hidden="true" i18n="@@assistedReview.detail.loading-visible">
+    Cargando el caso…
+  </p>
+}
+
+@if (lostRace(); as lost) {
+  <sol-alert kind="warning">
+    <ng-container i18n="@@assistedReview.detail.lost-race"
+      >Otro asesor ya decidió este caso.</ng-container
+    >
+    @if (lost.advisor) {
+      <ng-container i18n="@@assistedReview.detail.lost-race-by">
+        Decidió {{ lost.advisor }}</ng-container
+      >
+      @if (lost.decidedAt) {
+        <ng-container i18n="@@assistedReview.detail.lost-race-at">
+          el {{ lost.decidedAt | date: 'medium' }}</ng-container
+        >
+      }
+      .
+    }
+  </sol-alert>
+}
+
+@if (detail(); as d) {
+  @if (decided()) {
+    <sol-alert kind="success">
+      @if (d.human; as h) {
+        @switch (h.decision) {
+          @case ('REJECTED') {
+            <ng-container i18n="@@assistedReview.done.rejected"
+              >Caso rechazado. La compra se cerró sin cobro.</ng-container
+            >
+          }
+          @case ('ADJUSTED') {
+            <ng-container i18n="@@assistedReview.done.adjusted"
+              >Cobertura ajustada. Se cobrará la prima ajustada y la compra continúa.</ng-container
+            >
+          }
+          @default {
+            <ng-container i18n="@@assistedReview.done.approved"
+              >Caso aprobado. Se cobrará la prima y la compra continúa.</ng-container
+            >
+          }
+        }
+      }
+    </sol-alert>
+  }
+
+  <sol-card class="page__card">
+    <h2 class="page__step" i18n="@@assistedReview.card.summary">Resumen del caso</h2>
+    <dl class="ar__summary">
+      <div>
+        <dt i18n="@@assistedReview.col.priority">Prioridad</dt>
+        <dd>
+          <span
+            class="ar__badge"
+            [class.ar__badge--high]="d.priority === 'HIGH'"
+            [class.ar__badge--medium]="d.priority === 'MEDIUM'"
+          >
+            <span aria-hidden="true">{{ priorityMark(d.priority) }}</span>
+            {{ priorityText(d.priority) }}
+          </span>
+        </dd>
+      </div>
+      <div>
+        <dt i18n="@@assistedReview.col.date">Fecha</dt>
+        <dd>{{ d.createdAt | date: 'medium' }}</dd>
+      </div>
+    </dl>
+  </sol-card>
+
+  <sol-card class="page__card">
+    <h2 class="page__step" i18n="@@assistedReview.card.client">Cliente</h2>
+    @if (d.client; as cl) {
+      <dl class="ar__summary">
+        <div>
+          <dt i18n="@@assistedReview.client.name">Nombre</dt>
+          <dd>{{ cl.firstName }} {{ cl.lastNameInitial }}.</dd>
+        </div>
+        <div>
+          <dt i18n="@@assistedReview.client.document">Documento</dt>
+          <dd>{{ cl.documentType }} {{ cl.maskedDocument }}</dd>
+        </div>
+      </dl>
+    } @else {
+      <sol-alert kind="info">
+        <ng-container i18n="@@assistedReview.client.unavailable"
+          >No pudimos cargar los datos del cliente. Puedes decidir con el resto de la
+          información.</ng-container
+        >
+      </sol-alert>
+    }
+  </sol-card>
+
+  <sol-card class="page__card">
+    <h2 class="page__step" i18n="@@assistedReview.card.quote">Cotización</h2>
+    @if (d.quoteExpired) {
+      <sol-alert kind="warning">
+        <ng-container i18n="@@assistedReview.quote.expired-notice"
+          >La cotización venció el {{ d.quote.validUntil | date: 'medium' }}. Solo se puede cerrar
+          el caso; el cliente debe volver a cotizar.</ng-container
+        >
+        @if (d.canDecide) {
+          <button
+            type="button"
+            class="sol-btn sol-btn--outline ar__inline-action"
+            (click)="closeExpired(d)"
+            i18n="@@assistedReview.close.action"
+          >
+            Cerrar por cotización vencida
+          </button>
+        }
+      </sol-alert>
+    }
+    <dl class="ar__summary">
+      <div>
+        <dt i18n="@@assistedReview.col.product">Producto</dt>
+        <dd>{{ productText(d.quote.product) }}</dd>
+      </div>
+      <div>
+        <dt i18n="@@assistedReview.col.amount">Monto asegurado</dt>
+        <dd>
+          {{
+            d.quote.insuredAmount.amount
+              | currency: d.quote.insuredAmount.currency : 'symbol-narrow' : digits
+          }}
+        </dd>
+      </div>
+      <div>
+        <dt i18n="@@assistedReview.quote.annual">Prima anual</dt>
+        <dd>
+          {{
+            d.quote.annualPremium.amount
+              | currency: d.quote.annualPremium.currency : 'symbol-narrow' : digits
+          }}
+        </dd>
+      </div>
+      <div>
+        <dt i18n="@@assistedReview.quote.monthly">Prima mensual</dt>
+        <dd>
+          {{
+            d.quote.monthlyPremium.amount
+              | currency: d.quote.monthlyPremium.currency : 'symbol-narrow' : digits
+          }}
+        </dd>
+      </div>
+      <div>
+        <dt i18n="@@assistedReview.quote.valid-until">Vigente hasta</dt>
+        <dd>
+          @if (d.quote.validUntil) {
+            {{ d.quote.validUntil | date: 'medium' }}
+          } @else {
+            —
+          }
+        </dd>
+      </div>
+    </dl>
+    @if (d.quote.coverages.length > 0) {
+      <table class="ar__table">
+        <caption class="sol-visually-hidden" i18n="@@assistedReview.quote.coverages-caption">
+          Coberturas de la cotización
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col" i18n="@@assistedReview.coverage.type">Cobertura</th>
+            <th scope="col" i18n="@@assistedReview.coverage.amount">Monto</th>
+            <th scope="col" i18n="@@assistedReview.coverage.deductible">Deducible</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (c of d.quote.coverages; track c.type) {
+            <tr>
+              <td>{{ coverageText(c.type) }}</td>
+              <td>
+                {{ c.amount.amount | currency: c.amount.currency : 'symbol-narrow' : digits }}
+              </td>
+              <td>
+                {{
+                  c.deductible.amount | currency: c.deductible.currency : 'symbol-narrow' : digits
+                }}
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  </sol-card>
+
+  <sol-card class="page__card">
+    <h2 class="page__step" i18n="@@assistedReview.card.profile">Perfilamiento</h2>
+    @if (profile(); as p) {
+      <dl class="ar__summary">
+        <div>
+          <dt i18n="@@assistedReview.profile.source">Fuente</dt>
+          <dd>{{ sourceText(p.source) }}</dd>
+        </div>
+        <div>
+          <dt i18n="@@assistedReview.profile.completeness">Completitud</dt>
+          <dd>{{ p.completeness | percent: '1.0-0' }}</dd>
+        </div>
+        <div>
+          <dt i18n="@@assistedReview.profile.consent">Consentimiento</dt>
+          <dd>
+            @if (p.hasConsent) {
+              <ng-container i18n="@@assistedReview.profile.consent-yes">Vigente</ng-container>
+            } @else {
+              <ng-container i18n="@@assistedReview.profile.consent-no"
+                >Sin consentimiento</ng-container
+              >
+            }
+          </dd>
+        </div>
+        @for (s of p.signals; track s.name) {
+          <div>
+            <dt>{{ signalText(s.name) }}</dt>
+            <dd>{{ levelText(s.level) }}</dd>
+          </div>
+        }
+      </dl>
+    } @else if (profileFailed()) {
+      <sol-alert kind="info">
+        <ng-container i18n="@@assistedReview.profile.unavailable"
+          >No pudimos cargar el perfil del cliente. El motivo de la derivación sigue
+          abajo.</ng-container
+        >
+        <button
+          type="button"
+          class="sol-btn sol-btn--outline ar__inline-action"
+          (click)="retryProfile()"
+          i18n="@@assistedReview.retry-load"
+        >
+          Volver a cargar
+        </button>
+      </sol-alert>
+    } @else {
+      <p class="ar__loading" i18n="@@assistedReview.profile.loading">Cargando el perfil…</p>
+    }
+  </sol-card>
+
+  <sol-card class="page__card">
+    <h2 class="page__step" i18n="@@assistedReview.card.reason">Motivo de la derivación</h2>
+    <ul class="ar__reasons">
+      @for (r of d.automatic.reasons; track r.text) {
+        <li>
+          <strong>{{ categoryText(r.category) }}</strong>
+          <span class="ar__reason-text">{{ r.text }}</span>
+        </li>
+      }
+    </ul>
+    @if (d.automatic.rulesVersion) {
+      <small class="ar__reason" i18n="@@assistedReview.reason.rules"
+        >Reglas {{ d.automatic.rulesVersion }}</small
+      >
+    }
+  </sol-card>
+
+  @if (d.human; as h) {
+    <sol-card class="page__card">
+      <h2 class="page__step" i18n="@@assistedReview.card.decision">Decisión del asesor</h2>
+      <dl class="ar__summary">
+        <div>
+          <dt i18n="@@assistedReview.human.result">Resultado</dt>
+          <dd>{{ resultText(h.decision) }}</dd>
+        </div>
+        <div>
+          <dt i18n="@@assistedReview.human.advisor">Asesor</dt>
+          <dd>{{ h.advisorName ?? '—' }}</dd>
+        </div>
+        <div>
+          <dt i18n="@@assistedReview.human.date">Fecha</dt>
+          <dd>{{ h.decidedAt | date: 'medium' }}</dd>
+        </div>
+      </dl>
+      <p class="ar__note">
+        <strong i18n="@@assistedReview.human.justification">Justificación:</strong>
+        {{ h.justification }}
+      </p>
+      @if (h.adjustment; as a) {
+        <p>
+          <ng-container i18n="@@assistedReview.human.adjustment"
+            >Monto asegurado ajustado de
+            {{
+              a.originalAmount | currency: d.quote.insuredAmount.currency : 'symbol-narrow' : digits
+            }}
+            a
+            {{
+              a.adjustedAmount
+                | currency: d.quote.insuredAmount.currency : 'symbol-narrow' : digits
+            }}; prima anual
+            {{
+              a.annualPremium | currency: d.quote.insuredAmount.currency : 'symbol-narrow' : digits
+            }}.</ng-container
+          >
+        </p>
+      }
+    </sol-card>
+  } @else if (d.canDecide) {
+    <sol-card class="page__card">
+      <h2 class="page__step" i18n="@@assistedReview.card.decide">Decisión</h2>
+      <sol-error-summary
+        [errors]="errors()"
+        heading="Revisa estos datos"
+        i18n-heading="@@assistedReview.form.summary"
+      />
+
+      <form class="ar__form" (submit)="$event.preventDefault(); review()" novalidate>
+        <fieldset
+          class="ar__decisions"
+          [attr.aria-describedby]="decisionError() ? 'ar-decision-error' : null"
+        >
+          <legend i18n="@@assistedReview.form.decision">Decisión</legend>
+          @for (o of decisionOptions; track o.value) {
+            <label class="ar__radio" [class.ar__radio--disabled]="!isAllowed(o.value)">
+              <input
+                type="radio"
+                name="decision"
+                [id]="'ar-decision-' + o.value"
+                [value]="o.value"
+                [checked]="decision() === o.value"
+                [disabled]="!isAllowed(o.value)"
+                [attr.aria-describedby]="isAllowed(o.value) ? null : 'ar-expired-reason'"
+                (change)="choose(o.value)"
+              />
+              {{ o.label }}
+            </label>
+          }
+          @if (d.quoteExpired) {
+            <small
+              id="ar-expired-reason"
+              class="ar__reason"
+              i18n="@@assistedReview.form.expired-reason"
+              >Aprobar y ajustar están deshabilitados porque la cotización venció.</small
+            >
+          }
+          @if (decisionError(); as de) {
+            <small id="ar-decision-error" class="ar__error"
+              ><span aria-hidden="true">✕</span> {{ de }}</small
+            >
+          }
+        </fieldset>
+
+        @if (decision() === 'ADJUSTED') {
+          <sol-form-field
+            fieldId="ar-amount"
+            label="Nuevo monto asegurado"
+            i18n-label="@@assistedReview.form.amount"
+            hint="Debe ser menor que el actual. Las coberturas y las primas se ajustan en proporción."
+            i18n-hint="@@assistedReview.form.amount-hint"
+            [error]="amountError()"
+          >
+            <input
+              id="ar-amount"
+              class="sol-input"
+              inputmode="numeric"
+              autocomplete="off"
+              name="insuredAmount"
+              [(ngModel)]="insuredAmount"
+              [attr.aria-invalid]="amountError() ? true : null"
+              [attr.aria-describedby]="describedBy('ar-amount', true, !!amountError())"
+            />
+          </sol-form-field>
+        }
+
+        <sol-form-field
+          fieldId="ar-justification"
+          label="Justificación"
+          i18n-label="@@assistedReview.form.justification"
+          hint="Es interna: el cliente no la ve. No incluyas números de tarjeta ni datos de contacto."
+          i18n-hint="@@assistedReview.form.justification-hint"
+          [error]="justificationError()"
+        >
+          <textarea
+            id="ar-justification"
+            class="sol-input"
+            rows="4"
+            name="justification"
+            [(ngModel)]="justification"
+            [attr.aria-invalid]="justificationError() ? true : null"
+            [attr.aria-describedby]="describedBy('ar-justification', true, !!justificationError())"
+          ></textarea>
+        </sol-form-field>
+        <small class="ar__counter" aria-live="off"
+          >{{ length(justification()) }}/{{ justificationMax }}</small
+        >
+
+        @if (decideError(); as de) {
+          <sol-alert kind="error">{{ decideErrorText(de) }}</sol-alert>
+        }
+
+        @if (confirming() && decision(); as chosen) {
+          <sol-alert kind="warning">
+            <strong>{{ consequenceText(chosen) }}</strong>
+            <span i18n="@@assistedReview.confirm.final"> No se puede deshacer.</span>
+          </sol-alert>
+          <div class="sol-actions">
+            <button
+              type="button"
+              class="sol-btn sol-btn--primary"
+              [disabled]="saving()"
+              (click)="confirm()"
+              i18n="@@assistedReview.confirm.action"
+            >
+              Confirmar decisión
+            </button>
+            <button
+              type="button"
+              class="sol-btn sol-btn--outline"
+              [disabled]="saving()"
+              (click)="cancelConfirm()"
+              i18n="@@assistedReview.confirm.cancel"
+            >
+              Volver a editar
+            </button>
+          </div>
+        } @else {
+          <div class="sol-actions">
+            <button
+              type="submit"
+              class="sol-btn sol-btn--primary"
+              i18n="@@assistedReview.form.review"
+            >
+              Revisar decisión
+            </button>
+          </div>
+        }
+        <p class="sol-visually-hidden" role="status">
+          @if (saving()) {
+            <ng-container i18n="@@assistedReview.saving">Guardando la decisión…</ng-container>
+          }
+        </p>
+      </form>
+    </sol-card>
+  } @else if (d.state === 'PENDING') {
+    <sol-alert kind="info">
+      <ng-container i18n="@@assistedReview.cannot-decide"
+        >Este caso ya no se puede decidir.</ng-container
+      >
+    </sol-alert>
+  }
+}

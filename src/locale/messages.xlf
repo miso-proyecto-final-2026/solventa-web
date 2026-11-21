@@ -69,7 +69,7 @@
         <source>Verificación de identidad</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/client-profile/client-profile.html</context>
-          <context context-type="linenumber">12,14</context>
+          <context context-type="linenumber">12,13</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.profile.signals.title" datatype="html">
@@ -139,434 +139,434 @@
         <source>Edad</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="linenumber">12</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.field.suma_asegurada" datatype="html">
         <source>Suma asegurada</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">19</context>
+          <context context-type="linenumber">13</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.field.tipo_dispositivo" datatype="html">
         <source>Tipo de dispositivo</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">14</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.field.valor_dispositivo" datatype="html">
         <source>Valor del dispositivo</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">21</context>
+          <context context-type="linenumber">15</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.field.antiguedad_meses" datatype="html">
         <source>Antigüedad (meses)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.option.celular" datatype="html">
         <source>Celular</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.option.portatil" datatype="html">
         <source>Portátil</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.option.tableta" datatype="html">
         <source>Tableta</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.coverage.muerte" datatype="html">
         <source>Muerte</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.coverage.incapacidad_total" datatype="html">
         <source>Incapacidad total</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.coverage.dano_accidental" datatype="html">
         <source>Daño accidental</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">34</context>
+          <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.coverage.robo" datatype="html">
         <source>Robo</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.component.prima_base" datatype="html">
         <source>Prima base del producto</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.component.ajuste_datos" datatype="html">
         <source>Ajuste por los datos del seguro</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.component.ajuste_riesgo" datatype="html">
         <source>Ajuste por el perfil de riesgo</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.component.recargo_degradado" datatype="html">
         <source>Recargo por datos no disponibles</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.signal.ratio_endeudamiento" datatype="html">
         <source>Nivel de endeudamiento</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.signal.reportes_negativos" datatype="html">
         <source>Reportes negativos</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">41</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.signal.ingresos_mensuales_cop" datatype="html">
         <source>Ingresos mensuales</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.level.low" datatype="html">
         <source>Bajo</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">64</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.level.medium" datatype="html">
         <source>Medio</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">66</context>
+          <context context-type="linenumber">60</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.level.high" datatype="html">
         <source>Alto</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">68</context>
+          <context context-type="linenumber">62</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.consent.granted" datatype="html">
         <source>Consentimiento vigente</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">69</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.consent.revoked" datatype="html">
         <source>Consentimiento revocado</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">77</context>
+          <context context-type="linenumber">71</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.consent.not-granted" datatype="html">
         <source>Sin consentimiento</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">73</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.consent.effect.real" datatype="html">
         <source>El precio se calcula con el perfil real del cliente.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">87</context>
+          <context context-type="linenumber">81</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.consent.effect.default" datatype="html">
         <source>El precio se calcula con el perfil por defecto y es un estimado: puede cambiar al comprar.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">89</context>
+          <context context-type="linenumber">83</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.consent.effect.degraded" datatype="html">
         <source>No pudimos consultar los datos del cliente: el precio lleva un recargo conservador y es un estimado.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">91</context>
+          <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.source.real" datatype="html">
         <source>Perfil real del cliente</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">98</context>
+          <context context-type="linenumber">92</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.source.default" datatype="html">
         <source>Perfil por defecto</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">100</context>
+          <context context-type="linenumber">94</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.source.degraded" datatype="html">
         <source>Perfil degradado</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">102</context>
+          <context context-type="linenumber">96</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.error.network" datatype="html">
         <source>No hay conexión con el servidor. Revisa tu red e inténtalo de nuevo; lo que ingresaste se conserva.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">110</context>
+          <context context-type="linenumber">104</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.error.forbidden" datatype="html">
         <source>Tu usuario no tiene permiso para esta operación.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">112</context>
+          <context context-type="linenumber">106</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.error.validation" datatype="html">
         <source>Revisa los datos marcados e inténtalo de nuevo.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">114</context>
+          <context context-type="linenumber">108</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.error.unauthenticated" datatype="html">
         <source>Tu sesión venció. Inicia sesión de nuevo para continuar.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">116</context>
+          <context context-type="linenumber">110</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.error.server" datatype="html">
         <source>No pudimos completar la operación por un problema del servidor. Inténtalo de nuevo; lo que ingresaste se conserva.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">119</context>
+          <context context-type="linenumber">113</context>
         </context-group>
       </trans-unit>
       <trans-unit id="lineage.source.open_finance" datatype="html">
         <source>Open Finance</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">126</context>
+          <context context-type="linenumber">120</context>
         </context-group>
       </trans-unit>
       <trans-unit id="lineage.source.open_data" datatype="html">
         <source>Open Data</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">127</context>
+          <context context-type="linenumber">121</context>
         </context-group>
       </trans-unit>
       <trans-unit id="lineage.field.ingresos_mensuales_cop" datatype="html">
         <source>Ingresos mensuales</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">132</context>
+          <context context-type="linenumber">126</context>
         </context-group>
       </trans-unit>
       <trans-unit id="lineage.field.ratio_endeudamiento" datatype="html">
         <source>Nivel de endeudamiento</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">133</context>
+          <context context-type="linenumber">127</context>
         </context-group>
       </trans-unit>
       <trans-unit id="lineage.field.antiguedad_cuentas_anios" datatype="html">
         <source>Antigüedad de las cuentas</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">134</context>
+          <context context-type="linenumber">128</context>
         </context-group>
       </trans-unit>
       <trans-unit id="lineage.field.obligaciones_mensuales_cop" datatype="html">
         <source>Obligaciones mensuales</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">135</context>
+          <context context-type="linenumber">129</context>
         </context-group>
       </trans-unit>
       <trans-unit id="lineage.field.score_crediticio" datatype="html">
         <source>Puntaje crediticio</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">136</context>
+          <context context-type="linenumber">130</context>
         </context-group>
       </trans-unit>
       <trans-unit id="lineage.field.productos_financieros" datatype="html">
         <source>Productos financieros</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">137</context>
+          <context context-type="linenumber">131</context>
         </context-group>
       </trans-unit>
       <trans-unit id="lineage.field.estrato" datatype="html">
         <source>Estrato</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">138</context>
+          <context context-type="linenumber">132</context>
         </context-group>
       </trans-unit>
       <trans-unit id="lineage.field.reportes_negativos" datatype="html">
         <source>Reportes negativos</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">139</context>
+          <context context-type="linenumber">133</context>
         </context-group>
       </trans-unit>
       <trans-unit id="lineage.field.zona_riesgo" datatype="html">
         <source>Zona de riesgo</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">140</context>
+          <context context-type="linenumber">134</context>
         </context-group>
       </trans-unit>
       <trans-unit id="lineage.missing.sin_datos" datatype="html">
         <source>La fuente no estaba disponible</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">144</context>
+          <context context-type="linenumber">138</context>
         </context-group>
       </trans-unit>
       <trans-unit id="lineage.missing.degradado" datatype="html">
         <source>Solo había un dato viejo de respaldo</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">145</context>
+          <context context-type="linenumber">139</context>
         </context-group>
       </trans-unit>
       <trans-unit id="lineage.missing.no_reportado" datatype="html">
         <source>Ninguna fuente lo reportó</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">146</context>
+          <context context-type="linenumber">140</context>
         </context-group>
       </trans-unit>
       <trans-unit id="lineage.missing.fuera_de_rango" datatype="html">
         <source>El valor recibido estaba fuera de rango</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">147</context>
+          <context context-type="linenumber">141</context>
         </context-group>
       </trans-unit>
       <trans-unit id="lineage.missing.invalido" datatype="html">
         <source>El valor recibido no era válido</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">148</context>
+          <context context-type="linenumber">142</context>
         </context-group>
       </trans-unit>
       <trans-unit id="lineage.missing.sin_consentimiento" datatype="html">
         <source>Sin consentimiento del cliente</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">149</context>
+          <context context-type="linenumber">143</context>
         </context-group>
       </trans-unit>
       <trans-unit id="lineage.data-type.financial" datatype="html">
         <source>Financiero</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">159</context>
+          <context context-type="linenumber">153</context>
         </context-group>
       </trans-unit>
       <trans-unit id="lineage.data-type.socioeconomic" datatype="html">
         <source>Socioeconómico</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">161</context>
+          <context context-type="linenumber">155</context>
         </context-group>
       </trans-unit>
       <trans-unit id="lineage.data-type.unknown" datatype="html">
         <source>Sin clasificar</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">163</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="lineage.origin.live" datatype="html">
         <source>Consulta en vivo</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">170</context>
+          <context context-type="linenumber">164</context>
         </context-group>
       </trans-unit>
       <trans-unit id="lineage.origin.cache" datatype="html">
         <source>Desde caché</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">172</context>
+          <context context-type="linenumber">166</context>
         </context-group>
       </trans-unit>
       <trans-unit id="lineage.origin.degraded" datatype="html">
         <source>Degradado: respaldo viejo</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">174</context>
+          <context context-type="linenumber">168</context>
         </context-group>
       </trans-unit>
       <trans-unit id="lineage.origin.default" datatype="html">
         <source>Por defecto: fuente no disponible</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">176</context>
+          <context context-type="linenumber">170</context>
         </context-group>
       </trans-unit>
       <trans-unit id="lineage.ttl.hours" datatype="html">
         <source><x id="hours" equiv-text="hours"/> h</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">185</context>
+          <context context-type="linenumber">179</context>
         </context-group>
       </trans-unit>
       <trans-unit id="lineage.ttl.minutes" datatype="html">
         <source><x id="minutes" equiv-text="minutes"/> min</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/domain/labels.ts</context>
-          <context context-type="linenumber">188</context>
+          <context context-type="linenumber">182</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.title" datatype="html">
@@ -770,7 +770,7 @@
         <source>Detalle de la cotización</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/quote-result/quote-result.html</context>
-          <context context-type="linenumber">10,11</context>
+          <context context-type="linenumber">10,14</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.result.tab.quote" datatype="html">
@@ -784,91 +784,91 @@
         <source> Linaje de fuentes </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/quote-result/quote-result.html</context>
-          <context context-type="linenumber">39,45</context>
+          <context context-type="linenumber">40,46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.result.monthly" datatype="html">
         <source>Prima mensual</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/quote-result/quote-result.html</context>
-          <context context-type="linenumber">56,58</context>
+          <context context-type="linenumber">57,59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.result.annual" datatype="html">
         <source>Prima anual</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/quote-result/quote-result.html</context>
-          <context context-type="linenumber">58,60</context>
+          <context context-type="linenumber">59,61</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.result.estimated" datatype="html">
         <source>Precio estimado: se calculó sin el perfil real del cliente y puede cambiar al comprar.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/quote-result/quote-result.html</context>
-          <context context-type="linenumber">68,71</context>
+          <context context-type="linenumber">69,72</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.result.without-account" datatype="html">
         <source>Cotización sin cuenta: para comprar, el cliente debe registrarse.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/quote-result/quote-result.html</context>
-          <context context-type="linenumber">77,82</context>
+          <context context-type="linenumber">78,83</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.result.coverages" datatype="html">
         <source>Coberturas y deducibles</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/quote-result/quote-result.html</context>
-          <context context-type="linenumber">83,85</context>
+          <context context-type="linenumber">84,86</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.result.coverages-caption" datatype="html">
         <source> Coberturas con su valor asegurado y su deducible </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/quote-result/quote-result.html</context>
-          <context context-type="linenumber">86,89</context>
+          <context context-type="linenumber">87,91</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.result.coverage" datatype="html">
         <source>Cobertura</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/quote-result/quote-result.html</context>
-          <context context-type="linenumber">90,91</context>
+          <context context-type="linenumber">91,92</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.result.insured" datatype="html">
         <source> Valor asegurado </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/quote-result/quote-result.html</context>
-          <context context-type="linenumber">92,94</context>
+          <context context-type="linenumber">93,95</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.result.deductible" datatype="html">
-        <source>Deducible</source>
+        <source> Deducible </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/quote-result/quote-result.html</context>
-          <context context-type="linenumber">94,97</context>
+          <context context-type="linenumber">96,99</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.result.valid-until" datatype="html">
         <source>Válida hasta</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/quote-result/quote-result.html</context>
-          <context context-type="linenumber">114,115</context>
+          <context context-type="linenumber">117,118</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.result.start-subscription" datatype="html">
         <source> Iniciar suscripción </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/quote-result/quote-result.html</context>
-          <context context-type="linenumber">140,143</context>
+          <context context-type="linenumber">143,146</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.result.new" datatype="html">
         <source>Nueva cotización</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/quote-result/quote-result.html</context>
-          <context context-type="linenumber">144,147</context>
+          <context context-type="linenumber">147,150</context>
         </context-group>
       </trans-unit>
       <trans-unit id="lineage.title" datatype="html">
@@ -1015,14 +1015,14 @@
         <source> Datos que reportaron dos fuentes </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/source-lineage/source-lineage.html</context>
-          <context context-type="linenumber">113,115</context>
+          <context context-type="linenumber">114,116</context>
         </context-group>
       </trans-unit>
       <trans-unit id="lineage.conflicts.used" datatype="html">
         <source>se usó</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/source-lineage/source-lineage.html</context>
-          <context context-type="linenumber">119,120</context>
+          <context context-type="linenumber">121,122</context>
         </context-group>
       </trans-unit>
       <trans-unit id="lineage.error.unavailable" datatype="html">
@@ -1030,6 +1030,1040 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-quote/source-lineage/source-lineage.ts</context>
           <context context-type="linenumber">78</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.inbox.document-title" datatype="html">
+        <source>Solventa — Revisión asistida</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/assisted-review.routes.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.detail.document-title" datatype="html">
+        <source>Solventa — Detalle de la revisión asistida</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/assisted-review.routes.ts</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.priority.high" datatype="html">
+        <source>Alta</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.priority.medium" datatype="html">
+        <source>Media</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.priority.low" datatype="html">
+        <source>Baja</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.category.risk-profile" datatype="html">
+        <source>Variables del perfil fuera de rango</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.category.amount" datatype="html">
+        <source>Monto asegurado sobre el límite automático</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.category.data" datatype="html">
+        <source>Datos incompletos o inconsistentes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.state.pending" datatype="html">
+        <source>Pendiente</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.state.decided" datatype="html">
+        <source>Decidido</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.decision.approved" datatype="html">
+        <source>Aprobar</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.decision.rejected" datatype="html">
+        <source>Rechazar</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.decision.adjusted" datatype="html">
+        <source>Ajustar la cobertura</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.result.approved" datatype="html">
+        <source>Aprobado</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.result.rejected" datatype="html">
+        <source>Rechazado</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">61</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.result.adjusted" datatype="html">
+        <source>Ajustado</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.consequence.approved" datatype="html">
+        <source>Se cobrará la prima de la cotización y la compra continuará como si la decisión hubiera sido automática.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">71</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.consequence.adjusted" datatype="html">
+        <source>Se cobrará la prima ajustada y la compra continuará, sin pedir otra aceptación al cliente.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">73</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.consequence.rejected" datatype="html">
+        <source>La compra se cerrará sin cobro y el cliente podrá volver a cotizar.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.level.low" datatype="html">
+        <source>Bajo</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">82</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.level.medium" datatype="html">
+        <source>Medio</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">84</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.level.high" datatype="html">
+        <source>Alto</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.source.real" datatype="html">
+        <source>Perfil real del cliente</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">93</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.source.default" datatype="html">
+        <source>Perfil por defecto</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">95</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.source.degraded" datatype="html">
+        <source>Perfil degradado</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">97</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.signal.ratio_endeudamiento" datatype="html">
+        <source>Nivel de endeudamiento</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">102</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.signal.reportes_negativos" datatype="html">
+        <source>Reportes negativos</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">103</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.signal.ingresos_mensuales_cop" datatype="html">
+        <source>Ingresos mensuales</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">104</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.coverage.muerte" datatype="html">
+        <source>Muerte</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">110</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.coverage.incapacidad_total" datatype="html">
+        <source>Incapacidad total</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">111</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.coverage.dano_accidental" datatype="html">
+        <source>Daño accidental</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">112</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.coverage.robo" datatype="html">
+        <source>Robo</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">113</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.error.unauthenticated" datatype="html">
+        <source>Tu sesión venció. Inicia sesión de nuevo para continuar.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">125</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.error.forbidden" datatype="html">
+        <source>Tu usuario no tiene permiso para la revisión asistida. Solo los asesores pueden verla.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">127</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.error.not-found" datatype="html">
+        <source>Este caso no existe o ya no está en revisión. Vuelve a la bandeja y elige otro.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">129</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.error.network" datatype="html">
+        <source>No hay conexión con el servidor. Revisa tu red e inténtalo de nuevo.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">131</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.error.server" datatype="html">
+        <source>No pudimos cargar los casos por un problema del servidor. Inténtalo de nuevo en unos minutos.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">134</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.decide.error.already" datatype="html">
+        <source>Otro asesor ya decidió este caso.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">142</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.decide.error.expired" datatype="html">
+        <source>La cotización venció mientras decidías. Solo se puede cerrar el caso; el cliente debe volver a cotizar.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">144</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.decide.error.quote-unavailable" datatype="html">
+        <source>No pudimos confirmar la vigencia de la cotización. Inténtalo de nuevo en un momento.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">146</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.decide.error.adjustment" datatype="html">
+        <source>El nuevo monto asegurado debe ser mayor que cero y menor que el actual.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">148</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.decide.error.no-payment" datatype="html">
+        <source>La compra no tiene un método de pago para cobrar. No se puede aprobar ni ajustar; consulta con el equipo de soporte.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">150</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.decide.error.validation" datatype="html">
+        <source>Revisa los datos de la decisión: la justificación debe tener entre 20 y 2000 caracteres.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/domain/labels.ts</context>
+          <context context-type="linenumber">153</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.detail.back" datatype="html">
+        <source>← Volver a la bandeja</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">2,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.detail.title" datatype="html">
+        <source>Caso en revisión asistida</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">4,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.detail.loading" datatype="html">
+        <source>Cargando el caso…</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">8,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.retry-load" datatype="html">
+        <source> Volver a cargar </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">22,25</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">261,263</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.html</context>
+          <context context-type="linenumber">78,80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.detail.loading-visible" datatype="html">
+        <source> Cargando el caso… </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">30,35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.detail.lost-race" datatype="html">
+        <source>Otro asesor ya decidió este caso.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">37,39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.detail.lost-race-by" datatype="html">
+        <source> Decidió <x id="INTERPOLATION" equiv-text="{{ lost.advisor }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">41,42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.detail.lost-race-at" datatype="html">
+        <source> el <x id="INTERPOLATION" equiv-text="{{ lost.decidedAt | date: &apos;medium&apos; }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">45,46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.done.rejected" datatype="html">
+        <source>Caso rechazado. La compra se cerró sin cobro.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">60,62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.done.adjusted" datatype="html">
+        <source>Cobertura ajustada. Se cobrará la prima ajustada y la compra continúa.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">65,67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.done.approved" datatype="html">
+        <source>Caso aprobado. Se cobrará la prima y la compra continúa.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">70,72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.card.summary" datatype="html">
+        <source>Resumen del caso</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">79,81</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.col.priority" datatype="html">
+        <source>Prioridad</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">82,85</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.html</context>
+          <context context-type="linenumber">129,130</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.col.date" datatype="html">
+        <source>Fecha</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">95,96</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.html</context>
+          <context context-type="linenumber">130,131</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.card.client" datatype="html">
+        <source>Cliente</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">102,104</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.client.name" datatype="html">
+        <source>Nombre</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">106,107</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.client.document" datatype="html">
+        <source>Documento</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">110,111</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.client.unavailable" datatype="html">
+        <source>No pudimos cargar los datos del cliente. Puedes decidir con el resto de la información.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">117,120</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.card.quote" datatype="html">
+        <source>Cotización</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">125,127</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.quote.expired-notice" datatype="html">
+        <source>La cotización venció el <x id="INTERPOLATION" equiv-text="{{ d.quote.validUntil | date: &apos;medium&apos; }}"/>. Solo se puede cerrar el caso; el cliente debe volver a cotizar.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">129,130</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.close.action" datatype="html">
+        <source> Cerrar por cotización vencida </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">139,141</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.html</context>
+          <context context-type="linenumber">210,211</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.col.product" datatype="html">
+        <source>Producto</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">146,147</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.html</context>
+          <context context-type="linenumber">133,134</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.col.amount" datatype="html">
+        <source>Monto asegurado</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">150,153</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.html</context>
+          <context context-type="linenumber">134,136</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.quote.annual" datatype="html">
+        <source>Prima anual</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">159,162</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.quote.monthly" datatype="html">
+        <source>Prima mensual</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">168,171</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.quote.valid-until" datatype="html">
+        <source>Vigente hasta</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">177,179</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.quote.coverages-caption" datatype="html">
+        <source> Coberturas de la cotización </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">190,193</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.coverage.type" datatype="html">
+        <source>Cobertura</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">194,195</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.coverage.amount" datatype="html">
+        <source>Monto</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">195,196</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.coverage.deductible" datatype="html">
+        <source>Deducible</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">196,199</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.card.profile" datatype="html">
+        <source>Perfilamiento</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">219,221</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.profile.source" datatype="html">
+        <source>Fuente</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">223,224</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.profile.completeness" datatype="html">
+        <source>Completitud</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">227,228</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.profile.consent" datatype="html">
+        <source>Consentimiento</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">231,233</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.profile.consent-yes" datatype="html">
+        <source>Vigente</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">234,236</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.profile.consent-no" datatype="html">
+        <source>Sin consentimiento</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">237,240</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.profile.unavailable" datatype="html">
+        <source>No pudimos cargar el perfil del cliente. El motivo de la derivación sigue abajo.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">252,255</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.profile.loading" datatype="html">
+        <source>Cargando el perfil…</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">265,269</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.card.reason" datatype="html">
+        <source>Motivo de la derivación</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">270,272</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.reason.rules" datatype="html">
+        <source>Reglas <x id="INTERPOLATION" equiv-text="{{ d.automatic.rulesVersion }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">281,282</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.card.decision" datatype="html">
+        <source>Decisión del asesor</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">288,290</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.human.result" datatype="html">
+        <source>Resultado</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">291,292</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.human.advisor" datatype="html">
+        <source>Asesor</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">295,296</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.human.date" datatype="html">
+        <source>Fecha</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">299,300</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.human.justification" datatype="html">
+        <source>Justificación:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">304,306</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.human.adjustment" datatype="html">
+        <source>Monto asegurado ajustado de <x id="INTERPOLATION" equiv-text="{{
+              a.originalAmount | currency: d.quote.insuredAmount.currency : &apos;symbol-narrow&apos; : digits
+            }}"/> a <x id="INTERPOLATION_1" equiv-text="{{
+              a.adjustedAmount
+                | currency: d.quote.insuredAmount.currency : &apos;symbol-narrow&apos; : digits
+            }}"/>; prima anual <x id="INTERPOLATION_2" equiv-text="{{
+              a.annualPremium | currency: d.quote.insuredAmount.currency : &apos;symbol-narrow&apos; : digits
+            }}"/>.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">310,322</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.card.decide" datatype="html">
+        <source>Decisión</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">328,330</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.form.summary" datatype="html">
+        <source>Revisa estos datos</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">331,332</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.form.decision" datatype="html">
+        <source>Decisión</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">340,341</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.form.expired-reason" datatype="html">
+        <source>Aprobar y ajustar están deshabilitados porque la cotización venció.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">361,364</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.form.amount" datatype="html">
+        <source>Nuevo monto asegurado</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">374,375</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.form.amount-hint" datatype="html">
+        <source>Debe ser menor que el actual. Las coberturas y las primas se ajustan en proporción.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">376,377</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.form.justification" datatype="html">
+        <source>Justificación</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">395,396</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.form.justification-hint" datatype="html">
+        <source>Es interna: el cliente no la ve. No incluyas números de tarjeta ni datos de contacto.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">397,398</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.confirm.final" datatype="html">
+        <source> No se puede deshacer.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">422,424</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.confirm.action" datatype="html">
+        <source> Confirmar decisión </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">432,434</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.confirm.cancel" datatype="html">
+        <source> Volver a editar </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">441,443</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.form.review" datatype="html">
+        <source> Revisar decisión </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">451,453</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.saving" datatype="html">
+        <source>Guardando la decisión…</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">457,459</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.cannot-decide" datatype="html">
+        <source>Este caso ya no se puede decidir.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.html</context>
+          <context context-type="linenumber">465,468</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.form.error.decision" datatype="html">
+        <source>Elige aprobar, rechazar o ajustar la cobertura.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.ts</context>
+          <context context-type="linenumber">107</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.close.suggested" datatype="html">
+        <source>La cotización venció el <x id="until" equiv-text="until"/> antes de decidir; el cliente debe volver a cotizar.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.ts</context>
+          <context context-type="linenumber">197</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.ts</context>
+          <context context-type="linenumber">136</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.form.error.amount-required" datatype="html">
+        <source>Escribe el nuevo monto asegurado, un número entero mayor que cero.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.ts</context>
+          <context context-type="linenumber">215</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.form.error.amount-lower" datatype="html">
+        <source>El nuevo monto debe ser menor que el actual.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.ts</context>
+          <context context-type="linenumber">218</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.form.error.justification-short" datatype="html">
+        <source>La justificación debe tener al menos <x id="min" equiv-text="JUSTIFICATION_MIN"/> caracteres.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.ts</context>
+          <context context-type="linenumber">227</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.form.error.justification-long" datatype="html">
+        <source>La justificación no puede pasar de <x id="max" equiv-text="JUSTIFICATION_MAX"/> caracteres.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-detail-page.ts</context>
+          <context context-type="linenumber">230</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.inbox.title" datatype="html">
+        <source>Revisión asistida</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.html</context>
+          <context context-type="linenumber">1,2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.inbox.lead" datatype="html">
+        <source> Casos que las reglas automáticas derivaron a una persona. Los más antiguos aparecen primero.
+</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.html</context>
+          <context context-type="linenumber">3,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.filter.state" datatype="html">
+        <source>Estado</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.html</context>
+          <context context-type="linenumber">9,11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.filter.category" datatype="html">
+        <source>Categoría del motivo</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.html</context>
+          <context context-type="linenumber">23,25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.filter.mine" datatype="html">
+        <source>Mis cotizaciones</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.html</context>
+          <context context-type="linenumber">43,45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.filter.expired" datatype="html">
+        <source>Solo cotizaciones vencidas</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.html</context>
+          <context context-type="linenumber">52,56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.loading" datatype="html">
+        <source>Cargando los casos…</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.html</context>
+          <context context-type="linenumber">58,59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.inbox.count" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ r.total }}"/> casos</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.html</context>
+          <context context-type="linenumber">60,61</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.inbox.loading-visible" datatype="html">
+        <source> Cargando los casos… </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.html</context>
+          <context context-type="linenumber">85,90</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.expired-notice.one" datatype="html">
+        <source>1 caso tiene la cotización vencida y solo se puede cerrar.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.html</context>
+          <context context-type="linenumber">94,97</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.expired-notice.many" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ r.expiredTotal }}"/> casos tienen la cotización vencida y solo se pueden cerrar.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.html</context>
+          <context context-type="linenumber">98,99</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.expired-notice.filter" datatype="html">
+        <source> Ver solo los vencidos </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.html</context>
+          <context context-type="linenumber">109,112</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.inbox.empty" datatype="html">
+        <source>No hay casos con estos filtros.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.html</context>
+          <context context-type="linenumber">118,120</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.inbox.caption" datatype="html">
+        <source> Casos derivados a revisión asistida, del más antiguo al más reciente </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.html</context>
+          <context context-type="linenumber">125,127</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.col.reason" datatype="html">
+        <source>Motivo</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.html</context>
+          <context context-type="linenumber">131,132</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.col.client" datatype="html">
+        <source>Cliente</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.html</context>
+          <context context-type="linenumber">132,133</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.col.actions" datatype="html">
+        <source>Acciones</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.html</context>
+          <context context-type="linenumber">137,139</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.badge.expired" datatype="html">
+        <source>Cotización vencida</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.html</context>
+          <context context-type="linenumber">167,169</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.inbox.open" datatype="html">
+        <source>Ver detalle</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.html</context>
+          <context context-type="linenumber">192,193</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.close.label" datatype="html">
+        <source>Justificación del cierre</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.html</context>
+          <context context-type="linenumber">224,226</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.close.hint" datatype="html">
+        <source>Se rechazará el caso sin cobro. Puedes editar el texto sugerido (mínimo <x id="INTERPOLATION" equiv-text="{{ justificationMin }}"/> caracteres).</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.html</context>
+          <context context-type="linenumber">237,239</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.close.confirm" datatype="html">
+        <source> Confirmar cierre sin cobro </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.html</context>
+          <context context-type="linenumber">254,255</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.close.cancel" datatype="html">
+        <source> Cancelar </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.html</context>
+          <context context-type="linenumber">262,263</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.pager.label" datatype="html">
+        <source>Paginación</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.html</context>
+          <context context-type="linenumber">274,276</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.pager.previous" datatype="html">
+        <source> Anterior </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.html</context>
+          <context context-type="linenumber">282,284</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.pager.position" datatype="html">
+        <source>Página <x id="INTERPOLATION" equiv-text="{{ query().page }}"/> de <x id="INTERPOLATION_1" equiv-text="{{ pages() }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.html</context>
+          <context context-type="linenumber">285,287</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.pager.next" datatype="html">
+        <source> Siguiente </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.html</context>
+          <context context-type="linenumber">294,296</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.filter.pending" datatype="html">
+        <source>Pendientes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.ts</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.filter.decided" datatype="html">
+        <source>Decididos</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.ts</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.filter.all-categories" datatype="html">
+        <source>Todas</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.ts</context>
+          <context context-type="linenumber">79</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.badge.expired-aria" datatype="html">
+        <source>Cotización vencida el <x id="until" equiv-text="until"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.ts</context>
+          <context context-type="linenumber">144</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.close.error.length" datatype="html">
+        <source>La justificación debe tener entre <x id="min" equiv-text="JUSTIFICATION_MIN"/> y <x id="max" equiv-text="JUSTIFICATION_MAX"/> caracteres.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.ts</context>
+          <context context-type="linenumber">156</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="assistedReview.close.done" datatype="html">
+        <source>El caso se cerró por cotización vencida, sin cobro. Salió de los pendientes.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-review/pages/review-inbox-page.ts</context>
+          <context context-type="linenumber">170</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.list.document-title" datatype="html">
@@ -1508,7 +2542,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">137,139</context>
+          <context context-type="linenumber">143,145</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-list-page.html</context>
@@ -1615,140 +2649,147 @@
         <source>Este caso se derivó a revisión asistida.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">125,127</context>
+          <context context-type="linenumber">125,128</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="subscriptions.detail.referred-link" datatype="html">
+        <source>Ver el caso en revisión asistida</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
+          <context context-type="linenumber">131,136</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.detail.download" datatype="html">
         <source> Descargar póliza firmada </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">148,151</context>
+          <context context-type="linenumber">154,157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.detail.manage" datatype="html">
         <source> Gestionar firma </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">158,161</context>
+          <context context-type="linenumber">164,167</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.certificate.title" datatype="html">
         <source>Certificado de cobertura</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">169,170</context>
+          <context context-type="linenumber">175,176</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.certificate.note" datatype="html">
         <source> El cliente recibe un correo de confirmación con el enlace de descarga. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">171,173</context>
+          <context context-type="linenumber">177,179</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.certificate.open" datatype="html">
         <source> Ver certificado </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">182,184</context>
+          <context context-type="linenumber">188,190</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.certificate.download" datatype="html">
         <source> Descargar certificado </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">192,195</context>
+          <context context-type="linenumber">198,201</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.resend.wait" datatype="html">
         <source>Reenviar correo en <x id="INTERPOLATION" equiv-text="{{ resendWait() }}"/> s</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">203,204</context>
+          <context context-type="linenumber">209,210</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.resend.action" datatype="html">
         <source>Reenviar correo al cliente</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">207,209</context>
+          <context context-type="linenumber">213,215</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.resend.done" datatype="html">
         <source>Solicitamos el reenvío del correo al cliente.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">216,218</context>
+          <context context-type="linenumber">222,224</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.certificate.pdf-title" datatype="html">
         <source>Certificado de cobertura</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">232,236</context>
+          <context context-type="linenumber">238,242</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.sign.title" datatype="html">
         <source>Gestionar firma</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">240,242</context>
+          <context context-type="linenumber">246,248</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.sign.email-title" datatype="html">
         <source>Enviar al cliente</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">242,243</context>
+          <context context-type="linenumber">248,249</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.sign.email-note" datatype="html">
         <source> El cliente recibe en su correo registrado un enlace para revisar y firmar con su código. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">244,246</context>
+          <context context-type="linenumber">250,252</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.sign.email-wait" datatype="html">
         <source>Volver a enviar en <x id="INTERPOLATION" equiv-text="{{ linkWait() }}"/> s</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">257,258</context>
+          <context context-type="linenumber">263,264</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.sign.email" datatype="html">
         <source>Enviar por correo</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">260,262</context>
+          <context context-type="linenumber">266,268</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.sign.email-sent" datatype="html">
         <source>Solicitamos el envío del enlace. Vencimiento: <x id="INTERPOLATION" equiv-text="{{ link.expiresAt | date: &apos;medium&apos; }}"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">269,271</context>
+          <context context-type="linenumber">275,277</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.sign.email-confirm" datatype="html">
         <source>Si envías otro enlace, el anterior dejará de servir.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">279,281</context>
+          <context context-type="linenumber">285,287</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.sign.email-confirm-action" datatype="html">
         <source> Enviar otro enlace </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">287,289</context>
+          <context context-type="linenumber">293,295</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.sign.screen-title" datatype="html">
         <source> O firmar en pantalla, con el cliente presente </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/assisted-subscriptions/pages/subscription-detail-page.html</context>
-          <context context-type="linenumber">296,298</context>
+          <context context-type="linenumber">302,304</context>
         </context-group>
       </trans-unit>
       <trans-unit id="subscriptions.detail.stepper" datatype="html">
@@ -2752,6 +3793,879 @@
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="reconciliation.status.pending" datatype="html">
+        <source>Pendiente</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/domain/labels.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.status.reconciled" datatype="html">
+        <source>Conciliado</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/domain/labels.ts</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.status.with-difference" datatype="html">
+        <source>Con diferencia</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/domain/labels.ts</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.payment.pending" datatype="html">
+        <source>Pago en curso</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/domain/labels.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.payment.paid" datatype="html">
+        <source>Pagado</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/domain/labels.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.payment.failed" datatype="html">
+        <source>Pago fallido</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/domain/labels.ts</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.event.sismo" datatype="html">
+        <source>Sismo</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/domain/labels.ts</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.event.inundacion" datatype="html">
+        <source>Inundación</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/domain/labels.ts</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.event.sequia" datatype="html">
+        <source>Sequía</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/domain/labels.ts</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.event.tormenta" datatype="html">
+        <source>Tormenta</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/domain/labels.ts</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.event.vuelo-retrasado" datatype="html">
+        <source>Vuelo retrasado</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/domain/labels.ts</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.event.vuelo-cancelado" datatype="html">
+        <source>Vuelo cancelado</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/domain/labels.ts</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.magnitude.magnitud" datatype="html">
+        <source>Magnitud</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/domain/labels.ts</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.magnitude.nivel-rio" datatype="html">
+        <source>Nivel del río (cm)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/domain/labels.ts</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.magnitude.precipitacion" datatype="html">
+        <source>Precipitación 30 días (mm)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/domain/labels.ts</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.magnitude.viento" datatype="html">
+        <source>Viento (km/h)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/domain/labels.ts</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.magnitude.retraso" datatype="html">
+        <source>Retraso (min)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/domain/labels.ts</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.error.unauthenticated" datatype="html">
+        <source>Tu sesión venció. Inicia sesión de nuevo para continuar.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/domain/labels.ts</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.error.forbidden" datatype="html">
+        <source>Solo los operadores pueden conciliar desembolsos.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/domain/labels.ts</context>
+          <context context-type="linenumber">78</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.error.not-found" datatype="html">
+        <source>Este desembolso no existe. Vuelve a la lista y elige otro.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/domain/labels.ts</context>
+          <context context-type="linenumber">80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.error.network" datatype="html">
+        <source>No hay conexión con el servidor. Revisa tu red e inténtalo de nuevo.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/domain/labels.ts</context>
+          <context context-type="linenumber">82</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.error.server" datatype="html">
+        <source>No pudimos cargar los desembolsos por un problema del servidor. Inténtalo de nuevo en unos minutos.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/domain/labels.ts</context>
+          <context context-type="linenumber">85</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.reconcile.error.no-payment" datatype="html">
+        <source>La pasarela no tiene un pago con la clave de este desembolso. No se cambió nada: verifica con el equipo de pagos.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/domain/labels.ts</context>
+          <context context-type="linenumber">91</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.reconcile.error.not-paid" datatype="html">
+        <source>Solo se concilian los desembolsos pagados.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/domain/labels.ts</context>
+          <context context-type="linenumber">94</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.escalate.error.no-difference" datatype="html">
+        <source>Solo se escalan los desembolsos con diferencia.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/domain/labels.ts</context>
+          <context context-type="linenumber">101</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.escalate.error.note" datatype="html">
+        <source>Escribe una nota de 1 a 500 caracteres.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/domain/labels.ts</context>
+          <context context-type="linenumber">104</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.export.error" datatype="html">
+        <source>No pudimos generar el reporte. Inténtalo de nuevo en unos minutos.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/domain/labels.ts</context>
+          <context context-type="linenumber">113</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.back" datatype="html">
+        <source>← Volver a la lista</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">2,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.title" datatype="html">
+        <source>Desembolso</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">4,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.loading" datatype="html">
+        <source>Cargando el desembolso…</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">8,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.retry-load" datatype="html">
+        <source> Volver a cargar </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">22,25</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">172,174</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.loading-visible" datatype="html">
+        <source> Cargando el desembolso… </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">30,35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.event" datatype="html">
+        <source>Evento</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">36,38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.event-type" datatype="html">
+        <source>Tipo de evento</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">39,40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.magnitude" datatype="html">
+        <source>Magnitud</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">43,44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.location" datatype="html">
+        <source>Ubicación</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">47,48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.event-date" datatype="html">
+        <source>Fecha del evento</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">51,52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.event-id" datatype="html">
+        <source>Evento</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">55,56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.policy" datatype="html">
+        <source>Póliza</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">60,62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.policy-number" datatype="html">
+        <source>Número</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">63,64</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.product" datatype="html">
+        <source>Producto</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">67,68</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.client" datatype="html">
+        <source>Cliente</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">71,72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.insured" datatype="html">
+        <source>Monto asegurado</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">75,77</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.validation" datatype="html">
+        <source>Validación de la condición</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">86,88</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.validation-result" datatype="html">
+        <source>Resultado</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">89,90</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.validation-reason" datatype="html">
+        <source>Motivo</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">93,94</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.rule" datatype="html">
+        <source>Regla</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">97,99</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.payment" datatype="html">
+        <source>Pago</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">107,109</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.amount" datatype="html">
+        <source>Monto</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">110,111</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.payment-state" datatype="html">
+        <source>Estado del pago</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">114,115</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.reference" datatype="html">
+        <source>Referencia de la pasarela</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">118,119</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.paid-at" datatype="html">
+        <source>Fecha del pago</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">122,123</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.key" datatype="html">
+        <source>Clave de idempotencia</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">126,127</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.redeliveries" datatype="html">
+        <source>Reentregas del comando</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">130,132</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.redeliveries-hint" datatype="html">
+        <source>(ninguna volvió a pagar)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">134,138</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.failure" datatype="html">
+        <source>Motivo del fallo</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">140,142</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.attempts" datatype="html">
+        <source>Intentos de pago</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">149,151</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.attempts-caption" datatype="html">
+        <source> Intentos de pago contra la pasarela </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">153,156</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.attempt.number" datatype="html">
+        <source>N.º</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">157,158</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.attempt.result" datatype="html">
+        <source>Resultado</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">158,159</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.attempt.reference" datatype="html">
+        <source>Referencia</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">159,160</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.attempt.at" datatype="html">
+        <source>Fecha</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">160,162</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.reconciliation" datatype="html">
+        <source>Conciliación</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">183,186</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.status" datatype="html">
+        <source>Estado</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">186,189</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.reconciled-by" datatype="html">
+        <source>Verificado por</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">204,205</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.reconciled-at" datatype="html">
+        <source>Fecha de la verificación</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">208,209</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.difference" datatype="html">
+        <source>El extracto de la pasarela no coincide con el desembolso registrado.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">216,218</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.recorded" datatype="html">
+        <source>Monto registrado</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">220,223</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.gateway-amount" datatype="html">
+        <source>Monto en la pasarela</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">229,232</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.reconcile.running" datatype="html">
+        <source>Conciliando con la pasarela…</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">244,248</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.reconcile.ok" datatype="html">
+        <source>Conciliado: el pago coincide con el extracto de la pasarela.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">253,255</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.reconcile.difference" datatype="html">
+        <source>El monto del extracto no coincide. Puedes escalarlo al equipo de pagos con una nota.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">259,262</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.reconcile.action" datatype="html">
+        <source> Conciliar con la pasarela </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">278,281</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.reconcile.not-paid" datatype="html">
+        <source>Solo se concilian los desembolsos pagados.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">284,287</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.escalation" datatype="html">
+        <source>Escalado al equipo de pagos</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">290,292</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.escalated-by" datatype="html">
+        <source>Escalado por</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">293,294</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.escalated-at" datatype="html">
+        <source>Fecha</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">297,298</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.escalation-note" datatype="html">
+        <source>Nota</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">301,303</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.escalate.title" datatype="html">
+        <source>Escalar al equipo de pagos</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">309,310</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.escalate.note" datatype="html">
+        <source>Nota para el equipo de pagos</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">311,314</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.escalate.hint" datatype="html">
+        <source>Obligatoria, hasta 500 caracteres.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">324,326</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.escalate.done" datatype="html">
+        <source>Escalado. El equipo de pagos verá tu nota.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">332,334</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.escalate.action" datatype="html">
+        <source> Escalar </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/disbursement-detail-page.html</context>
+          <context context-type="linenumber">343,345</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.title" datatype="html">
+        <source>Conciliación de desembolsos</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">1,2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.lead" datatype="html">
+        <source> Indemnizaciones pagadas de forma automática. Verifica cada desembolso contra la pasarela y escala las diferencias al equipo de pagos.
+</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">3,7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.summary.title" datatype="html">
+        <source>Resumen</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">9,11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.summary.disbursements" datatype="html">
+        <source>Desembolsos</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">12,14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.summary.paid" datatype="html">
+        <source>Pagados</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">16,18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.summary.pending" datatype="html">
+        <source>Pendientes de conciliar</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">23,24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.summary.reconciled" datatype="html">
+        <source>Conciliados</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">27,28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.summary.with-difference" datatype="html">
+        <source>Con diferencia</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">31,32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.summary.duplicates" datatype="html">
+        <source>Claves con más de un pago</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">35,37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.summary.no-duplicates" datatype="html">
+        <source>Sin pagos duplicados</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">42,44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.summary.has-duplicates" datatype="html">
+        <source>Hay pagos duplicados</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">49,51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.filter.from" datatype="html">
+        <source>Desde</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">62,64</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.filter.to" datatype="html">
+        <source>Hasta</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">74,76</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.filter.event-type" datatype="html">
+        <source>Tipo de evento</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">86,89</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.filter.all-types" datatype="html">
+        <source>Todos los tipos</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">94,95</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.filter.status" datatype="html">
+        <source>Conciliación</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">101,103</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.filter.clear" datatype="html">
+        <source> Quitar filtros </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">121,124</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.export.csv" datatype="html">
+        <source> Exportar CSV </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">134,137</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.export.pdf" datatype="html">
+        <source> Exportar PDF </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">143,147</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.export.generating" datatype="html">
+        <source>Generando el reporte…</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">149,150</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.export.done" datatype="html">
+        <source>El reporte se descargó.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">151,152</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.loading" datatype="html">
+        <source>Cargando desembolsos…</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">153,154</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.count" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ r.total }}"/> desembolsos</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">155,156</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.loading-visible" datatype="html">
+        <source> Cargando desembolsos… </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">179,183</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.empty" datatype="html">
+        <source>No hay desembolsos con estos filtros.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">187,189</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.caption" datatype="html">
+        <source> Desembolsos de indemnizaciones, del más reciente al más antiguo </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">194,196</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.col.event" datatype="html">
+        <source>Evento</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">198,199</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.col.policy" datatype="html">
+        <source>Póliza</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">199,200</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.col.client" datatype="html">
+        <source>Cliente</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">200,201</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.col.validation" datatype="html">
+        <source>Validación</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">201,202</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.col.payment" datatype="html">
+        <source>Pago</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">202,203</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.col.reconciliation" datatype="html">
+        <source>Conciliación</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">203,205</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.col.actions" datatype="html">
+        <source>Acciones</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">206,208</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.open" datatype="html">
+        <source>Ver detalle</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">268,269</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.pager.label" datatype="html">
+        <source>Paginación</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">283,285</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.pager.previous" datatype="html">
+        <source> Anterior </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">291,293</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.pager.position" datatype="html">
+        <source>Página <x id="INTERPOLATION" equiv-text="{{ query().page }}"/> de <x id="INTERPOLATION_1" equiv-text="{{ pages() }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">294,296</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.pager.next" datatype="html">
+        <source> Siguiente </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.html</context>
+          <context context-type="linenumber">303,305</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.filter.all" datatype="html">
+        <source>Todos</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/pages/reconciliation-page.ts</context>
+          <context context-type="linenumber">77</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.document-title" datatype="html">
+        <source>Solventa — Conciliación de desembolsos</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/reconciliation.routes.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reconciliation.detail.document-title" datatype="html">
+        <source>Solventa — Detalle del desembolso</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/reconciliation/reconciliation.routes.ts</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="sign-link.error.invalid" datatype="html">
         <source>Este enlace no es válido. Pídele a tu asesor uno nuevo.</source>
         <context-group purpose="location">
@@ -2939,7 +4853,7 @@
         <source>Solventa, ir al inicio</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/header/header.html</context>
-          <context context-type="linenumber">7,12</context>
+          <context context-type="linenumber">7,10</context>
         </context-group>
       </trans-unit>
       <trans-unit id="header.nav.label" datatype="html">
@@ -2998,32 +4912,46 @@
           <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="nav.reconciliation" datatype="html">
+        <source>Conciliación</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="nav.subscriptions" datatype="html">
         <source>Suscripciones</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nav.assisted-review" datatype="html">
+        <source>Revisión asistida</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
+          <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nav.policies" datatype="html">
         <source>Mis Pólizas</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">56</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nav.claims" datatype="html">
         <source>Siniestros</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">57</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nav.profile" datatype="html">
         <source>Perfil</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
-          <context context-type="linenumber">44</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="language.switch.es-CO" datatype="html">

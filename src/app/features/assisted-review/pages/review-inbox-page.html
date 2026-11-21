@@ -1,0 +1,299 @@
+<h1 i18n="@@assistedReview.inbox.title">Revisión asistida</h1>
+<p class="page__lead" i18n="@@assistedReview.inbox.lead">
+  Casos que las reglas automáticas derivaron a una persona. Los más antiguos aparecen primero.
+</p>
+
+<sol-card class="page__card">
+  <form class="ar__filters" (submit)="$event.preventDefault()">
+    <div class="ar__filter">
+      <label for="ar-state" i18n="@@assistedReview.filter.state">Estado</label>
+      <select
+        id="ar-state"
+        class="sol-input"
+        [ngModel]="query().state"
+        name="state"
+        (ngModelChange)="setState($event)"
+      >
+        @for (o of stateOptions; track o.value) {
+          <option [value]="o.value">{{ o.label }}</option>
+        }
+      </select>
+    </div>
+    <div class="ar__filter">
+      <label for="ar-category" i18n="@@assistedReview.filter.category">Categoría del motivo</label>
+      <select
+        id="ar-category"
+        class="sol-input"
+        [ngModel]="query().category ?? ''"
+        name="category"
+        (ngModelChange)="setCategory($event)"
+      >
+        @for (o of categoryOptions; track o.value) {
+          <option [value]="o.value">{{ o.label }}</option>
+        }
+      </select>
+    </div>
+    <label class="ar__check">
+      <input
+        type="checkbox"
+        [ngModel]="query().mineOnly"
+        name="mineOnly"
+        (ngModelChange)="setMineOnly($event)"
+      />
+      <ng-container i18n="@@assistedReview.filter.mine">Mis cotizaciones</ng-container>
+    </label>
+    <label class="ar__check">
+      <input
+        type="checkbox"
+        [ngModel]="query().expiredOnly"
+        name="expiredOnly"
+        (ngModelChange)="setExpiredOnly($event)"
+      />
+      <ng-container i18n="@@assistedReview.filter.expired">Solo cotizaciones vencidas</ng-container>
+    </label>
+  </form>
+
+  <p class="sol-visually-hidden" role="status">
+    @if (loading()) {
+      <ng-container i18n="@@assistedReview.loading">Cargando los casos…</ng-container>
+    } @else if (result(); as r) {
+      <ng-container i18n="@@assistedReview.inbox.count">{{ r.total }} casos</ng-container>
+    }
+  </p>
+
+  <!-- Resultado de cerrar un caso desde la tabla: se anuncia y recibe el foco si no queda ninguna fila. -->
+  <p id="ar-announcement" class="ar__announcement" role="status" tabindex="-1">
+    {{ announcement() }}
+  </p>
+
+  @if (error(); as e) {
+    <sol-alert kind="error">
+      {{ errorText(e) }}
+      <button
+        type="button"
+        class="sol-btn sol-btn--outline ar__inline-action"
+        (click)="load()"
+        i18n="@@assistedReview.retry-load"
+      >
+        Volver a cargar
+      </button>
+    </sol-alert>
+  }
+
+  @if (loading() && !result()) {
+    <p class="ar__loading" aria-hidden="true" i18n="@@assistedReview.inbox.loading-visible">
+      Cargando los casos…
+    </p>
+  }
+
+  @if (result(); as r) {
+    @if (r.expiredTotal > 0 && query().state === 'PENDING') {
+      <sol-alert kind="warning">
+        @if (r.expiredTotal === 1) {
+          <ng-container i18n="@@assistedReview.expired-notice.one"
+            >1 caso tiene la cotización vencida y solo se puede cerrar.</ng-container
+          >
+        } @else {
+          <ng-container i18n="@@assistedReview.expired-notice.many"
+            >{{ r.expiredTotal }} casos tienen la cotización vencida y solo se pueden
+            cerrar.</ng-container
+          >
+        }
+        @if (!query().expiredOnly) {
+          <button
+            type="button"
+            class="sol-btn sol-btn--outline ar__inline-action"
+            (click)="setExpiredOnly(true)"
+            i18n="@@assistedReview.expired-notice.filter"
+          >
+            Ver solo los vencidos
+          </button>
+        }
+      </sol-alert>
+    }
+
+    @if (r.items.length === 0) {
+      <sol-alert kind="info">
+        <ng-container i18n="@@assistedReview.inbox.empty"
+          >No hay casos con estos filtros.</ng-container
+        >
+      </sol-alert>
+    } @else {
+      <div class="ar__table-wrap">
+        <table class="ar__table" [attr.aria-busy]="loading()">
+          <caption class="sol-visually-hidden" i18n="@@assistedReview.inbox.caption">
+            Casos derivados a revisión asistida, del más antiguo al más reciente
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col" i18n="@@assistedReview.col.priority">Prioridad</th>
+              <th scope="col" i18n="@@assistedReview.col.date">Fecha</th>
+              <th scope="col" i18n="@@assistedReview.col.reason">Motivo</th>
+              <th scope="col" i18n="@@assistedReview.col.client">Cliente</th>
+              <th scope="col" i18n="@@assistedReview.col.product">Producto</th>
+              <th scope="col" i18n="@@assistedReview.col.amount">Monto asegurado</th>
+              <th scope="col">
+                <span class="sol-visually-hidden" i18n="@@assistedReview.col.actions"
+                  >Acciones</span
+                >
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (c of r.items; track c.id) {
+              <tr [class.ar__row--expired]="c.quoteExpired">
+                <td>
+                  <span
+                    class="ar__badge"
+                    [class.ar__badge--high]="c.priority === 'HIGH'"
+                    [class.ar__badge--medium]="c.priority === 'MEDIUM'"
+                  >
+                    <span aria-hidden="true">{{ priorityMark(c.priority) }}</span>
+                    {{ priorityText(c.priority) }}
+                  </span>
+                </td>
+                <td>{{ c.createdAt | date: 'short' }}</td>
+                <td>
+                  <ul class="ar__categories">
+                    @for (cat of c.categories; track cat) {
+                      <li>{{ categoryText(cat) }}</li>
+                    }
+                  </ul>
+                  <small class="ar__reason">{{ c.reason }}</small>
+                  @if (c.quoteExpired) {
+                    <span class="ar__badge ar__badge--expired" [attr.aria-label]="expiredLabel(c)">
+                      <span aria-hidden="true">⏰</span>
+                      <ng-container i18n="@@assistedReview.badge.expired"
+                        >Cotización vencida</ng-container
+                      >
+                    </span>
+                  }
+                  @if (c.decision) {
+                    <span class="ar__badge">{{ resultText(c.decision) }}</span>
+                  }
+                </td>
+                <td>
+                  @if (c.client; as cl) {
+                    {{ cl.firstName }} {{ cl.lastNameInitial }}.
+                    <small class="ar__reason">{{ cl.documentType }} {{ cl.maskedDocument }}</small>
+                  } @else {
+                    —
+                  }
+                </td>
+                <td>{{ productText(c.product) }}</td>
+                <td>
+                  {{
+                    c.insuredAmount.amount
+                      | currency: c.insuredAmount.currency : 'symbol-narrow' : digits
+                  }}
+                </td>
+                <td class="ar__actions">
+                  <a [routerLink]="['/assisted-review', c.id]" class="ar__link ar__open">
+                    <ng-container i18n="@@assistedReview.inbox.open">Ver detalle</ng-container>
+                    <span class="sol-visually-hidden">
+                      ({{ c.createdAt | date: 'short' }},
+                      {{
+                        c.insuredAmount.amount
+                          | currency: c.insuredAmount.currency : 'symbol-narrow' : digits
+                      }})
+                    </span>
+                  </a>
+                  @if (c.quoteExpired && c.state === 'PENDING') {
+                    <button
+                      type="button"
+                      class="sol-btn sol-btn--outline"
+                      [attr.aria-expanded]="closingId() === c.id"
+                      [attr.aria-controls]="'ar-close-' + c.id"
+                      (click)="openClose(c)"
+                      i18n="@@assistedReview.close.action"
+                    >
+                      Cerrar por cotización vencida
+                    </button>
+                  }
+                </td>
+              </tr>
+              @if (closingId() === c.id) {
+                <tr class="ar__close-row">
+                  <td colspan="7">
+                    <form
+                      class="ar__close"
+                      [id]="'ar-close-' + c.id"
+                      (submit)="$event.preventDefault(); confirmClose(c)"
+                    >
+                      <label [for]="'ar-close-text-' + c.id" i18n="@@assistedReview.close.label"
+                        >Justificación del cierre</label
+                      >
+                      <textarea
+                        class="sol-input"
+                        rows="3"
+                        [id]="'ar-close-text-' + c.id"
+                        name="closeText"
+                        [(ngModel)]="closeText"
+                        [attr.aria-describedby]="'ar-close-hint-' + c.id"
+                        [attr.aria-invalid]="closeError() ? true : null"
+                      ></textarea>
+                      <small [id]="'ar-close-hint-' + c.id" class="ar__reason">
+                        <ng-container i18n="@@assistedReview.close.hint"
+                          >Se rechazará el caso sin cobro. Puedes editar el texto sugerido (mínimo
+                          {{ justificationMin }} caracteres).</ng-container
+                        >
+                        {{ length(closeText) }}/{{ justificationMax }}
+                      </small>
+                      @if (closeError(); as ce) {
+                        <p class="ar__error" role="alert">
+                          <span aria-hidden="true">✕</span> {{ ce }}
+                        </p>
+                      }
+                      <div class="sol-actions">
+                        <button
+                          type="submit"
+                          class="sol-btn sol-btn--primary"
+                          [disabled]="closing()"
+                          i18n="@@assistedReview.close.confirm"
+                        >
+                          Confirmar cierre sin cobro
+                        </button>
+                        <button
+                          type="button"
+                          class="sol-btn sol-btn--outline"
+                          (click)="cancelClose()"
+                          i18n="@@assistedReview.close.cancel"
+                        >
+                          Cancelar
+                        </button>
+                      </div>
+                    </form>
+                  </td>
+                </tr>
+              }
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <nav class="ar__pager" i18n-aria-label="@@assistedReview.pager.label" aria-label="Paginación">
+        <button
+          type="button"
+          class="sol-btn sol-btn--outline"
+          [disabled]="query().page <= 1 || loading()"
+          (click)="goToPage(query().page - 1)"
+          i18n="@@assistedReview.pager.previous"
+        >
+          Anterior
+        </button>
+        <span i18n="@@assistedReview.pager.position"
+          >Página {{ query().page }} de {{ pages() }}</span
+        >
+        <button
+          type="button"
+          class="sol-btn sol-btn--outline"
+          [disabled]="query().page >= pages() || loading()"
+          (click)="goToPage(query().page + 1)"
+          i18n="@@assistedReview.pager.next"
+        >
+          Siguiente
+        </button>
+      </nav>
+    }
+  }
+</sol-card>
