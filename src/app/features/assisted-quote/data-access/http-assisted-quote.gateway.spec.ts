@@ -239,4 +239,160 @@ describe('HttpAssistedQuoteGateway', () => {
       expect((failure as ApiError).code).toBe('LINAJE_NO_DISPONIBLE');
     });
   });
+
+  describe('mortgage life offer (HU26)', () => {
+    const DTO = {
+      cotizacion_id: 'cot-1',
+      oferta_id: 'of-1',
+      cliente_id: 'c1',
+      producto: 'vida_hipotecario',
+      moneda: 'COP',
+      suma_asegurada: 200_000_000,
+      prima_anual: 421_200,
+      prima_mensual: 35_100,
+      etapa_de_vida: 'consolidacion',
+      version_reglas: '2026.11.1-prototipo',
+      perfil_id: 'p1',
+      perfil_creado_en: '2026-11-20T15:00:00Z',
+      degradado: true,
+      coberturas: [{ tipo: 'muerte', monto: 200_000_000, deducible: 0 }],
+      ajustes: [
+        {
+          paso: 'prima_base',
+          nombre: '0.0018 sobre la suma asegurada',
+          factor: null,
+          ajuste: 360_000,
+          acumulado: 360_000,
+          sin_dato: false,
+        },
+        {
+          paso: 'etapa_de_vida',
+          nombre: 'consolidacion',
+          factor: '1.30',
+          ajuste: 108_000,
+          acumulado: 468_000,
+          sin_dato: false,
+        },
+        {
+          paso: 'senal',
+          nombre: 'score_crediticio',
+          factor: '1',
+          ajuste: 0,
+          acumulado: 468_000,
+          sin_dato: true,
+        },
+        {
+          paso: 'recargo_degradado',
+          nombre: 'datos de respaldo',
+          factor: '0.15',
+          ajuste: 70_200,
+          acumulado: 538_200,
+          sin_dato: false,
+        },
+        {
+          paso: 'nuevo_paso',
+          nombre: 'x',
+          factor: null,
+          ajuste: 0,
+          acumulado: 538_200,
+          sin_dato: false,
+        },
+      ],
+      vigente_hasta: '2026-12-20T15:00:00Z',
+      creada_en: '2026-11-20T15:00:01Z',
+      asesor_id: 'a1',
+      canal: 'WEB_ASESOR',
+    };
+    const URL = '/api/cotizacion/v1/asesor/clientes/c%2F1/ofertas-vida-hipotecario';
+
+    it('should post to the advisor endpoint and map the offer to the feature model', () => {
+      let result: unknown;
+      gateway
+        .requestMortgageOffer({ clientId: 'c/1', insuredSum: null, enrich: true })
+        .subscribe((o) => (result = o));
+
+      const req = backend.expectOne((r) => r.url === URL && r.method === 'POST');
+      // Sin suma: Perfilamiento usa la de sus reglas. El precio nunca sale del navegador.
+      expect(req.request.body).toEqual({ enriquecer: true });
+      req.flush(DTO, { status: 201, statusText: 'Created' });
+
+      expect(result).toEqual(
+        jasmine.objectContaining({
+          quoteId: 'cot-1',
+          offerId: 'of-1',
+          lifeStage: 'consolidacion',
+          degraded: true,
+          insuredSum: { amount: 200_000_000, currency: 'COP' },
+          monthlyPremium: { amount: 35_100, currency: 'COP' },
+          validUntil: new Date('2026-12-20T15:00:00Z'),
+        }),
+      );
+      const steps = (
+        result as { steps: { kind: string; factor: number | null; missingData: boolean }[] }
+      ).steps;
+      expect(steps.map((s) => s.kind)).toEqual([
+        'BASE',
+        'LIFE_STAGE',
+        'SIGNAL',
+        'DEGRADED',
+        'OTHER',
+      ]);
+      expect(steps.map((s) => s.factor)).toEqual([null, 1.3, 1, 0.15, null]);
+      expect(steps[2].missingData).toBeTrue();
+    });
+
+    it('should send the new sum without enriching again when the advisor changes it', () => {
+      gateway
+        .requestMortgageOffer({ clientId: 'c1', insuredSum: 150_000_000, enrich: false })
+        .subscribe();
+
+      const req = backend.expectOne(
+        '/api/cotizacion/v1/asesor/clientes/c1/ofertas-vida-hipotecario',
+      );
+      expect(req.request.body).toEqual({ suma_asegurada: 150_000_000, enriquecer: false });
+      req.flush({ ...DTO, cliente_id: 'c1' }, { status: 201, statusText: 'Created' });
+    });
+
+    it('should let a missing consent (409) through with its code', () => {
+      let failure: unknown;
+      gateway
+        .requestMortgageOffer({ clientId: 'c1', insuredSum: null, enrich: true })
+        .subscribe({ error: (e: unknown) => (failure = e) });
+
+      backend
+        .expectOne('/api/cotizacion/v1/asesor/clientes/c1/ofertas-vida-hipotecario')
+        .flush(
+          { error: { code: 'CONSENTIMIENTO_REQUERIDO', message: 'm', details: [], trace_id: 't' } },
+          { status: 409, statusText: '' },
+        );
+
+      expect((failure as ApiError).status).toBe(409);
+      expect((failure as ApiError).code).toBe('CONSENTIMIENTO_REQUERIDO');
+    });
+
+    it('should keep the reason Perfilamiento gave for an out-of-range sum (422)', () => {
+      let failure: unknown;
+      gateway
+        .requestMortgageOffer({ clientId: 'c1', insuredSum: 5, enrich: false })
+        .subscribe({ error: (e: unknown) => (failure = e) });
+
+      backend.expectOne('/api/cotizacion/v1/asesor/clientes/c1/ofertas-vida-hipotecario').flush(
+        {
+          error: {
+            code: 'VALIDATION_ERROR',
+            message: 'm',
+            details: [
+              { campo: 'suma_asegurada', motivo: 'debe estar entre 20,000,000 y 800,000,000' },
+            ],
+            trace_id: 't',
+          },
+        },
+        { status: 422, statusText: '' },
+      );
+
+      expect((failure as ApiError).fields).toEqual([
+        { field: 'suma_asegurada', reason: 'debe estar entre 20,000,000 y 800,000,000' },
+      ]);
+    });
+  });
 });

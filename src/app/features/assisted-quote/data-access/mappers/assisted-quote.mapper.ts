@@ -7,6 +7,9 @@ import {
   FieldKind,
   LineageDataType,
   LineageOrigin,
+  MortgageOffer,
+  MortgageOfferRequest,
+  OfferStepKind,
   Product,
   ProfileLineage,
   ProfileSource,
@@ -19,6 +22,8 @@ import {
   CatalogDto,
   ClientSearchDto,
   LineageDto,
+  MortgageOfferDto,
+  MortgageOfferRequestDto,
   ProfileDto,
   QuoteDto,
   QuoteRequestDto,
@@ -148,5 +153,52 @@ export function toLineage(dto: LineageDto): ProfileLineage {
       winner: c.ganadora,
       discarded: c.descartadas,
     })),
+  };
+}
+
+// --- HU26: oferta de vida hipotecario ------------------------------------------------------
+
+const OFFER_STEP: Record<string, OfferStepKind> = {
+  prima_base: 'BASE',
+  etapa_de_vida: 'LIFE_STAGE',
+  senal: 'SIGNAL',
+  recargo_degradado: 'DEGRADED',
+};
+
+/** Sin `suma_asegurada`, Perfilamiento usa la suma por defecto de sus reglas. */
+export function toMortgageOfferRequestDto(request: MortgageOfferRequest): MortgageOfferRequestDto {
+  return request.insuredSum === null
+    ? { enriquecer: request.enrich }
+    : { suma_asegurada: request.insuredSum, enriquecer: request.enrich };
+}
+
+export function toMortgageOffer(dto: MortgageOfferDto): MortgageOffer {
+  const at = (amount: number): Money => money(amount, dto.moneda);
+  return {
+    quoteId: dto.cotizacion_id,
+    offerId: dto.oferta_id,
+    clientId: dto.cliente_id,
+    insuredSum: at(dto.suma_asegurada),
+    annualPremium: at(dto.prima_anual),
+    monthlyPremium: at(dto.prima_mensual),
+    lifeStage: dto.etapa_de_vida,
+    rulesVersion: dto.version_reglas,
+    profileCreatedAt: new Date(dto.perfil_creado_en),
+    degraded: dto.degradado,
+    coverages: dto.coberturas.map((c) => ({
+      type: c.tipo,
+      amount: at(c.monto),
+      deductible: at(c.deducible),
+    })),
+    // El factor llega como texto decimal («1.30») para no perder precisión; se muestra con el idioma.
+    steps: dto.ajustes.map((a) => ({
+      kind: OFFER_STEP[a.paso] ?? 'OTHER',
+      name: a.nombre,
+      factor: a.factor === null ? null : Number(a.factor),
+      adjustment: at(a.ajuste),
+      accumulated: at(a.acumulado),
+      missingData: a.sin_dato,
+    })),
+    validUntil: new Date(dto.vigente_hasta),
   };
 }

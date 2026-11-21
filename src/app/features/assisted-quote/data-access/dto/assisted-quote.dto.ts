@@ -84,3 +84,38 @@ export interface LineageDto {
   ausentes: Record<string, string>;
   conflictos: { campo: string; ganadora: string; descartadas: string[] }[];
 }
+
+/** HU26: `POST /v1/asesor/clientes/{id}/ofertas-vida-hipotecario` (MS Cotización, fachada de MS Perfilamiento). */
+export interface MortgageOfferRequestDto {
+  suma_asegurada?: number;
+  enriquecer: boolean;
+}
+
+export interface MortgageOfferDto {
+  cotizacion_id: string;
+  oferta_id: string;
+  cliente_id: string;
+  producto: string;
+  moneda: string;
+  suma_asegurada: number;
+  prima_anual: number;
+  prima_mensual: number;
+  etapa_de_vida: string;
+  version_reglas: string;
+  perfil_id: string;
+  perfil_creado_en: string;
+  degradado: boolean;
+  coberturas: { tipo: string; monto: number; deducible: number }[];
+  ajustes: {
+    paso: string;
+    nombre: string;
+    factor: string | null;
+    ajuste: number;
+    acumulado: number;
+    sin_dato: boolean;
+  }[];
+  vigente_hasta: string;
+  creada_en: string;
+  asesor_id: string;
+  canal: string;
+}

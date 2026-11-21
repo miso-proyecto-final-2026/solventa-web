@@ -47,6 +47,33 @@
     }
     <p class="profile__source">{{ sourceLabel(p.source) }}</p>
   }
+
+  <!-- HU26: la oferta de vida hipotecario se calcula con el perfil enriquecido; sin consentimiento no hay oferta. -->
+  <section class="profile__offer" aria-labelledby="mortgage-offer-title">
+    <h3 id="mortgage-offer-title" class="profile__subtitle" i18n="@@mortgageOffer.entry.title">
+      Seguro de vida hipotecario
+    </h3>
+    @if (c.consent.state === 'GRANTED') {
+      <p i18n="@@mortgageOffer.entry.lead">
+        Genera la oferta con el precio individualizado del cliente para presentarla en esta misma
+        venta.
+      </p>
+      <button
+        type="button"
+        class="sol-btn sol-btn--outline"
+        [disabled]="busy()"
+        (click)="offerMortgage.emit()"
+        i18n="@@mortgageOffer.entry.button"
+      >
+        Ofrecer vida hipotecario
+      </button>
+    } @else {
+      <p class="profile__empty" i18n="@@mortgageOffer.entry.no-consent">
+        No se puede generar la oferta: el cliente no ha otorgado el consentimiento de datos, y el
+        precio se calcula con su perfil financiero.
+      </p>
+    }
+  </section>
 } @else if (searched(); as doc) {
   <sol-alert kind="info">
     <p i18n="@@assistedQuote.profile.not-found">

@@ -1,0 +1,125 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sol-space-4);
+  // Sin esto, el contenido de las tablas ensancha la tarjeta en un celular.
+  min-width: 0;
+}
+
+section {
+  min-width: 0;
+}
+
+.offer {
+  &__panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sol-space-4);
+    min-width: 0;
+
+    // `display: flex` le gana al estilo del navegador para [hidden].
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  &__muted {
+    font-weight: 400;
+    color: var(--sol-text-muted);
+  }
+
+  &__premium {
+    text-align: center;
+  }
+
+  &__product {
+    font-weight: 600;
+    color: var(--sol-text-muted);
+  }
+
+  &__amount {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--sol-teal-700);
+  }
+
+  &__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sol-space-4) var(--sol-space-6);
+    margin: 0;
+
+    dt {
+      font-size: 0.875rem;
+      color: var(--sol-text-muted);
+    }
+
+    dd {
+      margin: 0;
+      font-weight: 600;
+    }
+  }
+
+  &__sum-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sol-space-2);
+
+    input {
+      flex: 1 1 12rem;
+      min-width: 0;
+    }
+  }
+
+  // En pantallas angostas cada tabla se desplaza dentro de su caja, no la página.
+  &__scroll {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  &__table {
+    width: 100%;
+    margin-top: var(--sol-space-2);
+    border-collapse: collapse;
+
+    th,
+    td {
+      padding: var(--sol-space-2) var(--sol-space-3);
+      text-align: left;
+      border-bottom: 1px solid var(--sol-border);
+    }
+  }
+
+  &__num {
+    text-align: right !important;
+    white-space: nowrap;
+  }
+}
+
+.tabs {
+  display: flex;
+  gap: var(--sol-space-2);
+  border-bottom: 1px solid var(--sol-border);
+
+  &__tab {
+    min-height: 2.75rem; // objetivo táctil de al menos 44 px
+    padding: var(--sol-space-2) var(--sol-space-4);
+    font: inherit;
+    font-weight: 600;
+    color: var(--sol-text-muted);
+    cursor: pointer;
+    background: none;
+    border: 0;
+    border-bottom: 3px solid transparent;
+
+    &[aria-selected='true'] {
+      color: var(--sol-teal-700);
+      border-bottom-color: var(--sol-teal-600);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--sol-teal-600);
+      outline-offset: 2px;
+    }
+  }
+}

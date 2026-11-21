@@ -107,6 +107,65 @@ export const LINEAGE_DTO = (client: DemoClient) => ({
   conflictos: [],
 });
 
+/**
+ * HU26: respuesta de `POST /v1/asesor/clientes/{id}/ofertas-vida-hipotecario` (contrato de
+ * Cotización). Reglas de prototipo: 0,18 % de la suma, etapa «desarrollo» (×1,00) y un
+ * endeudamiento bajo (×0,90). Con 100 millones: prima anual 162.000 y mensual 13.500.
+ */
+export function mortgageOfferDto(client: DemoClient, sum: number, quoteId: string) {
+  const base = Math.round(sum * 0.0018);
+  const annual = Math.round(base * 0.9);
+  return {
+    cotizacion_id: quoteId,
+    oferta_id: `oferta-${quoteId}`,
+    cliente_id: client.id,
+    producto: 'vida_hipotecario',
+    moneda: 'COP',
+    suma_asegurada: sum,
+    prima_anual: annual,
+    prima_mensual: Math.round(annual / 12),
+    etapa_de_vida: 'desarrollo',
+    version_reglas: '2026.11.1-prototipo',
+    perfil_id: '6a1f0c4e-2b7d-4e9a-8c3f-1d2e3f4a5b6c',
+    perfil_creado_en: '2026-11-20T15:00:00Z',
+    degradado: false,
+    coberturas: [
+      { tipo: 'muerte', monto: sum, deducible: 0 },
+      { tipo: 'incapacidad_total_permanente', monto: sum, deducible: Math.round(sum * 0.1) },
+    ],
+    ajustes: [
+      {
+        paso: 'prima_base',
+        nombre: '0.0018 sobre la suma asegurada',
+        factor: null,
+        ajuste: base,
+        acumulado: base,
+        sin_dato: false,
+      },
+      {
+        paso: 'etapa_de_vida',
+        nombre: 'desarrollo',
+        factor: '1.00',
+        ajuste: 0,
+        acumulado: base,
+        sin_dato: false,
+      },
+      {
+        paso: 'senal',
+        nombre: 'ratio_endeudamiento',
+        factor: '0.90',
+        ajuste: annual - base,
+        acumulado: annual,
+        sin_dato: false,
+      },
+    ],
+    vigente_hasta: '2026-12-20T15:00:00Z',
+    creada_en: '2026-11-20T15:00:01Z',
+    asesor_id: 'a-1',
+    canal: 'WEB_ASESOR',
+  };
+}
+
 export const PROFILE_DTO = (client: DemoClient) => ({
   cliente_id: client.id,
   con_consentimiento: client.consentimiento === 'OTORGADO',

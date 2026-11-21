@@ -4,7 +4,10 @@ import { ConsentStatus } from '../consent-status/consent-status';
 import { levelLabel, profileSourceLabel, signalLabel } from '../domain/labels';
 import { ClientIdentity, DocumentId, ProfileSummary } from '../domain/models';
 
-/** Paso 2: perfil del cliente. El asesor lo revisa y aprueba cotizar (o continúa sin cuenta). */
+/**
+ * Paso 2: perfil del cliente. El asesor lo revisa y aprueba cotizar (o continúa sin cuenta). Con
+ * consentimiento puede abrir también la oferta de vida hipotecario (HU26).
+ */
 @Component({
   selector: 'sol-client-profile',
   imports: [Alert, ConsentStatus],
@@ -19,6 +22,8 @@ export class ClientProfile {
   readonly busy = input(false);
 
   readonly approve = output<void>();
+  /** HU26: abrir la oferta de vida hipotecario (solo con consentimiento). */
+  readonly offerMortgage = output<void>();
   readonly searchAnother = output<void>();
 
   protected readonly signalLabel = signalLabel;
