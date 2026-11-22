@@ -1,5 +1,12 @@
 import { money } from '@core/money/money';
-import { ClientIdentity, Product, ProfileLineage, ProfileSummary, Quote } from '../domain/models';
+import {
+  ClientIdentity,
+  MortgageOffer,
+  Product,
+  ProfileLineage,
+  ProfileSummary,
+  Quote,
+} from '../domain/models';
 
 export const CLIENT: ClientIdentity = {
   id: '00000000-0000-4000-8000-0000000000a1',
@@ -112,4 +119,61 @@ export const LINEAGE: ProfileLineage = {
     { field: 'zona_riesgo', reason: 'sin_datos' },
   ],
   conflicts: [],
+};
+
+/** HU26: oferta de 200 millones, etapa «consolidación», con una señal sin dato. */
+export const OFFER: MortgageOffer = {
+  quoteId: 'cot-vh-1',
+  offerId: 'oferta-1',
+  clientId: CLIENT.id,
+  insuredSum: money(200_000_000),
+  annualPremium: money(421_200),
+  monthlyPremium: money(35_100),
+  lifeStage: 'consolidacion',
+  rulesVersion: '2026.11.1-prototipo',
+  profileCreatedAt: new Date('2026-11-20T15:00:00Z'),
+  degraded: false,
+  coverages: [
+    { type: 'muerte', amount: money(200_000_000), deductible: money(0) },
+    {
+      type: 'incapacidad_total_permanente',
+      amount: money(200_000_000),
+      deductible: money(20_000_000),
+    },
+  ],
+  steps: [
+    {
+      kind: 'BASE',
+      name: '0.0018 sobre la suma asegurada',
+      factor: null,
+      adjustment: money(360_000),
+      accumulated: money(360_000),
+      missingData: false,
+    },
+    {
+      kind: 'LIFE_STAGE',
+      name: 'consolidacion',
+      factor: 1.3,
+      adjustment: money(108_000),
+      accumulated: money(468_000),
+      missingData: false,
+    },
+    {
+      kind: 'SIGNAL',
+      name: 'ratio_endeudamiento',
+      factor: 0.9,
+      adjustment: money(-46_800),
+      accumulated: money(421_200),
+      missingData: false,
+    },
+    {
+      kind: 'SIGNAL',
+      name: 'score_crediticio',
+      factor: 1,
+      adjustment: money(0),
+      accumulated: money(421_200),
+      missingData: true,
+    },
+  ],
+  validUntil: new Date('2026-12-20T15:00:00Z'),
 };

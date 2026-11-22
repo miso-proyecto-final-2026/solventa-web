@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { AssistedQuoteGateway } from '../data-access/assisted-quote.gateway';
 import { Quote } from '../domain/models';
 import { FakeAssistedQuoteGateway } from '../testing/fake-assisted-quote.gateway';
-import { CLIENT, QUOTE } from '../testing/fixtures';
+import { CLIENT, OFFER, QUOTE } from '../testing/fixtures';
 import { AssistedQuoteFacade } from './assisted-quote.facade';
 import { AssistedQuoteStore } from './assisted-quote.store';
 
@@ -179,5 +179,89 @@ describe('AssistedQuoteFacade', () => {
     expect(store.step()).toBe('lookup');
     expect(store.client()).toBeNull();
     expect(store.quote()).toBeNull();
+  });
+
+  describe('mortgage life offer (HU26)', () => {
+    const unavailable = new ApiError('server', 503, 'OFERTA_NO_DISPONIBLE');
+
+    beforeEach(() => facade.searchClient(doc));
+
+    it('should open the offer from the profile, enriching the profile first', () => {
+      facade.openMortgageOffer();
+
+      expect(store.step()).toBe('offer');
+      expect(store.stepIndex()).toBe(3);
+      expect(gateway.offerRequests).toEqual([
+        { clientId: CLIENT.id, insuredSum: null, enrich: true },
+      ]);
+      expect(store.offer()).toBe(OFFER);
+      expect(store.busy()).toBeFalse();
+    });
+
+    it('should recalculate a new sum without enriching the profile again', () => {
+      facade.openMortgageOffer();
+
+      facade.recalculateOffer(150_000_000);
+
+      expect(gateway.offerRequests[1]).toEqual({
+        clientId: CLIENT.id,
+        insuredSum: 150_000_000,
+        enrich: false,
+      });
+      expect(store.offer()?.insuredSum.amount).toBe(150_000_000);
+    });
+
+    it('should keep the error at the offer step and retry by enriching when there is no offer yet', () => {
+      gateway.failOfferOnce = unavailable;
+
+      facade.openMortgageOffer();
+
+      expect(store.step()).toBe('offer');
+      expect(store.error()).toBe(unavailable);
+      expect(store.offer()).toBeNull();
+
+      facade.retryOffer();
+
+      expect(gateway.offerRequests[1]).toEqual({
+        clientId: CLIENT.id,
+        insuredSum: null,
+        enrich: true,
+      });
+      expect(store.error()).toBeNull();
+      expect(store.offer()).toBe(OFFER);
+    });
+
+    it('should retry a failed recalculation with the same sum and without enriching', () => {
+      facade.openMortgageOffer();
+      gateway.failOfferOnce = unavailable;
+      facade.recalculateOffer(300_000_000);
+
+      facade.retryOffer();
+
+      expect(gateway.offerRequests[2]).toEqual({
+        clientId: CLIENT.id,
+        insuredSum: 300_000_000,
+        enrich: false,
+      });
+    });
+
+    it('should enrich again when the profile was not found', () => {
+      facade.openMortgageOffer();
+      gateway.failOfferOnce = new ApiError('not-found', 404, 'PERFIL_NO_ENCONTRADO');
+      facade.recalculateOffer(300_000_000);
+
+      facade.retryOffer();
+
+      expect(gateway.offerRequests[2].enrich).toBeTrue();
+    });
+
+    it('should forget the offer when going back to the lookup for a new client', () => {
+      facade.openMortgageOffer();
+
+      facade.newQuote();
+
+      expect(store.offer()).toBeNull();
+      expect(store.offerSum()).toBeNull();
+    });
   });
 });

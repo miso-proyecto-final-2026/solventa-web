@@ -4,13 +4,15 @@ import { AssistedQuoteGateway } from '../data-access/assisted-quote.gateway';
 import {
   ClientIdentity,
   DocumentId,
+  MortgageOffer,
+  MortgageOfferRequest,
   Product,
   ProfileLineage,
   ProfileSummary,
   Quote,
   QuoteRequest,
 } from '../domain/models';
-import { CATALOG, CLIENT, LINEAGE, PROFILE, QUOTE } from './fixtures';
+import { CATALOG, CLIENT, LINEAGE, OFFER, PROFILE, QUOTE } from './fixtures';
 
 /** Gateway de pruebas: responde al instante, registra las llamadas y puede fallar o quedarse esperando. */
 export class FakeAssistedQuoteGateway extends AssistedQuoteGateway {
@@ -23,6 +25,10 @@ export class FakeAssistedQuoteGateway extends AssistedQuoteGateway {
   failFind: ApiError | null = null;
   failQuote: ApiError | null = null;
   failLineage: ApiError | null = null;
+  /** HU26: la oferta que responde y, si se define, el error de la próxima solicitud (solo una vez). */
+  offer: MortgageOffer = OFFER;
+  failOfferOnce: ApiError | null = null;
+  readonly offerRequests: MortgageOfferRequest[] = [];
   /** Si se define, `requestQuote` queda esperando hasta que se emita aquí (para probar el doble envío). */
   holdQuote: Subject<Quote> | null = null;
 
@@ -56,5 +62,18 @@ export class FakeAssistedQuoteGateway extends AssistedQuoteGateway {
   getLineage(clientId: string): Observable<ProfileLineage | null> {
     this.lineageRequests.push(clientId);
     return this.failLineage ? throwError(() => this.failLineage) : of(this.lineage);
+  }
+
+  requestMortgageOffer(request: MortgageOfferRequest): Observable<MortgageOffer> {
+    this.offerRequests.push(request);
+    const failure = this.failOfferOnce;
+    this.failOfferOnce = null;
+    if (failure) return throwError(() => failure);
+    const sum = request.insuredSum;
+    return of(
+      sum === null
+        ? this.offer
+        : { ...this.offer, insuredSum: { ...this.offer.insuredSum, amount: sum } },
+    );
   }
 }

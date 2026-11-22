@@ -1,5 +1,12 @@
 import { ApiError } from '@core/http/api-error';
-import { ConsentState, LineageDataType, LineageOrigin, ProfileSource, RiskLevel } from './models';
+import {
+  ConsentState,
+  LineageDataType,
+  LineageOrigin,
+  OfferStep,
+  ProfileSource,
+  RiskLevel,
+} from './models';
 import { productLabel } from '@shared/models/product-labels';
 
 /**
@@ -25,6 +32,7 @@ const OPTIONS: Record<string, string> = {
 const COVERAGES: Record<string, string> = {
   muerte: $localize`:@@assistedQuote.coverage.muerte:Muerte`,
   incapacidad_total: $localize`:@@assistedQuote.coverage.incapacidad_total:Incapacidad total`,
+  incapacidad_total_permanente: $localize`:@@assistedQuote.coverage.incapacidad_total_permanente:Incapacidad total y permanente`,
   dano_accidental: $localize`:@@assistedQuote.coverage.dano_accidental:Daño accidental`,
   robo: $localize`:@@assistedQuote.coverage.robo:Robo`,
 };
@@ -180,4 +188,34 @@ export function ttlLabel(seconds: number | null): string {
   }
   const minutes = Math.round(seconds / 60);
   return $localize`:@@lineage.ttl.minutes:${minutes}:minutes: min`;
+}
+
+// --- HU26: oferta de vida hipotecario ------------------------------------------------------
+
+const LIFE_STAGES: Record<string, string> = {
+  inicial: $localize`:@@mortgageOffer.stage.inicial:Inicial`,
+  desarrollo: $localize`:@@mortgageOffer.stage.desarrollo:Desarrollo`,
+  consolidacion: $localize`:@@mortgageOffer.stage.consolidacion:Consolidación`,
+  madurez: $localize`:@@mortgageOffer.stage.madurez:Madurez`,
+  sin_dato: $localize`:@@mortgageOffer.stage.sin_dato:Sin dato`,
+};
+
+export const lifeStageLabel = (stage: string): string => lookup(LIFE_STAGES, stage);
+
+/** Concepto de un paso del precio. La regla de la prima base viene del backend sin traducir: no se usa. */
+export function offerStepLabel(step: OfferStep): string {
+  switch (step.kind) {
+    case 'BASE':
+      return $localize`:@@mortgageOffer.step.base:Prima base sobre la suma asegurada`;
+    case 'LIFE_STAGE': {
+      const stage = lifeStageLabel(step.name);
+      return $localize`:@@mortgageOffer.step.life-stage:Etapa de vida: ${stage}:stage:`;
+    }
+    case 'SIGNAL':
+      return profileFieldLabel(step.name);
+    case 'DEGRADED':
+      return $localize`:@@mortgageOffer.step.degraded:Recargo por datos de respaldo`;
+    case 'OTHER':
+      return step.name;
+  }
 }

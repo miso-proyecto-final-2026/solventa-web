@@ -142,4 +142,33 @@ describe('MockAssistedQuoteGateway', () => {
     expect(brunoLineage!.missing.length).toBe(3);
     expect(await firstValueFrom(gateway.getLineage(diego!.id))).toBeNull();
   });
+
+  it('should offer mortgage life insurance only with consent, within the rule limits (HU26)', async () => {
+    const ana = await find('1000000001');
+    const bruno = await find('1000000002');
+    const diego = await find('1000000004');
+
+    const offer = await firstValueFrom(
+      gateway.requestMortgageOffer({ clientId: ana!.id, insuredSum: null, enrich: true }),
+    );
+    expect(offer.insuredSum.amount).toBe(100_000_000);
+    expect(offer.coverages.map((c) => c.type)).toEqual(['muerte', 'incapacidad_total_permanente']);
+    expect(offer.degraded).toBeFalse();
+
+    const degraded = await firstValueFrom(
+      gateway.requestMortgageOffer({ clientId: bruno!.id, insuredSum: 200_000_000, enrich: false }),
+    );
+    expect(degraded.degraded).toBeTrue();
+    expect(degraded.steps.at(-1)?.kind).toBe('DEGRADED');
+
+    const noConsent = await firstValueFrom(
+      gateway.requestMortgageOffer({ clientId: diego!.id, insuredSum: null, enrich: true }),
+    ).catch((e: unknown) => e);
+    expect((noConsent as ApiError).code).toBe('CONSENTIMIENTO_REQUERIDO');
+
+    const outOfRange = await firstValueFrom(
+      gateway.requestMortgageOffer({ clientId: ana!.id, insuredSum: 1_000, enrich: false }),
+    ).catch((e: unknown) => e);
+    expect((outOfRange as ApiError).fields[0].field).toBe('suma_asegurada');
+  });
 });
