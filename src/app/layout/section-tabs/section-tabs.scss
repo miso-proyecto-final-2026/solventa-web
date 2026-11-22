@@ -1,0 +1,35 @@
+.tabs {
+  background: var(--sol-surface);
+  border-bottom: 1px solid var(--sol-border);
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sol-space-1);
+    max-width: var(--sol-content-width);
+    padding: 0 var(--sol-space-4);
+    margin: 0 auto;
+    list-style: none;
+  }
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem; // objetivo táctil de al menos 44 px
+    padding: 0 var(--sol-space-3);
+    font-size: 0.9rem;
+    color: var(--sol-text-muted);
+    text-decoration: none;
+    border-bottom: 3px solid transparent;
+
+    &:hover {
+      color: var(--sol-text);
+    }
+
+    &--active {
+      font-weight: 600;
+      color: var(--sol-text);
+      border-bottom-color: var(--sol-teal-600);
+    }
+  }
+}

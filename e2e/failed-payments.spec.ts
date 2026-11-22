@@ -158,12 +158,12 @@ test.describe('Cobros fallidos (HU-19)', () => {
     await page.goto('/failed-payments');
 
     const nav = page.getByRole('navigation').first();
-    const logout = page.getByRole('button', { name: 'Cerrar sesión' });
-    await expect(nav.getByRole('link', { name: /Cobros fallidos/ })).toBeVisible();
-    const [navBox, logoutBox] = [await nav.boundingBox(), await logout.boundingBox()];
-    // Una fila de enlaces mide 44 px; con dos, el menú o «Cerrar sesión» bajan.
+    const account = page.locator('button[aria-haspopup="menu"]');
+    await expect(nav.getByRole('link', { name: 'Cobros', exact: true })).toBeVisible();
+    const [navBox, accountBox] = [await nav.boundingBox(), await account.boundingBox()];
+    // Una fila de enlaces mide 44 px; con dos, el menú o el menú de cuenta bajan.
     expect(navBox!.height).toBeLessThan(50);
-    expect(Math.abs(navBox!.y - logoutBox!.y)).toBeLessThan(4);
+    expect(Math.abs(navBox!.y - accountBox!.y)).toBeLessThan(4);
   });
 
   test('el operador ve cobros fallidos en la navegación, pero no la cotización asistida', async ({
@@ -173,10 +173,10 @@ test.describe('Cobros fallidos (HU-19)', () => {
     await page.goto('/');
 
     const nav = page.getByRole('navigation').first();
-    await expect(nav.getByRole('link', { name: /Cobros fallidos/ })).toBeVisible();
-    await expect(nav.getByRole('link', { name: /Cotización asistida/ })).toHaveCount(0);
+    await expect(nav.getByRole('link', { name: 'Cobros', exact: true })).toBeVisible();
+    await expect(page.getByRole('link', { name: /Cotización asistida/ })).toHaveCount(0);
 
-    await nav.getByRole('link', { name: /Cobros fallidos/ }).click();
+    await nav.getByRole('link', { name: 'Cobros', exact: true }).click();
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Cobros fallidos');
   });
 });

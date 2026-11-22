@@ -240,8 +240,9 @@ test.describe('Revisión asistida (HU-16)', () => {
 
   test('la opción de navegación aparece solo para el asesor', async ({ page }) => {
     await signIn(page);
-    await page.goto('/');
+    await page.goto('/assisted-quote');
 
+    // Ahora es una pestaña del grupo Cotizaciones, no una opción de la barra.
     await expect(page.getByRole('link', { name: 'Revisión asistida' })).toBeVisible();
   });
 });

@@ -6,7 +6,7 @@ import { AppLocale } from '@core/i18n/locales';
  * Nombre accesible del botón, por idioma de destino. Dice el idioma actual y la acción,
  * e incluye el código visible del botón (WCAG 2.5.3).
  */
-const SWITCH_LABELS: Readonly<Record<AppLocale, string>> = {
+export const SWITCH_LABELS: Readonly<Record<AppLocale, string>> = {
   'es-CO': $localize`:@@language.switch.es-CO:Idioma de la aplicación: inglés. Cambiar a español (ES)`,
   'en-US': $localize`:@@language.switch.en-US:Idioma de la aplicación: español. Cambiar a inglés (EN)`,
 };

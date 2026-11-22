@@ -8,7 +8,6 @@
     align-items: center;
     justify-content: space-between;
     gap: var(--sol-space-2) var(--sol-space-3);
-    // Más ancho que el contenido: con todas las opciones del asesor el menú cabe en una línea a 1280 px.
     max-width: var(--sol-header-width);
     padding: var(--sol-space-3) var(--sol-space-2);
     margin: 0 auto;
@@ -30,7 +29,7 @@
   &__list {
     display: flex;
     flex-wrap: wrap;
-    gap: 0;
+    gap: var(--sol-space-1);
     padding: 0;
     margin: 0;
     list-style: none;
@@ -39,11 +38,9 @@
   &__link {
     display: inline-flex;
     align-items: center;
-    gap: 0.15rem;
     min-height: 2.75rem; // objetivo táctil de al menos 44 px
-    // Compacto a lo ancho: con las diez opciones del asesor (HU16) el menú debe seguir cabiendo en una línea a 1280 px.
-    padding: var(--sol-space-1) 0.15rem;
-    font-size: 0.85rem;
+    padding: var(--sol-space-1) var(--sol-space-3);
+    font-size: 0.9rem;
     color: var(--sol-text-on-dark-muted);
     text-decoration: none;
     border-radius: var(--sol-radius-sm);
@@ -60,36 +57,102 @@
     }
   }
 
-  // Decorativo: en escritorio el menú del asesor tiene diez opciones y los íconos (con fuentes de emoji más anchas en Linux)
-  // hacían que no cupiera en una línea a 1280 px. Las etiquetas de texto se mantienen.
-  &__icon {
-    @media (width >= 64rem) {
-      display: none;
-    }
-  }
-
   &__session {
     display: flex;
     gap: var(--sol-space-2);
     align-items: center;
   }
 
-  &__user {
-    font-size: 0.9rem;
-    color: var(--sol-text-on-dark-muted);
-  }
-
-  &__button {
-    font: inherit;
-    font-size: 0.9rem;
-    cursor: pointer;
-    background: none;
-    border: 0;
-  }
-
   // El foco por defecto (verde) no se ve sobre el fondo oscuro.
   &__brand:focus-visible,
   &__link:focus-visible {
     outline-color: var(--sol-text-on-dark);
+  }
+}
+
+// Menú de cuenta: el nombre de la persona con Perfil, Idioma y Cerrar sesión.
+.account {
+  position: relative;
+
+  &__button {
+    display: inline-flex;
+    gap: var(--sol-space-2);
+    align-items: center;
+    min-height: 2.75rem;
+    padding: 0 var(--sol-space-3);
+    font: inherit;
+    font-size: 0.9rem;
+    color: var(--sol-text-on-dark);
+    cursor: pointer;
+    background: none;
+    border: 1px solid rgb(255 255 255 / 40%);
+    border-radius: var(--sol-radius-sm);
+
+    &:hover {
+      background: rgb(255 255 255 / 12%);
+    }
+
+    // El foco por defecto (verde) no se ve sobre el fondo oscuro.
+    &:focus-visible {
+      outline-color: var(--sol-text-on-dark);
+    }
+  }
+
+  &__chevron {
+    transition: transform 0.15s;
+
+    &--open {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__menu {
+    position: absolute;
+    top: calc(100% + var(--sol-space-2));
+    right: 0;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    min-width: 12.5rem;
+    padding: var(--sol-space-1);
+    background: var(--sol-surface);
+    border: 1px solid var(--sol-border);
+    border-radius: var(--sol-radius-md);
+    box-shadow: var(--sol-shadow-card);
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 2.75rem; // objetivo táctil de al menos 44 px
+    padding: 0 var(--sol-space-3);
+    font: inherit;
+    font-size: 0.9rem;
+    color: var(--sol-text);
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+    background: none;
+    border: 0;
+    border-radius: var(--sol-radius-sm);
+
+    &:hover,
+    &:focus-visible {
+      background: var(--sol-bg);
+    }
+  }
+
+  &__hint {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--sol-text-muted);
+  }
+
+  &__divider {
+    height: 1px;
+    margin: var(--sol-space-1) 0;
+    background: var(--sol-border);
+    border: 0;
   }
 }
