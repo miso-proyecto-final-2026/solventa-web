@@ -16,17 +16,15 @@
         aria-label="Navegación principal"
       >
         <ul class="header__list">
-          @for (item of navItems(); track item.path) {
+          @for (item of nav.groups(); track item.group.id) {
             <li>
               <a
                 class="header__link"
-                [routerLink]="item.path"
-                routerLinkActive="header__link--active"
-                [routerLinkActiveOptions]="{ exact: item.exact }"
-                ariaCurrentWhenActive="page"
+                [class.header__link--active]="nav.active()?.group?.id === item.group.id"
+                [routerLink]="item.href"
+                [attr.aria-current]="nav.active()?.group?.id === item.group.id ? 'page' : null"
               >
-                <span class="header__icon" aria-hidden="true">{{ item.icon }}</span>
-                {{ item.label }}
+                {{ item.group.label }}
               </a>
             </li>
           }
@@ -35,16 +33,75 @@
 
       <div class="header__session">
         @if (session.user(); as user) {
-          <span class="header__user">{{ user.name }}</span>
-          <button type="button" class="header__link header__button" (click)="logout()">
-            <ng-container i18n="@@header.logout">Cerrar sesión</ng-container>
-          </button>
+          <div class="account">
+            <button
+              #trigger
+              type="button"
+              class="account__button"
+              aria-haspopup="menu"
+              aria-controls="account-menu"
+              [attr.aria-expanded]="menuOpen()"
+              (click)="toggleMenu()"
+            >
+              {{ user.name }}
+              <svg
+                class="account__chevron"
+                [class.account__chevron--open]="menuOpen()"
+                aria-hidden="true"
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M2.5 4.5 6 8l3.5-3.5" />
+              </svg>
+            </button>
+
+            @if (menuOpen()) {
+              <div
+                id="account-menu"
+                class="account__menu"
+                role="menu"
+                i18n-aria-label="@@header.account.menu-label"
+                aria-label="Cuenta"
+              >
+                <a
+                  class="account__item"
+                  role="menuitem"
+                  [routerLink]="profilePath"
+                  (click)="closeMenu()"
+                  i18n="@@nav.profile"
+                >
+                  Perfil
+                </a>
+                @if (canSwitchLanguage) {
+                  <button
+                    type="button"
+                    class="account__item"
+                    role="menuitem"
+                    [attr.aria-label]="languageLabel"
+                    (click)="changeLanguage()"
+                  >
+                    <ng-container i18n="@@header.account.language">Idioma</ng-container>
+                    <span class="account__hint" aria-hidden="true">{{ otherLanguage }}</span>
+                  </button>
+                }
+                <hr class="account__divider" />
+                <button type="button" class="account__item" role="menuitem" (click)="logout()">
+                  <ng-container i18n="@@header.logout">Cerrar sesión</ng-container>
+                </button>
+              </div>
+            }
+          </div>
         } @else {
           <a class="header__link" routerLink="/login" i18n="@@header.login">Ingresar</a>
+          <sol-language-selector />
         }
       </div>
-
-      <sol-language-selector />
     </div>
   </div>
 </header>

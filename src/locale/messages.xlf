@@ -3501,6 +3501,79 @@
           <context context-type="linenumber">73,76</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="comingSoon.text" datatype="html">
+        <source> Esta pantalla todavía no está disponible. Estamos trabajando en ella. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/coming-soon/coming-soon-page.html</context>
+          <context context-type="linenumber">4,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="comingSoon.back" datatype="html">
+        <source>Volver al inicio</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/coming-soon/coming-soon-page.html</context>
+          <context context-type="linenumber">6,8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nav.quote" datatype="html">
+        <source>Cotizar</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/coming-soon/coming-soon.routes.ts</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nav.group.policies" datatype="html">
+        <source>Pólizas</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/coming-soon/coming-soon.routes.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
+          <context context-type="linenumber">66</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
+          <context context-type="linenumber">67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nav.claims" datatype="html">
+        <source>Siniestros</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/coming-soon/coming-soon.routes.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
+          <context context-type="linenumber">92</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
+          <context context-type="linenumber">93</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nav.profile" datatype="html">
+        <source>Perfil</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/coming-soon/coming-soon.routes.ts</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/header/header.html</context>
+          <context context-type="linenumber">79,80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="comingSoon.document-title" datatype="html">
+        <source>Solventa — <x id="name" equiv-text="name"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/coming-soon/coming-soon.routes.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="failedPayments.status.pending" datatype="html">
         <source>Pendiente</source>
         <context-group purpose="location">
@@ -5185,95 +5258,103 @@
           <context context-type="linenumber">16,18</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="header.account.menu-label" datatype="html">
+        <source>Cuenta</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/header/header.html</context>
+          <context context-type="linenumber">71,73</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="header.account.language" datatype="html">
+        <source>Idioma</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/header/header.html</context>
+          <context context-type="linenumber">89,90</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="header.logout" datatype="html">
         <source>Cerrar sesión</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/header/header.html</context>
-          <context context-type="linenumber">40,41</context>
+          <context context-type="linenumber">95,96</context>
         </context-group>
       </trans-unit>
       <trans-unit id="header.login" datatype="html">
         <source>Ingresar</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/header/header.html</context>
-          <context context-type="linenumber">43,45</context>
+          <context context-type="linenumber">101,102</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nav.home" datatype="html">
         <source>Inicio</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
-          <context context-type="linenumber">12</context>
+          <context context-type="linenumber">31</context>
         </context-group>
-      </trans-unit>
-      <trans-unit id="nav.quote" datatype="html">
-        <source>Cotizar</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
-          <context context-type="linenumber">13</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nav.group.quotes" datatype="html">
+        <source>Cotizaciones</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
+          <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nav.assisted-quote" datatype="html">
         <source>Cotización asistida</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
-          <context context-type="linenumber">16</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="nav.client-consent" datatype="html">
-        <source>Consentimiento</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
-          <context context-type="linenumber">23</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="nav.failed-payments" datatype="html">
-        <source>Cobros fallidos</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
-          <context context-type="linenumber">30</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="nav.reconciliation" datatype="html">
-        <source>Conciliación</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
-          <context context-type="linenumber">37</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="nav.subscriptions" datatype="html">
-        <source>Suscripciones</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
-          <context context-type="linenumber">44</context>
+          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nav.assisted-review" datatype="html">
         <source>Revisión asistida</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="nav.policies" datatype="html">
-        <source>Mis Pólizas</source>
+      <trans-unit id="nav.group.consents" datatype="html">
+        <source>Consentimientos</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
-          <context context-type="linenumber">56</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
+          <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="nav.claims" datatype="html">
-        <source>Siniestros</source>
+      <trans-unit id="nav.group.billing" datatype="html">
+        <source>Cobros</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">71</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="nav.profile" datatype="html">
-        <source>Perfil</source>
+      <trans-unit id="nav.failed-payments" datatype="html">
+        <source>Cobros fallidos</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
-          <context context-type="linenumber">58</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nav.subscriptions" datatype="html">
+        <source>Suscripciones</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
+          <context context-type="linenumber">80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nav.reconciliation" datatype="html">
+        <source>Conciliación</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/header/nav-items.ts</context>
+          <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="language.switch.es-CO" datatype="html">
@@ -5290,11 +5371,18 @@
           <context context-type="linenumber">11</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="nav.tabs.label" datatype="html">
+        <source>Secciones de <x id="group" equiv-text="section.group.label"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/section-tabs/section-tabs.ts</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="shell.skip-link" datatype="html">
         <source>Saltar al contenido</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/shell/shell.html</context>
-          <context context-type="linenumber">1,5</context>
+          <context context-type="linenumber">1,4</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assistedQuote.product.microseguro_vida" datatype="html">

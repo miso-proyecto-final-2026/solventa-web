@@ -3063,6 +3063,46 @@
         <source>Seguro de vida hipotecario</source>
         <target>Mortgage life insurance</target>
       </trans-unit>
+      <trans-unit id="header.account.language" datatype="html">
+        <source>Idioma</source>
+        <target>Language</target>
+      </trans-unit>
+      <trans-unit id="header.account.menu-label" datatype="html">
+        <source>Cuenta</source>
+        <target>Account</target>
+      </trans-unit>
+      <trans-unit id="nav.group.billing" datatype="html">
+        <source>Cobros</source>
+        <target>Billing</target>
+      </trans-unit>
+      <trans-unit id="nav.group.consents" datatype="html">
+        <source>Consentimientos</source>
+        <target>Consents</target>
+      </trans-unit>
+      <trans-unit id="nav.group.policies" datatype="html">
+        <source>Pólizas</source>
+        <target>Policies</target>
+      </trans-unit>
+      <trans-unit id="nav.group.quotes" datatype="html">
+        <source>Cotizaciones</source>
+        <target>Quotes</target>
+      </trans-unit>
+      <trans-unit id="nav.tabs.label" datatype="html">
+        <source>Secciones de <x id="group" equiv-text="section.group.label"/></source>
+        <target>Sections of <x id="group" equiv-text="section.group.label"/></target>
+      </trans-unit>
+      <trans-unit id="comingSoon.text" datatype="html">
+        <source> Esta pantalla todavía no está disponible. Estamos trabajando en ella. </source>
+        <target>This screen is not available yet. We are working on it.</target>
+      </trans-unit>
+      <trans-unit id="comingSoon.back" datatype="html">
+        <source>Volver al inicio</source>
+        <target>Back to home</target>
+      </trans-unit>
+      <trans-unit id="comingSoon.document-title" datatype="html">
+        <source>Solventa — <x id="name" equiv-text="name"/></source>
+        <target>Solventa — <x id="name" equiv-text="name"/></target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

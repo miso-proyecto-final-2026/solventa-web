@@ -4,10 +4,11 @@ import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
 import { Footer } from '../footer/footer';
 import { Header } from '../header/header';
+import { SectionTabs } from '../section-tabs/section-tabs';
 
 @Component({
   selector: 'sol-shell',
-  imports: [Header, Footer, RouterOutlet],
+  imports: [Header, SectionTabs, Footer, RouterOutlet],
   templateUrl: './shell.html',
   styleUrl: './shell.scss',
 })

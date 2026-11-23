@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { roleGuard } from '@core/auth/role.guard';
+import { COMING_SOON_SECTIONS } from '@features/coming-soon/coming-soon.sections';
 
 export const routes: Routes = [
   {
@@ -65,6 +66,11 @@ export const routes: Routes = [
     loadChildren: () =>
       import('@features/sign-link/sign-link.routes').then((m) => m.SIGN_LINK_ROUTES),
   },
-  // Mientras no existan las demás pantallas (cotizar, pólizas…), vuelven al inicio.
+  // El menú ya enlaza estas pantallas, pero todavía no existen: una página lo dice en lugar de volver al inicio.
+  ...COMING_SOON_SECTIONS.map((path) => ({
+    path,
+    loadChildren: () =>
+      import('@features/coming-soon/coming-soon.routes').then((m) => m.comingSoonRoutes(path)),
+  })),
   { path: '**', redirectTo: '' },
 ];

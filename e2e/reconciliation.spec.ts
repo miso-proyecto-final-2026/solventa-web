@@ -154,6 +154,12 @@ test.describe('Conciliación de desembolsos (HU-31)', () => {
     await signIn(page, 'OPERADOR');
     await page.goto('/');
 
+    // Conciliación es una pestaña del grupo Cobros.
+    await page
+      .getByRole('navigation')
+      .first()
+      .getByRole('link', { name: 'Cobros', exact: true })
+      .click();
     await expect(page.getByRole('link', { name: 'Conciliación' })).toBeVisible();
   });
 });

@@ -1,0 +1,15 @@
+.coming-soon {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sol-space-4);
+  align-items: flex-start;
+
+  h1 {
+    margin: 0;
+  }
+
+  p {
+    margin: 0;
+    color: var(--sol-text-muted);
+  }
+}

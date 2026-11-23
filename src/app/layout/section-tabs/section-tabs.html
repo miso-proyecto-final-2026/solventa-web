@@ -1,0 +1,18 @@
+@if (section(); as section) {
+  <nav class="tabs" [attr.aria-label]="label()">
+    <ul class="tabs__list">
+      @for (tab of section.tabs; track tab.path) {
+        <li>
+          <a
+            class="tabs__link"
+            [class.tabs__link--active]="nav.isTabActive(tab.path)"
+            [routerLink]="tab.path"
+            [attr.aria-current]="nav.isTabActive(tab.path) ? 'page' : null"
+          >
+            {{ tab.label }}
+          </a>
+        </li>
+      }
+    </ul>
+  </nav>
+}
